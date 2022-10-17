@@ -3,14 +3,13 @@
 
 :root {
     --primary: #43b14b;
+    --sub: yellow;
     --black: #000;
     --white: #fff;
     --text-color: #161823;
     --font-family: 'Open Sans', sans-serif;
     // Default layout
-    --default-layout-header-height: 60px;
-    --default-layout-width: 1150px;
-    --default-layout-horizontal-spacer: 24px;
+    --default-layout-header-height: 195px;
 }
 
 * {
@@ -26,7 +25,7 @@ html {
 body {
     font-family: var(--font-family);
     font-size: 1.6rem;
-    line-height: 1.5;
+    line-height: 1.7;
     text-rendering: optimizeSpeed;
     color: var(--text-color);
     overflow-y: overlay;
@@ -56,4 +55,70 @@ input {
 a {
     color: var(--text-color);
     text-decoration: none;
+}
+li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+ul {
+    margin: 0;
+    padding: 0;
+}
+.form-control {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+.form-control,
+.btn-outline-secondary {
+    font-size: 1.4rem;
+    height: 48px;
+    padding: 0 20px;
+}
+.btn-outline-secondary {
+    background-color: var(--primary);
+    border: 1px solid var(--primary);
+    border-radius: 30px;
+    color: var(--white);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    &:hover {
+        background-color: #358c3b;
+    }
+    &:active {
+        background-color: #358c3b;
+    }
+}
+.accordion-item {
+    border: none;
+}
+.accordion-button::after {
+    display: none;
+}
+.carousel.carousel-slider .control-arrow {
+    display: none;
+}
+.carousel {
+    .carousel-status {
+        display: none;
+    }
+    .thumbs {
+        display: none;
+    }
+    .control-dots {
+        margin: 50px 0;
+        .dot {
+            width: 12px;
+            height: 12px;
+        }
+    }
+    .slider {
+        margin-bottom: 50px;
+    }
+    .thumbs-wrapper {
+        display: none;
+    }
+    .carousel .control-arrow {
+        display: none !important;
+    }
 }

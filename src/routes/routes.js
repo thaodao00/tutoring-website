@@ -10,6 +10,7 @@ import ReferenceTuition from '~/pages/ReferenceTuition/ReferenceTuition';
 
 const publicRoutes = [
     { path: '/', component: Home },
+    { path: '/home', component: Home },
     { path: '/class', component: Class },
     { path: '/tutor', component: Tutor },
     { path: '/login', component: Login },
@@ -18,6 +19,7 @@ const publicRoutes = [
     { path: '/searchTutor', component: SearchTutor },
     { path: '/register-as-tutor', component: RegisterAsTutor },
     { path: '/reference-tuition', component: ReferenceTuition },
+    { path: '/contract', component: Contacts },
 ];
 const privateRoutes = [];
 export { publicRoutes, privateRoutes };
