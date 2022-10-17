@@ -1,3 +1,515 @@
 .wrapper {
-    color: red;
+    font-family: ' Roboto Slab ', serif;
+    .wrapper-bg-top {
+        background-image: url(https://www.daykemtainha.vn/public/templates/public/giasu/images/bg/bg1.jpg);
+        height: 1000px;
+    }
+    .wrapper-bg-top,
+    .wrapper-bg-second,
+    .wrapper-bg-three {
+        // margin-top: -170px;
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: 50%;
+        position: relative;
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background-color: rgba(30, 49, 72, 0.6);
+        }
+        .text-bg {
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--white);
+        }
+        .text-sub {
+            font-size: 2rem;
+            margin: 15px 0 0;
+            span {
+                color: var(--primary);
+            }
+        }
+
+        .text-main {
+            font-weight: 800;
+            font-size: 4.5rem;
+            margin: 10px 0;
+            span {
+                color: var(--primary);
+            }
+        }
+        .text-phone {
+            font-size: 1.8rem;
+            color: var(--sub);
+            font-weight: 500;
+            span {
+                font-size: 2.4rem;
+                color: var(--white);
+            }
+        }
+        .btn-tutor {
+            font-size: 1.4rem;
+            color: var(--white);
+            margin: 15px 15px 0 0;
+            padding: 10px 30px;
+            border-radius: 30px;
+            background-color: #f0ad4e;
+            border-color: #eea236;
+            font-weight: 600;
+            &:hover {
+                background-color: #ec971f;
+                border-color: #d58512;
+            }
+        }
+        .name-app {
+            margin: 20px 0 10px;
+            font-size: 3.2rem;
+            font-weight: 600;
+            b {
+                color: var(--sub);
+            }
+        }
+        .img-app {
+            width: 10em;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+    }
+    .divider {
+        background-color: #f9f9f6;
+        .box-divider {
+            padding: 50px 0 60px;
+            width: 100%;
+            text-align: center;
+
+            .divider-item {
+                display: flex;
+                align-items: center;
+                width: 265px;
+                margin: auto;
+
+                img {
+                    height: 65px;
+                    margin-right: 20px;
+                    animation-duration: 0.4s;
+                    &:hover {
+                        animation-name: bounce;
+                        animation-timing-function: ease;
+                    }
+                }
+            }
+
+            .divider-item__text {
+                font-size: 2.5rem;
+                font-weight: 700;
+                color: #333;
+                b {
+                    color: var(--primary);
+                }
+            }
+        }
+    }
+
+    .wrapper-bg-second {
+        background-image: url(https://www.daykemtainha.vn/public/templates/public/giasu/images/bg/bg2.jpg);
+        height: 1000px;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background-color: rgba(30, 49, 72, 0.9);
+        }
+        .text-bg-second {
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            .text-bg-left {
+                text-align: center;
+                img {
+                    width: 374px;
+                    height: 467px;
+                }
+            }
+        }
+    }
+    .box-title {
+        margin: 20px 0 10px;
+        font-size: 3.2rem;
+        color: var(--white);
+        font-size: 700;
+        position: relative;
+        span {
+            color: var(--primary);
+        }
+    }
+    .box-icon {
+        color: var(--primary);
+        margin-right: 30px;
+        height: 41px;
+    }
+    .box-item {
+        color: #777777;
+        display: flex;
+        padding: 0 15px;
+        margin-bottom: 40px;
+        .item-title {
+            margin: 0 0 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+        .item-content {
+            margin: 0 0 10px;
+            font-size: 1.4rem;
+        }
+    }
+    .widget {
+        padding: 0 15px;
+        margin-bottom: 40px;
+        .widget-title {
+            font-size: 2rem;
+            padding: 0 0 10px;
+            margin: 0 0 20px;
+            font-weight: 600;
+            span {
+                color: var(--primary);
+            }
+        }
+        .widget--item {
+            display: flex;
+            padding: 10px 0;
+            color: #999;
+            border-bottom: 1px dashed #999;
+            align-items: center;
+            &:hover,
+            :active {
+                color: #737373;
+                cursor: pointer;
+            }
+            .widget-item__avatar {
+                height: 24px;
+                width: 24px;
+                border-radius: 50%;
+                margin-right: 10px;
+            }
+            .widget-item__name {
+                font-size: 1.4rem;
+            }
+            .badge {
+                background-color: #777;
+                color: var(--white);
+                width: 20px;
+                height: 18px;
+                border-radius: 10px;
+                font-size: 12px;
+                text-align: center;
+                margin-left: 3px;
+            }
+            .widget--item__class {
+                font-size: 1.4rem;
+            }
+        }
+        .widget-btn {
+            border: 1px solid #d3d3d3;
+            margin: 5px 10px;
+            padding: 5px 10px;
+            color: #999;
+            font-size: 2.1rem;
+            display: inline-block;
+            &:hover,
+            :active {
+                background-color: #1e3148;
+                color: var(--white);
+            }
+        }
+    }
+    .wrapper-bg-three {
+        background-image: url(https://www.daykemtainha.vn/public/templates/public/giasu/images/bg/bg1.jpg);
+        height: 1000px;
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background-color: rgba(30, 49, 72, 0.9);
+        }
+        .text-bg-three {
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            .wrapper-bg-three__left {
+                padding: 0 15px;
+                .wrapper-bg-three__left-title {
+                    font-size: 5.4rem;
+                    color: var(--white);
+                    font-weight: 700;
+                    margin: 0 0 10px;
+                    span {
+                        color: var(--primary);
+                    }
+                }
+            }
+            .wrapper-bg-three__left-sub {
+                font-size: 1.5rem;
+                color: #a9aa9a;
+                margin: 0 0 10px;
+                padding-right: 90px;
+                b {
+                    color: var(--primary);
+                }
+            }
+            .funfact {
+                margin-top: 30px;
+                padding: 0 15px;
+                margin-bottom: 50px;
+                .funfact-icon {
+                    height: 45px;
+                    color: var(--primary);
+                }
+                .funfact-number {
+                    margin: 0 0 10px;
+                    font-size: 3.8rem;
+                }
+                .funfact-text {
+                    margin: 10px 0;
+                    font-size: 1.4rem;
+                }
+            }
+        }
+    }
+    .wrapper-bg-three__right {
+        padding: 0 15px;
+        .procedure-title {
+            margin: 0 0 10px;
+            font-size: 3.2rem;
+            font-weight: 600;
+            span {
+                color: var(--primary);
+            }
+        }
+        .procedure {
+            p {
+                font-size: 1.8rem;
+                margin: 0 0 10px;
+            }
+            .procedure-item {
+                font-size: 1.8rem;
+                .procedure-item-link {
+                    color: var(--primary);
+                }
+            }
+        }
+    }
+    .question {
+        margin-top: 60px;
+        margin-bottom: 60px;
+        .question-title {
+            font-size: 2.4rem;
+            padding-bottom: 30px;
+            margin-bottom: 10px;
+            color: #333;
+            span {
+                color: var(--primary);
+            }
+        }
+        .question-icon {
+            margin-right: 10px;
+        }
+        .question-text {
+            display: flex;
+            align-items: center;
+            padding-bottom: 15px;
+            color: #333;
+            .icon-minus {
+                background-color: var(--primary);
+                color: var(--white);
+                padding: 6px 8px;
+                border-radius: 5px;
+            }
+            b {
+                margin-left: 5px;
+                font-size: 1.4rem;
+            }
+        }
+        .procedure-class {
+            padding-left: 40px;
+            padding-bottom: 15px;
+            font-size: 1.4rem;
+            color: #333;
+            b,
+            .procedure-phone {
+                color: var(--primary);
+            }
+            .contract {
+                .contract-btn {
+                    color: var(--primary);
+                    cursor: pointer;
+                }
+            }
+            .procedure-item {
+                padding: 5px 15px;
+            }
+        }
+    }
+    .wrapper-bg-bottom {
+        background-image: url(https://www.daykemtainha.vn/public/templates/public/giasu/images/bg/bg-pattern.png);
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: 50%;
+        position: relative;
+        min-height: 530px;
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background-color: rgba(30, 49, 72, 0.9);
+        }
+        .text-bg {
+            height: 110px;
+            text-align: center;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--white);
+            top: 100px;
+            h2 {
+                font-size: 3.2rem;
+                margin: 0 0 10px;
+                font-weight: 600;
+                // .double-line-bottom-centered-theme-colored-2 &:before {
+                //     border-radius: 8px;
+                //     bottom: 0;
+                //     content: '';
+                //     height: 6px;
+                //     bottom: -2px;
+                //     left: 0px;
+                //     right: 0px;
+                //     margin: 0 auto;
+                //     position: absolute;
+                //     width: 24px;
+                //     background-color: var(--primary);
+                // }
+                // .double-line-bottom-centered-theme-colored-2:after {
+                //     border-radius: 8px;
+                //     bottom: 0;
+                //     content: '';
+                //     height: 2px;
+                //     left: 0;
+                //     right: 0px;
+                //     margin: 0 auto;
+                //     position: absolute;
+                //     width: 64px;
+                // }
+                p {
+                    color: var(--primary);
+                }
+            }
+        }
+        .carousel-list {
+            text-align: center;
+            color: var(--white);
+            width: 100%;
+            padding-top: 150px;
+
+            .carousel-item {
+                margin: 0 50px;
+                img {
+                    height: 100px;
+                    width: 100px;
+                    border-radius: 50%;
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                }
+                p {
+                    margin: 20px;
+                    padding-bottom: 30px;
+                }
+                .carousel-icon {
+                    height: 24px;
+                    width: 24px;
+                    color: var(--primary);
+                }
+            }
+        }
+    }
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(20px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+@media (min-width: 992px) {
+    .wrapper-bg-second {
+        height: 600px !important;
+    }
+    .wrapper-bg-three {
+        height: 600px !important;
+    }
+}
+@media (max-width: 992px) {
+    .wrapper-bg-three__left {
+        text-align: center !important;
+    }
+}
+@media (max-width: 767px) {
+    .wrapper {
+        .box-divider {
+            .divider-item {
+                width: 100%;
+            }
+        }
+
+        .text-bg-left {
+            display: none;
+        }
+        .box-item {
+            margin-bottom: 40px;
+        }
+        .wrapper-bg-three {
+            height: 1700px !important;
+        }
+        .wrapper-bg-bottom {
+        }
+        .text-bg {
+            h2 {
+                font-size: 2.5rem !important;
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .wrapper {
+        .box-item {
+            margin-bottom: 30px;
+        }
+    }
 }

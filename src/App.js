@@ -1,10 +1,6 @@
-import { Button } from 'bootstrap';
-import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DefaultLayout from './layout/DefaultLayout/DefaultLayout';
-import Home from './pages/Home/Home';
-import Tutor from './pages/Tutor/Tutor';
 import { publicRoutes } from './routes';
-// import { publicRoutes } from './routes';
 
 function App() {
     return (
