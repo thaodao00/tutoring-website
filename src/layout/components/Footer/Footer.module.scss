@@ -1,0 +1,99 @@
+.wrapper {
+    background-color: rgb(33, 35, 49);
+    color: white;
+    padding: 50px 58px 30px;
+    .footer-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-top: 20px;
+        padding-bottom: 10px;
+    }
+    .footer-sub {
+        font-size: 1.8rem;
+        margin: 10px 0;
+        color: var(--primary);
+    }
+    .footer-contact {
+        font-size: 1.4rem;
+        padding: 0 10px 5px;
+        color: #808080;
+        display: block;
+        .icon {
+            color: var(--primary);
+            margin-right: 2px;
+        }
+        .text-phone,
+        .text-mail {
+            color: #808080;
+            &:hover {
+                color: #666666;
+            }
+        }
+    }
+    img {
+        width: 120px;
+        height: 60px;
+        margin-bottom: 40px;
+    }
+
+    .img-phone {
+        float: right;
+        width: 200px;
+        margin-left: 20px;
+        height: 400px;
+        margin-left: 20px;
+    }
+    .list {
+        margin: 20px 15px 0 15px;
+        padding-bottom: 20px;
+
+        .item {
+            font-size: 14px;
+            padding: 10px 0;
+            border-bottom: 1px dashed #333;
+            color: #808080;
+        }
+    }
+    .text {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+        color: #808080;
+    }
+    .img-app {
+        width: 140px;
+        height: 42px;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.1);
+        margin-right: 10px;
+        margin-top: 10px;
+        &:hover {
+            background-color: rgba(61, 58, 58, 0.253);
+        }
+    }
+    .footer-left {
+        padding-right: 50px;
+    }
+    .footer-right {
+        // min-height: 260px;
+        height: 260px;
+        overflow: hidden;
+        border-bottom: dashed 2px #333;
+        margin-bottom: 40px;
+    }
+}
+@media (max-width: 1213px) {
+    .wrapper {
+        .footer-right {
+            height: 280px;
+        }
+    }
+}
+@media (max-width: 790px) {
+    .img-phone {
+        display: none;
+    }
+    .footer-left {
+        display: flex;
+        flex-direction: column;
+    }
+}
