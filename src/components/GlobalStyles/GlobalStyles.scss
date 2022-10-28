@@ -29,6 +29,64 @@ body {
     text-rendering: optimizeSpeed;
     color: var(--text-color);
     overflow-y: overlay;
+    //reset css input react-bootstrap
+    textarea:focus,
+    textarea.form-control:focus,
+    input.form-control:focus,
+    input[type=text]:focus,
+    input[type=password]:focus,
+    input[type=email]:focus,
+    input[type=number]:focus,
+    [type=text].form-control:focus,
+    [type=password].form-control:focus,
+    [type=email].form-control:focus,
+    [type=tel].form-control:focus,
+    [contenteditable].form-control:focus {
+        box-shadow: none;
+        border: 1px solid rgba(0, 0, 0,0.3);
+    }
+    // reset css button react-bootstrap
+    .btn-check:checked + .btn, :not(.btn-check) + .btn:active, .btn:first-child:active, .btn.active, .btn.show{
+        background-color: #ccc;
+        color: var(--text-color);
+        border-color: var(--border-color);
+    }
+    //Css for react-select library
+    .form-select:focus{
+        outline: none;
+        box-shadow: none;
+        border: 1px solid rgba(0, 0, 0,0.3);
+    }
+    .react-select__control:focus{
+        outline: none;
+        box-shadow: none;
+        border: 1px solid rgba(0, 0, 0,0.3);
+    }
+    .react-select__control:hover{
+       border: 1px solid #ccc
+    }
+    .react-select__control{
+        height: 48px;
+        box-shadow: none;
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+    }
+    .react-select__dropdown-indicator.react-select__indicator{
+        display: none;
+    }
+    .react-select__indicators{
+        display: none;
+    }
+    .react-select__option--is-focused{
+        background-color: #5897FB;
+    }
+    .react-select__multi-value__remove:hover{
+       background-color: #e6e6e6;
+        color: rgba(0, 0, 0, 0.5);
+
+    }
+
+
 }
 
 // Scrollbar CSS
@@ -65,15 +123,12 @@ ul {
     margin: 0;
     padding: 0;
 }
-.form-control {
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
-}
+
 .form-control,
 .btn-outline-secondary {
     font-size: 1.4rem;
     height: 48px;
-    padding: 0 20px;
+    padding: 4px 20px;
 }
 .btn-outline-secondary {
     background-color: var(--primary);
