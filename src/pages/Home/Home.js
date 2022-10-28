@@ -387,6 +387,7 @@ function Home() {
                         <div className={cx('input-group mb-4 mt-4')}>
                             <input
                                 type="text"
+                                style={{borderTopLeftRadius: '30px',borderBottomLeftRadius: '30px'}}
                                 className={cx('form-control ')}
                                 placeholder="Hãy nhập một môn học!"
                                 aria-label="Hãy nhập một môn học!"

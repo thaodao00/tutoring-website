@@ -1,9 +1,207 @@
 import React from 'react';
-import styles from './ReferenceTuition.module.scss';
 import classNames from 'classnames/bind';
+import {Button, ButtonGroup, Col, Container, Row} from "react-bootstrap";
+import Form from 'react-bootstrap/Form';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+
+
+import styles from './ReferenceTuition.module.scss';
+import OptionItem from "~/pages/ReferenceTuition/OptionItem";
+import {
+    faCircleCheck
+} from '@fortawesome/free-regular-svg-icons';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
+
 const cx = classNames.bind(styles);
-function ReferenceTuition() {
-    return <div>ReferenceTuition</div>;
+
+
+const subjects = [
+    {label: "2D", value: 355},
+    {label: "3D Max", value: 54},
+    {label: "3Ds Max", value: 43},
+    {label: "Aerobic", value: 61},
+    {label: "Ảo thuật", value: 965},
+    {label: "Bơi lội", value: 46},
+    {label: "Bóng chuyền", value: 58}
+];
+const ours = [
+    {our: '-------'},
+    {our: '30 phút'},
+    {our: '45 phút'},
+    {our: '60 phút'},
+    {our: '90 phút'},
+    {our: '2 giờ'},
+    {our: '2.5 giờ'},
+    {our: '3 giờ'},
+
+]
+const levels = [
+    {level: 'Tùy'},
+    {level: 'Sinh viên'},
+    {level: 'Giáo viên'},
+    {level: 'Đã tốt nghiệp'},
+]
+const follows = [
+    {follow: 'Tháng'},
+    {follow: 'Buổi'},
+    {follow: 'Tuần'},
+    {follow: 'Giờ'},
+]
+const reasons = [
+    {
+        reason: 'Gia sư chất lượng. được kiểm duyệt gắt gao',
+        icon: <FontAwesomeIcon icon={faCircleCheck} className={cx('icon')} />,
+    },
+    {
+        reason: 'Chỉ cần đăng yêu cầu học',
+        icon: <FontAwesomeIcon icon={faCircleCheck} className={cx('icon')}/>,
+    },
+    {
+        reason: 'Chúng tôi sẽ làm cầu nối giữa bạn và Gia sư',
+        icon: <FontAwesomeIcon icon={faCircleCheck} className={cx('icon')}/>,
+    },
+    {
+        reason: 'Hỗ trợ nhanh chóng, thân thiện',
+        icon: <FontAwesomeIcon icon={faCircleCheck} className={cx('icon')}/>,
+    },
+    {
+        reason: ' Dịch vụ gia sư miễn phí',
+        icon: <FontAwesomeIcon icon={faCircleCheck} className={cx('icon')}/>,
+    },
+
+]
+
+function ReferenceTuition(props) {
+
+    const animatedComponents = makeAnimated();
+
+
+    return (
+        <div className={cx('wrapper')}>
+            <Container>
+                <Row>
+                    <Col sm={12} md={8} lg={8}>
+                        <div className={cx('detail-content')}>
+                            <h3 className={cx('title')}>Mô tả yêu cầu tìm gia sư</h3>
+                            <Row>
+                                <Col md={6} lg={6}>
+                                    <Form.Label className={cx('description')}>Số điện thoại liên hệ *</Form.Label>
+                                    <Form.Control size='sm' type="text" placeholder="Ví dụ: 0121********"/>
+                                </Col>
+                                <Col md={6} lg={6}>
+                                    <Form.Label className={cx('description')}>Địa điểm dạy *</Form.Label>
+                                    <Form.Control size='sm' type="text" placeholder="Nhập vị trí"/>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col lg={2} md={2} sm={12}>
+                                    <Form.Label className={cx('description')}>Số học viên *</Form.Label>
+                                    <Form.Control readOnly value={1} size="sm" type="text" placeholder="Small text"/>
+                                </Col>
+                                <Col lg={2} md={2}>
+                                    <Form.Label className={cx('description')}>Giờ mỗi buổi *</Form.Label>
+                                    <Form.Select style={{padding: '14px 18px'}} size='lg'>
+                                        {
+                                            ours.map((item, index) => {
+                                                return (
+                                                    <OptionItem key={index} children={item.our}/>
+                                                )
+                                            })
+                                        }
+                                    </Form.Select>
+                                </Col>
+                                <Col md={4} lg={4}>
+                                    <Form.Label className={cx('description')}>Môn học *</Form.Label>
+                                    <Select
+                                        classNamePrefix='react-select'
+                                        options={subjects}
+                                        components={animatedComponents}
+                                        placeholder='Chọn môn học'
+                                        isMulti
+                                    />
+                                </Col>
+                                <Col lg={4} md={4}>
+                                    <Form.Label className={cx('description', 'gender', 'mt-20')}>Giới tính học
+                                        viên</Form.Label>
+                                    <ButtonGroup size="lg" className="mb-2">
+                                        <Button className={cx('btn-gender', 'active')}>Nam</Button>
+                                        <Button className={cx('btn-gender')}>Nữ</Button>
+                                        <Button className={cx('btn-gender')}>Cả 2</Button>
+                                    </ButtonGroup>
+                                </Col>
+
+                            </Row>
+                            <h3 className={cx('title')}>Yêu cầu gia sư</h3>
+                            <Row>
+                                <Col lg={3} md={3}>
+                                    <Form.Label className={cx('description', 'gender')}>Giới tính</Form.Label>
+                                    <ButtonGroup size="lg" className="mb-2">
+                                        <Button className={cx('btn-gender', 'active')}>Nam</Button>
+                                        <Button className={cx('btn-gender')}>Nữ</Button>
+                                        <Button className={cx('btn-gender')}>Cả 2</Button>
+                                    </ButtonGroup>
+                                </Col>
+                                <Col lg={2} md={2}>
+                                    <Form.Label className={cx('description')}>Trình độ</Form.Label>
+                                    <Form.Select style={{padding: '14px 18px'}} size='lg'>
+                                        {
+                                            levels.map((item, index) => {
+                                                return (
+                                                    <OptionItem key={index} children={item.level}/>
+                                                )
+                                            })
+                                        }
+                                    </Form.Select>
+                                </Col>
+                                <Col lg={2} md={2}>
+                                    <Form.Label className={cx('description')}>Theo</Form.Label>
+                                    <Form.Select style={{padding: '14px 18px'}} size='lg'>
+                                        {
+                                            follows.map((item, index) => {
+                                                return (
+                                                    <OptionItem key={index} children={item.follow}/>
+                                                )
+                                            })
+                                        }
+                                    </Form.Select>
+                                </Col>
+                                <Col lg={2} md={2} sm={12}>
+                                    <Form.Label className={cx('description')}>Buổi/Tuần</Form.Label>
+                                    <Form.Control size="sm" type="text" placeholder="Ví dụ 3"/>
+                                </Col>
+
+                            </Row>
+
+
+                        </div>
+                    </Col>
+                    <Col sm={12} md={4} lg={4}>
+                        <div className={cx('widget')}>
+                            <h4 className={cx('reason-title')}>Tại sao bạn nên tìm giáo viên trên tainangtre.vn ?</h4>
+                            {
+                                reasons.map((item, index) => {
+                                    return (
+                                        <p className={cx('reason-item')} key={index}>
+                                            {item.icon}
+                                            {item.reason}
+                                        </p>
+                                    )
+                                })
+                            }
+
+                        </div>
+                    </Col>
+
+                </Row>
+            </Container>
+
+
+        </div>
+    );
 }
 
 export default ReferenceTuition;
+
+
