@@ -7,7 +7,6 @@
     .wrapper-bg-top,
     .wrapper-bg-second,
     .wrapper-bg-three {
-        // margin-top: -170px;
         background-size: cover;
         background-attachment: fixed;
         background-position: 50%;
@@ -397,30 +396,6 @@
                 font-size: 3.2rem;
                 margin: 0 0 10px;
                 font-weight: 600;
-                // .double-line-bottom-centered-theme-colored-2 &:before {
-                //     border-radius: 8px;
-                //     bottom: 0;
-                //     content: '';
-                //     height: 6px;
-                //     bottom: -2px;
-                //     left: 0px;
-                //     right: 0px;
-                //     margin: 0 auto;
-                //     position: absolute;
-                //     width: 24px;
-                //     background-color: var(--primary);
-                // }
-                // .double-line-bottom-centered-theme-colored-2:after {
-                //     border-radius: 8px;
-                //     bottom: 0;
-                //     content: '';
-                //     height: 2px;
-                //     left: 0;
-                //     right: 0px;
-                //     margin: 0 auto;
-                //     position: absolute;
-                //     width: 64px;
-                // }
                 p {
                     color: var(--primary);
                 }
@@ -495,8 +470,6 @@
         }
         .wrapper-bg-three {
             height: 1700px !important;
-        }
-        .wrapper-bg-bottom {
         }
         .text-bg {
             h2 {

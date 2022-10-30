@@ -1,0 +1,35 @@
+.wrapper {
+    padding: 60px 0;
+    .btn {
+        // display: block;
+        background-color: var(--primary);
+        color: white;
+        border-radius: 5px;
+        padding: 5px 25px;
+        margin-bottom: 5px;
+        &:hover {
+            background-color: #358c3b;
+        }
+    }
+    .name {
+        color: var(--primary);
+        font-weight: 600;
+    }
+    .list {
+        .item {
+            padding: 5px 0;
+            .icon {
+                width: 20px;
+                color: var(--primary);
+            }
+        }
+        font-size: 1.4rem;
+    }
+    .title {
+        color: black;
+        font-size: 1.4rem;
+    }
+    .describe {
+        font-size: 1.4rem;
+    }
+}

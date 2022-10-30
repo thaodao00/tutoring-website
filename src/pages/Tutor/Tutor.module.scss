@@ -1,1 +1,66 @@
-
+.box-card {
+    border: none !important;
+    padding: 0 !important;
+    & :hover {
+        opacity: 0.9;
+        cursor: pointer;
+    }
+    .box-item {
+        padding: 0px 15px 15px 10px;
+    }
+    .card-bottom {
+        background-color: #333 !important;
+        padding: 20px;
+    }
+    .text-name {
+        font-size: 1.8rem;
+        color: white;
+    }
+    .text-list {
+        color: #c0c0c0;
+        .text-item {
+            font-size: 1.4rem;
+            margin: 5px 0;
+            .item-icon {
+                width: 15px;
+                margin-right: 4px;
+            }
+        }
+        .textOverflow {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+    }
+}
+.box-form {
+    display: flex !important;
+    font-size: 1.6rem;
+    margin-left: 5px;
+    .box-input {
+        height: 50px;
+        .input-text {
+            color: #333;
+            height: 100%;
+            padding: 0 10px;
+            margin-right: 20px;
+            width: 100%;
+        }
+        .btn-text {
+            height: 100%;
+            padding: 0 10px;
+            margin-right: 20px;
+            width: 100px;
+            border-radius: 5px;
+            background-color: var(--primary);
+            color: white;
+            &:hover {
+                background-color: #358c3b;
+            }
+            .icon-search {
+                margin-left: 10px;
+            }
+        }
+    }
+}
