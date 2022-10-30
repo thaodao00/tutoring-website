@@ -3,7 +3,6 @@ import Button from '~/components/Button';
 import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import {
@@ -26,6 +25,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
+import GoodTutor from '~/layout/components/GoodTutor/GoodTutor';
 const cx = classNames.bind(styles);
 function Home() {
     const [show1, setShow1] = useState(true);
@@ -109,58 +109,7 @@ function Home() {
             name: 'Nguyễn Văn A',
         },
     ];
-    const GOOD_TUTOR = [
-        {
-            avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop_48_48/39132_avatar.jpeg',
-            name: 'Nguyễn Văn A',
-            badge: 2,
-        },
-        {
-            avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop_48_48/39132_avatar.jpeg',
-            name: 'Đào Thị Thu Thảo',
-            badge: 2,
-        },
-        {
-            avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop_48_48/24276_avatar.jpeg',
-            name: 'ĐOÀN PHƯƠNG RANG HOA',
-            badge: 2,
-        },
-        {
-            avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop_48_48/39132_avatar.jpeg',
-            name: 'Nguyễn Văn D',
-            badge: 1,
-        },
-        {
-            avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop_48_48/39132_avatar.jpeg',
-            name: 'Nguyễn Văn E',
-            badge: 2,
-        },
-        {
-            avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop_48_48/39126_avatar.jpg',
-            name: 'Nguyễn Văn F',
-            badge: 1,
-        },
-        {
-            avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop_48_48/39132_avatar.jpeg',
-            name: 'Nguyễn Văn G',
-            badge: 3,
-        },
-        {
-            avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop_48_48/39126_avatar.jpg',
-            name: 'Nguyễn Văn H',
-            badge: 2,
-        },
-        {
-            avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop_48_48/39132_avatar.jpeg',
-            name: 'Nguyễn Văn I',
-            badge: 2,
-        },
-        {
-            avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop_48_48/39126_avatar.jpg',
-            name: 'Nguyễn Văn A',
-            badge: 1,
-        },
-    ];
+
     const NEW_CLASS = [
         {
             idClass: 1225,
@@ -352,25 +301,6 @@ function Home() {
                 'Mình là Đào gia sư dạy tiếng Anh, giờ hành chánh mình làm cho một cty nước ngoài, vốn tiếng Anh của mình khá tốt nên mình đăng ký dạy kèm thêm tiếng Anh vào buổi tối tại trung tâm gia sư Tài Năng Trẻ, hiện tại mình đang dạy cho 2 bé, một bé học tối 246 một bé học tối 357, các bé rất dễ thương, mình thấy mỗi lần đi dạy là niềm vui đối với mình, cảm ơn trung tâm nhờ trung tâm mà mình có 2 trò đáng yêu.',
         },
     ];
-    const options = {
-        nav: true,
-        autoplay: true,
-        navText: ['Prev', 'Next'],
-        smartSpeed: 1000,
-        loop: false,
-        dots: true,
-        responsive: {
-            0: {
-                items: 1,
-            },
-            600: {
-                items: 1,
-            },
-            1000: {
-                items: 1,
-            },
-        },
-    };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('wrapper-bg-top')}>
@@ -524,22 +454,7 @@ function Home() {
                         </div>
                     </div>
                     <div className={cx('col-lg-3 col-md-12 col-sm-12')}>
-                        <div className={cx('widget')}>
-                            <h2 className={cx('widget-title')}>
-                                Gia sư nổi bật<span> Tháng 10</span>
-                            </h2>
-                            <ul className={cx('widget-list')}>
-                                {GOOD_TUTOR.map((item, index) => {
-                                    return (
-                                        <li key={index} className={cx('widget--item')}>
-                                            <img src={item.avatar} alt="Error" className={cx('widget-item__avatar')} />
-                                            <span className={cx('widget-item__name')}>{item.name}</span>
-                                            <span className={cx('badge')}>{item.badge}</span>
-                                        </li>
-                                    );
-                                })}
-                            </ul>
-                        </div>
+                        <GoodTutor></GoodTutor>
                     </div>
                     <div className={cx('col-lg-6 col-md-12 col-sm-12')}>
                         <div className={cx('widget')}>
@@ -922,7 +837,7 @@ function Home() {
                     <Carousel autoPlay={true} loop>
                         {LIST_COMMENT.map((item, index) => {
                             return (
-                                <div className={cx('carousel-item')}>
+                                <div className={cx('carousel-item')} key={index}>
                                     <img src={item.avatar} alt="" />
                                     <div>
                                         <FontAwesomeIcon icon={faQuoteRight} className={cx('carousel-icon')} />

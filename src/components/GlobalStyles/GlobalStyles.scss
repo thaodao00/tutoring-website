@@ -181,6 +181,7 @@ ul {
 .carousel.carousel-slider .control-arrow {
     display: none;
 }
+//custom carousel
 .carousel {
     .carousel-status {
         display: none;
@@ -204,4 +205,10 @@ ul {
     .carousel .control-arrow {
         display: none !important;
     }
+}
+//custom pagination
+.page-link {
+    color: #333;
+    font-size: 1.4rem;
+    padding: 10px 20px;
 }
