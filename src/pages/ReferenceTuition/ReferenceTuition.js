@@ -4,6 +4,7 @@ import {Button, ButtonGroup, Col, Container, Row} from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import {useMediaQuery} from 'react-responsive';
 
 
 import styles from './ReferenceTuition.module.scss';
@@ -52,7 +53,7 @@ const follows = [
 const reasons = [
     {
         reason: 'Gia sư chất lượng. được kiểm duyệt gắt gao',
-        icon: <FontAwesomeIcon icon={faCircleCheck} className={cx('icon')} />,
+        icon: <FontAwesomeIcon icon={faCircleCheck} className={cx('icon')}/>,
     },
     {
         reason: 'Chỉ cần đăng yêu cầu học',
@@ -74,6 +75,12 @@ const reasons = [
 ]
 
 function ReferenceTuition(props) {
+    const isTablet = useMediaQuery({maxWidth: 768})
+    const maxWidth1024 = useMediaQuery({maxWidth:1024})
+    const maxWidth1200 = useMediaQuery({maxWidth:1200})
+    const convertTablet = () => {
+        return `${isTablet ? 'row':''}`
+    }
 
     const animatedComponents = makeAnimated();
 
@@ -95,13 +102,13 @@ function ReferenceTuition(props) {
                                     <Form.Control size='sm' type="text" placeholder="Nhập vị trí"/>
                                 </Col>
                             </Row>
-                            <Row>
-                                <Col lg={2} md={2} sm={12}>
+                            <Row >
+                                <Col  bsPrefix={convertTablet()} lg={2} md={maxWidth1024 ? 6 : 2} sm={12}>
                                     <Form.Label className={cx('description')}>Số học viên *</Form.Label>
                                     <Form.Control readOnly value={1} size="sm" type="text" placeholder="Small text"/>
                                 </Col>
-                                <Col lg={2} md={2}>
-                                    <Form.Label className={cx('description')}>Giờ mỗi buổi *</Form.Label>
+                                <Col lg={maxWidth1200 ? 4 : maxWidth1024 ? 4 :2} md={4} sm={12} bsPrefix={convertTablet()}>
+                                    <Form.Label className={cx('description')}>Giờ mỗi buổi*</Form.Label>
                                     <Form.Select style={{padding: '14px 18px'}} size='lg'>
                                         {
                                             ours.map((item, index) => {
@@ -112,7 +119,7 @@ function ReferenceTuition(props) {
                                         }
                                     </Form.Select>
                                 </Col>
-                                <Col md={4} lg={4}>
+                                <Col  lg={4} sm={6} bsPrefix={convertTablet()}>
                                     <Form.Label className={cx('description')}>Môn học *</Form.Label>
                                     <Select
                                         classNamePrefix='react-select'
@@ -122,7 +129,7 @@ function ReferenceTuition(props) {
                                         isMulti
                                     />
                                 </Col>
-                                <Col lg={4} md={4}>
+                                <Col lg={4} md={maxWidth1024 ? 6 :4} bsPrefix={convertTablet()}>
                                     <Form.Label className={cx('description', 'gender', 'mt-20')}>Giới tính học
                                         viên</Form.Label>
                                     <ButtonGroup size="lg" className="mb-2">
@@ -135,7 +142,7 @@ function ReferenceTuition(props) {
                             </Row>
                             <h3 className={cx('title')}>Yêu cầu gia sư</h3>
                             <Row>
-                                <Col lg={3} md={3}>
+                                <Col lg={3} md={maxWidth1024 ? 6 : 3} bsPrefix={convertTablet()}>
                                     <Form.Label className={cx('description', 'gender')}>Giới tính</Form.Label>
                                     <ButtonGroup size="lg" className="mb-2">
                                         <Button className={cx('btn-gender', 'active')}>Nam</Button>
@@ -143,7 +150,7 @@ function ReferenceTuition(props) {
                                         <Button className={cx('btn-gender')}>Cả 2</Button>
                                     </ButtonGroup>
                                 </Col>
-                                <Col lg={2} md={2}>
+                                <Col lg={3} md={maxWidth1024 ? 6 : 2} bsPrefix={convertTablet()}>
                                     <Form.Label className={cx('description')}>Trình độ</Form.Label>
                                     <Form.Select style={{padding: '14px 18px'}} size='lg'>
                                         {
@@ -155,7 +162,7 @@ function ReferenceTuition(props) {
                                         }
                                     </Form.Select>
                                 </Col>
-                                <Col lg={2} md={2}>
+                                <Col lg={2} md={maxWidth1024 ? 6 : 2} bsPrefix={convertTablet()}>
                                     <Form.Label className={cx('description')}>Theo</Form.Label>
                                     <Form.Select style={{padding: '14px 18px'}} size='lg'>
                                         {
@@ -167,7 +174,7 @@ function ReferenceTuition(props) {
                                         }
                                     </Form.Select>
                                 </Col>
-                                <Col lg={2} md={2} sm={12}>
+                                <Col lg={2} md={maxWidth1024 ? 6 : 2} sm={12} bsPrefix={convertTablet()}>
                                     <Form.Label className={cx('description')}>Buổi/Tuần</Form.Label>
                                     <Form.Control size="sm" type="text" placeholder="Ví dụ 3"/>
                                 </Col>
