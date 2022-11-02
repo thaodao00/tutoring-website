@@ -15,7 +15,6 @@ const cx = classNames.bind(styles);
 
 function ClassItem(props) {
     const {data} = props;
-    console.log(data)
     return (
         <div className={cx('course-block', 'clear-fix')}>
             <Col lg={12} md={12}>
@@ -35,10 +34,10 @@ function ClassItem(props) {
                             <h4 className={cx('fee')}><span>Học phí :</span> {data.fee}/Tháng</h4>
                         </Col>
                         <Col lg={6} md={12}>
-                            <Button className={cx('btn-take')} size="lg">
+                            <a href='' className={cx('btn-take')} >
                                 <span> Phí: <b>{data.tax} (750,000)</b></span>
                                 <span>Nhận lớp ngay</span>
-                            </Button>
+                            </a>
                         </Col>
                     </Row>
                 </div>

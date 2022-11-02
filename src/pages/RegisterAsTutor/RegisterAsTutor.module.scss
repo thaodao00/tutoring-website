@@ -1,0 +1,98 @@
+.wrapper {
+  --label-color: #333;
+  padding-top: var(--padding);
+  padding-bottom: var(--padding);
+}
+
+.item {
+  margin-bottom: 15px;
+}
+
+.title {
+  padding-bottom: 10px;
+  padding-left: 0;
+  margin-bottom: 30px;
+  font-size: 2.4rem;
+}
+
+.description {
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  @media screen and (max-width: 600px) {
+    font-size: 1.2rem;
+
+  }
+
+  .icon-label {
+    font-size: 1.5rem;
+    color: var(--text-danger);
+    margin-left: 4px;
+  }
+}
+
+.btn-gender {
+  font-size: 1.4rem ;
+  padding: 8px 22px ;
+  background-color: var(--white) ;
+  color: var(--text-color) ;
+  border: 1px solid #EEEEEE;
+  cursor: pointer;
+  border-radius: 4px;
+  &:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &:last-child{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  &:hover {
+    color:#333;
+    background: #e6e6e6;
+
+  }
+  &.active {
+    background-color: var(--primary);
+    color: var(--white);
+  }
+}
+button.value{
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  font-weight: 600;
+  text-align: center;
+  color: #ccc;
+  background-color: #EFEFEF;
+  border: 1px solid #ccc;
+  user-select: none;
+  &:hover{
+    cursor: pointer;
+    border: 1px solid #999;
+    background-color: #999;
+    color: var(--white);
+    outline: none;
+  }
+  &:checked{
+    background-color: var(--primary) !important;
+  }
+  &.active{
+    background-color: var(--primary);
+  }
+
+
+}
+.day-name{
+  display: inline-block;
+  color: #666;
+  width: 70px;
+  text-align: right;
+  padding-right: 5px;
+}
+.note{
+  font-size: 1.2rem;
+  margin-top: 4px;
+  color: #333;
+}
