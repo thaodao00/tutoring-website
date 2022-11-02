@@ -9,48 +9,15 @@ import {useMediaQuery} from 'react-responsive';
 
 import styles from './ReferenceTuition.module.scss';
 import OptionItem from "~/pages/ReferenceTuition/OptionItem";
-import {
-    faCircleCheck
-} from '@fortawesome/free-regular-svg-icons';
+import {follows, levels, ours, subjects} from "~/utils/FakeData";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCircleCheck} from "@fortawesome/free-regular-svg-icons";
+
 
 
 const cx = classNames.bind(styles);
 
-
-const subjects = [
-    {label: "2D", value: 355},
-    {label: "3D Max", value: 54},
-    {label: "3Ds Max", value: 43},
-    {label: "Aerobic", value: 61},
-    {label: "Ảo thuật", value: 965},
-    {label: "Bơi lội", value: 46},
-    {label: "Bóng chuyền", value: 58}
-];
-const ours = [
-    {our: '-------'},
-    {our: '30 phút'},
-    {our: '45 phút'},
-    {our: '60 phút'},
-    {our: '90 phút'},
-    {our: '2 giờ'},
-    {our: '2.5 giờ'},
-    {our: '3 giờ'},
-
-]
-const levels = [
-    {level: 'Tùy'},
-    {level: 'Sinh viên'},
-    {level: 'Giáo viên'},
-    {level: 'Đã tốt nghiệp'},
-]
-const follows = [
-    {follow: 'Tháng'},
-    {follow: 'Buổi'},
-    {follow: 'Tuần'},
-    {follow: 'Giờ'},
-]
-const reasons = [
+export const reasons = [
     {
         reason: 'Gia sư chất lượng. được kiểm duyệt gắt gao',
         icon: <FontAwesomeIcon icon={faCircleCheck} className={cx('icon')}/>,

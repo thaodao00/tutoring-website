@@ -6,17 +6,7 @@
      }
 
 }
-.line-bottom {
-  position: relative;
-  margin: 20px 0;
-  &:after {
-    border: 1px solid #1e3148;
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 50px;
-  }
-}
+
 .title {
   margin: 20px 0 12px 0;
   font-size: 2.4rem;
@@ -58,12 +48,17 @@
 
 }
 body .btn-take{
-  padding: 10px 26px;
+  display: block;
+  max-width: 300px;
+  padding: 12px 12px;
   background-color:var(--primary);
   border-color: var(--primary);
+  border-radius: 4px;
+  color: var(--white);
   &:hover{
     background-color: var(--hover-color);
     border-color: var(--primary);
+    color: var(--white);
   }
   b{
     font-size: 1.6rem;
