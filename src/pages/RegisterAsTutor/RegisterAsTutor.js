@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import classNames from 'classnames/bind';
 import {Button, ButtonGroup, Col, Container, FloatingLabel, Row} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
@@ -7,8 +7,10 @@ import makeAnimated from 'react-select/animated';
 
 import styles from './RegisterAsTutor.module.scss';
 import {FaStarOfLife} from 'react-icons/fa';
-import {address, days, subjects} from "~/utils/FakeData";
+import {address, areas, days, ours, subjects} from "~/utils/FakeData";
 import DateItem from "~/pages/RegisterAsTutor/DateItem";
+import OptionItem from "~/pages/ReferenceTuition/OptionItem";
+import DayTutor from "~/layout/common/DayTutor";
 
 
 const cx = classNames.bind(styles);
@@ -82,6 +84,11 @@ function RegisterAsTutor(props) {
 
                 </Row>
                 <Row>
+                    <Form.Label
+                        className={cx('description')}>Giới thiệu bản thân
+                        <FaStarOfLife className={cx('icon-label')}/>
+                        <em> (1500 ký tự)</em>
+                    </Form.Label>
                     <FloatingLabel controlId="floatingTextarea2" label=''>
                         <Form.Control
                             as="textarea"
@@ -118,7 +125,15 @@ function RegisterAsTutor(props) {
                             className={cx('description')}> Khu vực bạn đang ở <FaStarOfLife
                             className={cx('icon-label')}/>
                         </Form.Label>
-                        <Form.Control size='sm' type="text"/>
+                        <Form.Select style={{padding: '14px 18px'}} size='lg'>
+                            {
+                                areas.map((item, index) => {
+                                    return (
+                                        <OptionItem key={index} children={item.label}/>
+                                    )
+                                })
+                            }
+                        </Form.Select>
                     </Col>
                     <Col lg={6} className={cx('item')}>
                         <Form.Label
@@ -148,7 +163,7 @@ function RegisterAsTutor(props) {
                         <Form.Label
                             className={cx('description')}> Năm tốt nghiệp
                         </Form.Label>
-                        <Form.Control size='sm' type="text" placeholder='Tên trường'/>
+                        <Form.Control size='sm' type="text" placeholder='vd:2000'/>
                     </Col>
                 </Row>
                 <Row>
@@ -156,15 +171,7 @@ function RegisterAsTutor(props) {
                         <Form.Label
                             className={cx('description')}> Thời gian bạn có thể nhân lớp
                         </Form.Label>
-                        {
-                            days.map((day, index) =>{
-                                return (
-                                    <div key={index} className={cx('day')}>
-                                        <span className={cx('day-name')}>{day.label}</span> {renderSquares(array)}
-                                    </div>
-                                )
-                            })
-                        }
+                        <DayTutor/>
                         <p className={cx('note')}>(Thời gian được hiển thị từ 0 giờ -> 23 giờ)</p>
 
                     </Col>

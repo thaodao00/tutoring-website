@@ -10,12 +10,14 @@ import ClassItem from "~/pages/Class/ClassItem";
 import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
 import {FaHandPointRight} from "react-icons/fa";
 import {data, tagLinks} from "~/utils/FakeData";
+import PaginationTutor from "~/layout/common/PaginationTutor";
 
 
 const cx = classNames.bind(styles);
 
 
 function Class(props) {
+
     return (
         <div className={cx('wrapper')}>
             <Container>
@@ -53,7 +55,9 @@ function Class(props) {
 
                             }
                         </div>
+                        <PaginationTutor/>
                     </Col>
+
                     <Col lg={3} md={3} sm={12}>
                         <div className={cx('sidebar-right')}>
                             <div className={cx('widget')}>
