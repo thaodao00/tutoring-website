@@ -12,6 +12,7 @@ import OptionItem from "~/pages/ReferenceTuition/OptionItem";
 import {follows, levels, ours, subjects} from "~/utils/FakeData";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleCheck} from "@fortawesome/free-regular-svg-icons";
+import ReasonTutor from "~/layout/common/ReasonTutor";
 
 
 
@@ -152,20 +153,7 @@ function ReferenceTuition(props) {
                         </div>
                     </Col>
                     <Col sm={12} md={4} lg={4}>
-                        <div className={cx('widget')}>
-                            <h4 className={cx('reason-title')}>Tại sao bạn nên tìm giáo viên trên tainangtre.vn ?</h4>
-                            {
-                                reasons.map((item, index) => {
-                                    return (
-                                        <p className={cx('reason-item')} key={index}>
-                                            {item.icon}
-                                            {item.reason}
-                                        </p>
-                                    )
-                                })
-                            }
-
-                        </div>
+                        <ReasonTutor/>
                     </Col>
 
                 </Row>

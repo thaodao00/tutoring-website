@@ -135,6 +135,17 @@ export const address = [
     {label: "Gò Vấp"},
     {label: "Quận 1"}
 ];
+export const areas = [
+    {label: "Tp.HCM"},
+    {label: "Gia Lai"},
+    {label: "Lâm Đồng"},
+    {label: "Bình Định"},
+    {label: "Đắc Nông"},
+    {label: "Bình Thuận"},
+    {label: "Vùng Tàu"},
+    {label: "Khánh Hòa"}
+];
+
 export const days = [
     {label: 'Thứ 2'},
     {label: 'Thứ 3'},
