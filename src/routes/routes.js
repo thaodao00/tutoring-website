@@ -3,10 +3,12 @@ import Class from '~/pages/Class/Class';
 import Tutor from '~/pages/Tutor/Tutor';
 import Login from '~/pages/Login/Login';
 import Posts from '~/pages/Posts/Posts';
-import Contacts from '~/pages/Contacts/contacts';
+
 import SearchTutor from '~/pages/SearchTutor/SearchTutor';
 import RegisterAsTutor from '~/pages/RegisterAsTutor/RegisterAsTutor';
 import ReferenceTuition from '~/pages/ReferenceTuition/ReferenceTuition';
+import TutorDetail from '~/pages/TutorDetail/TutorDetail';
+import Contacts from "~/pages/Contacts/Contacts";
 
 const publicRoutes = [
     { path: '/', component: Home },
@@ -20,6 +22,7 @@ const publicRoutes = [
     { path: '/register-as-tutor', component: RegisterAsTutor },
     { path: '/reference-tuition', component: ReferenceTuition },
     { path: '/contract', component: Contacts },
+    { path: '/tutor-detail', component: TutorDetail },
 ];
 const privateRoutes = [];
 export { publicRoutes, privateRoutes };

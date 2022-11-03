@@ -1,3 +1,97 @@
 .wrapper {
-    color: red;
+  --title-color: #333;
+  --border-color: #ccc;
+  display: flex;
+  padding-bottom: 60px;
+  padding-top: 60px;
+
+}
+
+
+.detail-content {
+  margin-top: 30px;
+
+  .title {
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: var(--title-color);
+    position: relative;
+    padding-bottom: 10px;
+    margin: 30px 0;
+
+    &:after {
+      bottom: -1px;
+      content: "";
+      height: 2px;
+      left: 0;
+      border-bottom: 1px solid #1E3148;
+      position: absolute;
+      width: 50px;
+    }
+  }
+
+  .description {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 1.4rem;
+
+    &.gender {
+      margin-right: 30px;
+    }
+  }
+
+  .item {
+    display: block;
+    padding: 12px 12px;
+    font-size: 1.4rem;
+  }
+
+  .btn-gender {
+    background-color: var(--white);
+    color: var(--text-color);
+    font-weight: 300;
+    font-size: 1.4rem;
+    height: 48px;
+    border-color: var(--border-color);
+
+    &:hover {
+      background-color: #EEEEEE;
+      color: var(--text-color);
+      border-color: var(--border-color);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+
+    }
+
+    &.active {
+      color: white;
+      background-color: var(--primary);
+    }
+  }
+
+
+}
+
+
+.widget {
+  margin-top: 30px;
+
+  .reason-title {
+    font-size: 2rem;
+    font-weight: 400;
+      margin-bottom: 20px;
+  }
+
+  .reason-item {
+    font-size: 1.4rem;
+    font-weight: 300;
+      .icon{
+          margin-right: 4px;
+      }
+  }
+
+
 }
