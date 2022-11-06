@@ -3,28 +3,37 @@ import Class from '~/pages/Class/Class';
 import Tutor from '~/pages/Tutor/Tutor';
 import Login from '~/pages/Login/Login';
 import Posts from '~/pages/Posts/Posts';
-
 import SearchTutor from '~/pages/SearchTutor/SearchTutor';
 import RegisterAsTutor from '~/pages/RegisterAsTutor/RegisterAsTutor';
 import ReferenceTuition from '~/pages/ReferenceTuition/ReferenceTuition';
 import TutorDetail from '~/pages/TutorDetail/TutorDetail';
 import Contract from '~/pages/Contract/Contract';
 import Contacts from "~/pages/Contacts/Contacts";
+import InfoUser from "~/pages/InforUser";
+import InfoLogin from "~/pages/InfoLogin";
+import ClassTeach from "~/pages/ClassTeach";
+import config from "~/config";
+
 
 
 const publicRoutes = [
-    { path: '/', component: Home },
-    { path: '/home', component: Home },
-    { path: '/class', component: Class },
-    { path: '/tutor', component: Tutor },
-    { path: '/login', component: Login },
-    { path: '/posts', component: Posts },
-    { path: '/contacts', component: Contacts },
-    { path: '/searchTutor', component: SearchTutor },
-    { path: '/register-as-tutor', component: RegisterAsTutor },
-    { path: '/reference-tuition', component: ReferenceTuition },
-    { path: '/contract', component: Contract },
-    { path: '/tutor-detail', component: TutorDetail },
+
+    {path: '/', component: Home},
+    {path: config.routes.home, component: Home},
+    {path: config.routes.class, component: Class},
+    {path: config.routes.tutor, component: Tutor},
+    {path: config.routes.login, component: Login},
+    {path: config.routes.posts, component: Posts},
+    {path: config.routes.contacts, component: Contacts},
+    {path: config.routes.searchTutor, component: SearchTutor},
+    {path: config.routes.registerAsTutor, component: RegisterAsTutor},
+    {path: config.routes.ReferenceTuition, component: ReferenceTuition},
+    {path: config.routes.contract, component: Contacts},
+    {path: config.routes.tutorDetail, component: TutorDetail},
+    {path: config.routes.infoUser, component: InfoUser},
+    {path: config.routes.infoLogin, component: InfoLogin},
+    {path: config.routes.listClassTeach, component: ClassTeach},
+
 ];
 const privateRoutes = [];
 export { publicRoutes, privateRoutes };
