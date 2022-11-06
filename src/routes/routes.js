@@ -7,6 +7,7 @@ import SearchTutor from '~/pages/SearchTutor/SearchTutor';
 import RegisterAsTutor from '~/pages/RegisterAsTutor/RegisterAsTutor';
 import ReferenceTuition from '~/pages/ReferenceTuition/ReferenceTuition';
 import TutorDetail from '~/pages/TutorDetail/TutorDetail';
+import Contract from '~/pages/Contract/Contract';
 import Contacts from "~/pages/Contacts/Contacts";
 import InfoUser from "~/pages/InforUser";
 import InfoLogin from "~/pages/InfoLogin";
@@ -14,7 +15,9 @@ import ClassTeach from "~/pages/ClassTeach";
 import config from "~/config";
 
 
+
 const publicRoutes = [
+
     {path: '/', component: Home},
     {path: config.routes.home, component: Home},
     {path: config.routes.class, component: Class},
@@ -30,6 +33,7 @@ const publicRoutes = [
     {path: config.routes.infoUser, component: InfoUser},
     {path: config.routes.infoLogin, component: InfoLogin},
     {path: config.routes.listClassTeach, component: ClassTeach},
+
 ];
 const privateRoutes = [];
 export { publicRoutes, privateRoutes };
