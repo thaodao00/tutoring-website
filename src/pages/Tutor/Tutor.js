@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './Tutor.module.scss';
+import {Col, Row} from "react-bootstrap";
 
 import GoodTutor from '~/layout/components/GoodTutor/GoodTutor';
 
@@ -8,6 +9,7 @@ import { faBookBookmark, faGraduationCap, faLocationDot, faMap, faMapLocation, f
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
+import PaginationTutor from "~/layout/common/PaginationTutor";
 const cx = classNames.bind(styles);
 function Tutor() {
     const dataTutor = [
@@ -185,33 +187,39 @@ function Tutor() {
 
                         </div>
                         <div className={cx('col-12')}>
-                            <div className={cx('box-pagination')}>
-                                <nav aria-label="Page navigation example">
-                                    <ul className={cx("pagination")}>
-                                        <li className={cx("page-item", "pagination-item")}>
-                                            <Link className={cx("page-link")} href="#" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </Link>
-                                        </li>
-                                        <li className={cx("page-item", "pagination-item")}>
-                                            <Link className={cx("page-link")} href="#">1</Link>
-                                        </li>
-                                        <li className={cx("page-item", "pagination-item")}>
-                                            <Link className={cx("page-link")} href="#">2</Link>
-                                        </li>
-                                        <li className={cx("page-item", "pagination-item")}>
-                                            <Link className={cx("page-link")} href="#">3</Link>
-                                        </li>
-                                        <li className="page-item">
-                                            <Link className="page-link" href="#" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
+                            {/*<div className={cx('box-pagination')}>*/}
+                            {/*    <nav aria-label="Page navigation example">*/}
+                            {/*        <ul className={cx("pagination")}>*/}
+                            {/*            <li className={cx("page-item", "pagination-item")}>*/}
+                            {/*                <Link className={cx("page-link")} href="#" aria-label="Previous">*/}
+                            {/*                    <span aria-hidden="true">&laquo;</span>*/}
+                            {/*                </Link>*/}
+                            {/*            </li>*/}
+                            {/*            <li className={cx("page-item", "pagination-item")}>*/}
+                            {/*                <Link className={cx("page-link")} href="#">1</Link>*/}
+                            {/*            </li>*/}
+                            {/*            <li className={cx("page-item", "pagination-item")}>*/}
+                            {/*                <Link className={cx("page-link")} href="#">2</Link>*/}
+                            {/*            </li>*/}
+                            {/*            <li className={cx("page-item", "pagination-item")}>*/}
+                            {/*                <Link className={cx("page-link")} href="#">3</Link>*/}
+                            {/*            </li>*/}
+                            {/*            <li className="page-item">*/}
+                            {/*                <Link className="page-link" href="#" aria-label="Next">*/}
+                            {/*                    <span aria-hidden="true">&raquo;</span>*/}
+                            {/*                </Link>*/}
+                            {/*            </li>*/}
+                            {/*        </ul>*/}
+                            {/*    </nav>*/}
+                            {/*</div>*/}
+
 
                         </div>
+                        <Row>
+                            <Col xs={12} lg={12} md={12}>
+                                <PaginationTutor/>
+                            </Col>
+                        </Row>
                     </div>
                     <div className={cx('col-lg-3 col-md-12 col-sm-12 mt-5')}>
                         <GoodTutor />
