@@ -10,6 +10,43 @@ import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
 const cx = classNames.bind(styles);
 function Tutor() {
+    const dataTutor = [
+        {
+            name: "Nguyễn Văn A",
+            address: "Hà Nội",
+            position: "Sinh Viên",
+            subject: " Tiếng Anh, Tiếng Anh Giao tiếp, Tiếng Anh lớp 5, Tiếng Anh lớp 6, Tiếng Anh lớp 7, Tiếng Anh lớp 8, Tiếng Anh lớp 9",
+            avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop/39352_avatar.jpeg'
+        },
+        {
+            name: "Nguyễn Văn A",
+            address: "Hà Nội",
+            position: "Sinh Viên",
+            subject: " Tiếng Anh, Tiếng Anh Giao tiếp, Tiếng Anh lớp 5, Tiếng Anh lớp 6, Tiếng Anh lớp 7, Tiếng Anh lớp 8, Tiếng Anh lớp 9",
+            avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop/39352_avatar.jpeg'
+        },
+        {
+            name: "Nguyễn Văn B",
+            address: "Hà Nội",
+            position: "Sinh Viên",
+            subject: " Tiếng Anh, Tiếng Anh Giao tiếp, Tiếng Anh lớp 5, Tiếng Anh lớp 6, Tiếng Anh lớp 7, Tiếng Anh lớp 8, Tiếng Anh lớp 9",
+            avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop/39352_avatar.jpeg'
+        },
+        {
+            name: "Nguyễn Văn C",
+            address: "Hà Nội",
+            position: "Sinh Viên",
+            subject: " Tiếng Anh, Tiếng Anh Giao tiếp, Tiếng Anh lớp 5, Tiếng Anh lớp 6, Tiếng Anh lớp 7, Tiếng Anh lớp 8, Tiếng Anh lớp 9",
+            avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop/39352_avatar.jpeg'
+        },
+        {
+            name: "Nguyễn Văn D",
+            address: "Hà Nội",
+            position: "Sinh Viên",
+            subject: " Tiếng Anh, Tiếng Anh Giao tiếp, Tiếng Anh lớp 5, Tiếng Anh lớp 6, Tiếng Anh lớp 7, Tiếng Anh lớp 8, Tiếng Anh lớp 9",
+            avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop/39352_avatar.jpeg'
+        },
+    ]
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container pt-5 pb-5')}>
@@ -115,136 +152,35 @@ function Tutor() {
                     </div>
                     <div className={cx('col-lg-9 col-md-12 col-sm-12 mt-5')}>
                         <div className='row'>
-                            <Button to="/tutor-detail" className={cx("col-lg-4 col-md-6 col-sm-12 card", "box-card")}>
-                                <div className={cx('box-item')}>
-                                    <img style={{ height: '255px' }} src="https://www.daykemtainha.vn/public/files/avatar_crop/39352_avatar.jpeg" className="card-img-top" alt="..." />
-                                    <div className={cx("card-body", "card-bottom")}>
-                                        <div className="card-text">
-                                            <h4 className={cx('text-name')}>
-                                                Nguyeen ngoc yen nhu
-                                            </h4>
-                                            <ul className={cx('text-list')}>
-                                                <li className={cx('text-item', 'textOverflow')}>
-                                                    <FontAwesomeIcon icon={faLocationDot} className={cx('item-icon')} />
-                                                    Hà nôi, cầu giấy
-                                                </li>
-                                                <li className={cx('text-item')}>
-                                                    <FontAwesomeIcon icon={faGraduationCap} className={cx('item-icon')} />
-                                                    Sinh vien
-                                                </li>
-                                                <li className={cx('text-item', 'textOverflow')}>
-                                                    <FontAwesomeIcon icon={faBookBookmark} className={cx('item-icon')} />
-                                                    Tiếng Anh, Tiếng Anh Giao tiếp, Tiếng Anh lớp 5, Tiếng Anh lớp 6, Tiếng Anh lớp 7, Tiếng Anh lớp 8, Tiếng Anh lớp 9
-                                                </li>
-                                            </ul>
+                            {dataTutor.map((item, index) => {
+                                return (<Button to="/tutor-detail" className={cx("col-lg-4 col-md-6 col-sm-12 card", "box-card")} key={index}>
+                                    <div className={cx('box-item')}>
+                                        <img style={{ height: '255px' }} src={item.avatar} className="card-img-top" alt="..." />
+                                        <div className={cx("card-body", "card-bottom")}>
+                                            <div className="card-text">
+                                                <h4 className={cx('text-name')}>
+                                                    {item.name}
+                                                </h4>
+                                                <ul className={cx('text-list')}>
+                                                    <li className={cx('text-item', 'textOverflow')}>
+                                                        <FontAwesomeIcon icon={faLocationDot} className={cx('item-icon')} />
+                                                        {item.address}
+                                                    </li>
+                                                    <li className={cx('text-item')}>
+                                                        <FontAwesomeIcon icon={faGraduationCap} className={cx('item-icon')} />
+                                                        {index.position}
+                                                    </li>
+                                                    <li className={cx('text-item', 'textOverflow')}>
+                                                        <FontAwesomeIcon icon={faBookBookmark} className={cx('item-icon')} />
+                                                        {item.subject}                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </Button>
-                            <Button to="/tutor-detail" className={cx("col-lg-4 col-md-6 col-sm-12 card", "box-card")}>
-                                <div className={cx('box-item')}>
-                                    <img style={{ height: '255px' }} src="https://www.daykemtainha.vn/public/files/avatar_crop/39352_avatar.jpeg" className="card-img-top" alt="..." />
-                                    <div className={cx("card-body", "card-bottom")}>
-                                        <div className="card-text">
-                                            <h4 className={cx('text-name')}>
-                                                Nguyeen ngoc yen nhu
-                                            </h4>
-                                            <ul className={cx('text-list')}>
-                                                <li className={cx('text-item', 'textOverflow')}>
-                                                    <FontAwesomeIcon icon={faLocationDot} className={cx('item-icon')} />
-                                                    Hà nôi, cầu giấy
-                                                </li>
-                                                <li className={cx('text-item')}>
-                                                    <FontAwesomeIcon icon={faGraduationCap} className={cx('item-icon')} />
-                                                    Sinh vien
-                                                </li>
-                                                <li className={cx('text-item', 'textOverflow')}>
-                                                    <FontAwesomeIcon icon={faBookBookmark} className={cx('item-icon')} />
-                                                    Tiếng Anh, Tiếng Anh Giao tiếp, Tiếng Anh lớp 5, Tiếng Anh lớp 6, Tiếng Anh lớp 7, Tiếng Anh lớp 8, Tiếng Anh lớp 9
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Button>
-                            <Button to="/tutor-detail" className={cx("col-lg-4 col-md-6 col-sm-12 card", "box-card")}>
-                                <div className={cx('box-item')}>
-                                    <img style={{ height: '255px' }} src="https://www.daykemtainha.vn/public/files/avatar_crop/39352_avatar.jpeg" className="card-img-top" alt="..." />
-                                    <div className={cx("card-body", "card-bottom")}>
-                                        <div className="card-text">
-                                            <h4 className={cx('text-name')}>
-                                                Nguyeen ngoc yen nhu
-                                            </h4>
-                                            <ul className={cx('text-list')}>
-                                                <li className={cx('text-item', 'textOverflow')}>
-                                                    <FontAwesomeIcon icon={faLocationDot} className={cx('item-icon')} />
-                                                    Hà nôi, cầu giấy
-                                                </li>
-                                                <li className={cx('text-item')}>
-                                                    <FontAwesomeIcon icon={faGraduationCap} className={cx('item-icon')} />
-                                                    Sinh vien
-                                                </li>
-                                                <li className={cx('text-item', 'textOverflow')}>
-                                                    <FontAwesomeIcon icon={faBookBookmark} className={cx('item-icon')} />
-                                                    Tiếng Anh, Tiếng Anh Giao tiếp, Tiếng Anh lớp 5, Tiếng Anh lớp 6, Tiếng Anh lớp 7, Tiếng Anh lớp 8, Tiếng Anh lớp 9
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Button>
-                            <Button to="/tutor-detail" className={cx("col-lg-4 col-md-6 col-sm-12 card", "box-card")}>
-                                <div className={cx('box-item')}>
-                                    <img style={{ height: '255px' }} src="https://www.daykemtainha.vn/public/files/avatar_crop/39352_avatar.jpeg" className="card-img-top" alt="..." />
-                                    <div className={cx("card-body", "card-bottom")}>
-                                        <div className="card-text">
-                                            <h4 className={cx('text-name')}>
-                                                Nguyeen ngoc yen nhu
-                                            </h4>
-                                            <ul className={cx('text-list')}>
-                                                <li className={cx('text-item', 'textOverflow')}>
-                                                    <FontAwesomeIcon icon={faLocationDot} className={cx('item-icon')} />
-                                                    Hà nôi, cầu giấy
-                                                </li>
-                                                <li className={cx('text-item')}>
-                                                    <FontAwesomeIcon icon={faGraduationCap} className={cx('item-icon')} />
-                                                    Sinh vien
-                                                </li>
-                                                <li className={cx('text-item', 'textOverflow')}>
-                                                    <FontAwesomeIcon icon={faBookBookmark} className={cx('item-icon')} />
-                                                    Tiếng Anh, Tiếng Anh Giao tiếp, Tiếng Anh lớp 5, Tiếng Anh lớp 6, Tiếng Anh lớp 7, Tiếng Anh lớp 8, Tiếng Anh lớp 9
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Button>
-                            <Button to="/tutor-detail" className={cx("col-lg-4 col-md-6 col-sm-12 card", "box-card")}>
-                                <div className={cx('box-item')}>
-                                    <img style={{ height: '255px' }} src="https://www.daykemtainha.vn/public/files/avatar_crop/39352_avatar.jpeg" className="card-img-top" alt="..." />
-                                    <div className={cx("card-body", "card-bottom")}>
-                                        <div className="card-text">
-                                            <h4 className={cx('text-name')}>
-                                                Nguyeen ngoc yen nhu
-                                            </h4>
-                                            <ul className={cx('text-list')}>
-                                                <li className={cx('text-item', 'textOverflow')}>
-                                                    <FontAwesomeIcon icon={faLocationDot} className={cx('item-icon')} />
-                                                    Hà nôi, cầu giấy
-                                                </li>
-                                                <li className={cx('text-item')}>
-                                                    <FontAwesomeIcon icon={faGraduationCap} className={cx('item-icon')} />
-                                                    Sinh vien
-                                                </li>
-                                                <li className={cx('text-item', 'textOverflow')}>
-                                                    <FontAwesomeIcon icon={faBookBookmark} className={cx('item-icon')} />
-                                                    Tiếng Anh, Tiếng Anh Giao tiếp, Tiếng Anh lớp 5, Tiếng Anh lớp 6, Tiếng Anh lớp 7, Tiếng Anh lớp 8, Tiếng Anh lớp 9
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Button>
+                                </Button>)
+                            })}
+
+
 
 
                         </div>
