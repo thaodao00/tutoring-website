@@ -7,7 +7,7 @@ import makeAnimated from 'react-select/animated';
 
 import styles from './RegisterAsTutor.module.scss';
 import {FaStarOfLife} from 'react-icons/fa';
-import {address, areas, days, ours, subjects} from "~/utils/FakeData";
+import {address, areas, subjects} from "~/utils/FakeData";
 import DateItem from "~/pages/RegisterAsTutor/DateItem";
 import OptionItem from "~/pages/ReferenceTuition/OptionItem";
 import DayTutor from "~/layout/common/DayTutor";
@@ -62,8 +62,8 @@ function RegisterAsTutor(props) {
                                 className={cx('description')}> Giới tính <FaStarOfLife className={cx('icon-label')}/>
                             </Form.Label>
                             <ButtonGroup role={"group"} size="lg" className="mb-2">
-                                <span className={cx('btn-gender', 'active')}>Nam</span>
-                                <span className={cx('btn-gender')}>Nữ</span>
+                                <span className='btn-gender active'>Nam</span>
+                                <span className={'btn-gender'}>Nữ</span>
                             </ButtonGroup>
                         </Col>
                     </Col>

@@ -10,6 +10,8 @@
   --font-family: 'Open Sans', sans-serif;
   --padding: 60px;
   --text-danger: #a94442;
+  --padding-top: 60px;
+  --padding-bottom: 60px;
   // Default layout
   --default-layout-header-height: 195px;
 
@@ -55,6 +57,51 @@ body {
     border: 1px solid rgba(0, 0, 0, 0.3);
   }
 
+  .custom-file-input {
+    color: transparent;
+  }
+
+  input.btn-upload {
+    width: 100px;
+    height: 37px;
+    margin-bottom: 20px;
+    margin-right: 4px;
+  }
+
+  .btn-upload::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+
+  .btn-upload::before {
+    content: 'Đổi ảnh';
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 200px;
+    width: 100%;
+    background-color: #c9302c;
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 6px 8px 7px 8px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 10pt;
+
+  }
+
+  .btn-upload:hover::before {
+    background-color: var(--text-danger);
+  }
+
+  .btn-upload:active {
+    outline: 0;
+  }
+
+
   // reset css button react-bootstrap
   .btn-check:checked + .btn, :not(.btn-check) + .btn:active, .btn:first-child:active, .btn.active, .btn.show {
     border: 1px solid var(--primary);
@@ -62,15 +109,18 @@ body {
     box-shadow: none;
     background-color: var(--primary);
   }
-  .btn{
+
+  .btn {
     font-size: 1.4rem;
     padding: 8px 22px;
     line-height: 1.38;
   }
 
 
-
   .btn-success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--white);
     background-color: #5cb85c;
     border-color: #4cae4c;
@@ -197,14 +247,46 @@ ul {
   }
 }
 
+.description {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.btn-gender {
+  font-size: 1.4rem;
+  padding: 8px 22px;
+  background-color: var(--white);
+  color: var(--text-color);
+  border: 1px solid #EEEEEE;
+  cursor: pointer;
+  border-radius: 4px;
+
+  &:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  &:hover {
+    color: #333;
+    background: #e6e6e6;
+
+  }
+
+  &.active {
+    background-color: var(--primary);
+    color: var(--white);
+  }
+}
+
 
 .form-control-none-radius {
-  border-top-left-radius: none;
-  border-bottom-left-radius: none;
-
-  box-shadow: none;
-  height: 45px;
-  border: 1px solid #eeeeee;
   display: block;
   width: 100%;
   height: 34px;
@@ -234,7 +316,6 @@ ul {
 .btn-outline-secondary {
   background-color: var(--primary);
   border: 1px solid var(--primary);
-  border-radius: 30px;
   color: var(--white);
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -299,10 +380,12 @@ ul {
   font-size: 1.6rem;
   padding: 10px 20px;
   border: 1px solid #ccc;
-  &:hover{
-    color: #fff;
-    border: 1px solid transparent;
+
+  &:hover {
+    color: #333;
+
   }
+
   @media screen and (max-width: 600px) {
     font-size: 1.2rem;
     padding: 4px 12px;
