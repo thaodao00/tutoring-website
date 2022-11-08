@@ -26,6 +26,7 @@ import {
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 import GoodTutor from '~/layout/components/GoodTutor/GoodTutor';
+import { Subject } from '~/layout/components/Subject/Subject';
 const cx = classNames.bind(styles);
 function Home() {
     const [show1, setShow1] = useState(true);
@@ -157,81 +158,6 @@ function Home() {
             nameCLass: ' - Cần gia sư môn Sinh lớp 10 tại Tây Hồ, Hà Nội',
         },
     ];
-    const LIST_DATA_CLASS = [
-        {
-            name: 'Toán Lớp 1',
-            to: '/tutor',
-        },
-        {
-            name: 'Toán Lớp 2',
-            to: '/tutor',
-        },
-        {
-            name: 'Toán Lớp 3',
-            to: '/tutor',
-        },
-        {
-            name: 'Toán Lớp 4',
-            to: '/tutor',
-        },
-        {
-            name: 'Toán Lớp 5',
-            to: '/tutor',
-        },
-        {
-            name: 'Toán Lớp 6',
-            to: '/tutor',
-        },
-        {
-            name: 'Toán Lớp 7',
-            to: '/tutor',
-        },
-        {
-            name: 'Tiếng Việt Lớp 1',
-            to: '/tutor',
-        },
-        {
-            name: 'Tiếng Việt Lớp 2',
-            to: '/tutor',
-        },
-        {
-            name: 'Tiếng Việt Lớp 3',
-            to: '/tutor',
-        },
-
-        {
-            name: 'Tiếng Việt Lớp 4',
-            to: '/tutor',
-        },
-        {
-            name: 'Tiếng Việt Lớp 5',
-            to: '/tutor',
-        },
-        {
-            name: 'Tiếng Việt Lớp 6',
-            to: '/tutor',
-        },
-        {
-            name: 'Tiếng Việt Lớp 7',
-            to: '/tutor',
-        },
-        {
-            name: 'Tiếng Việt Lớp 8',
-            to: '/tutor',
-        },
-        {
-            name: 'Tiếng Anh Lớp 3',
-            to: '/tutor',
-        },
-        {
-            name: 'Tiếng Anh Lớp 4',
-            to: '/tutor',
-        },
-        {
-            name: 'Tiếng Anh Lớp 5',
-            to: '/tutor',
-        },
-    ];
     const LIST_FUNFAC = [
         {
             icon: <FontAwesomeIcon icon={faBook} className={cx('funfact-icon')} />,
@@ -317,7 +243,7 @@ function Home() {
                         <div className={cx('input-group mb-4 mt-4')}>
                             <input
                                 type="text"
-                                style={{borderTopLeftRadius: '30px',borderBottomLeftRadius: '30px'}}
+                                style={{ borderTopLeftRadius: '30px', borderBottomLeftRadius: '30px' }}
                                 className={cx('form-control ')}
                                 placeholder="Hãy nhập một môn học!"
                                 aria-label="Hãy nhập một môn học!"
@@ -481,13 +407,7 @@ function Home() {
                                 Tìm gia sư theo các<span> môn phổ biến</span>
                             </h2>
                             <div>
-                                {LIST_DATA_CLASS.map((item, index) => {
-                                    return (
-                                        <Button to={item.to} key={index} className={cx('widget-btn')}>
-                                            {item.name}
-                                        </Button>
-                                    );
-                                })}
+                                <Subject />
                             </div>
                         </div>
                     </div>
