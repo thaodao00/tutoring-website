@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { getSubject } from '~/services/workspaces.sevices';
 const cx = classNames.bind(styles);
 export const Subject = () => {
-    const [data, setData] = useState({})
+    const [data, setData] = useState([])
     useEffect(() => {
         async function fetchData() {
             const response = await getSubject();
