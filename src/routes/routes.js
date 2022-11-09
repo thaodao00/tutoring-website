@@ -7,11 +7,11 @@ import SearchTutor from '~/pages/SearchTutor/SearchTutor';
 import RegisterAsTutor from '~/pages/RegisterAsTutor/RegisterAsTutor';
 import ReferenceTuition from '~/pages/ReferenceTuition/ReferenceTuition';
 import TutorDetail from '~/pages/TutorDetail/TutorDetail';
-import Contract from '~/pages/Contract/Contract';
 import Contacts from "~/pages/Contacts/Contacts";
 import InfoUser from "~/pages/InforUser";
 import InfoLogin from "~/pages/InfoLogin";
 import ClassTeach from "~/pages/ClassTeach";
+import ClassStudy from "~/pages/ClassStudy";
 import config from "~/config";
 
 
@@ -32,7 +32,8 @@ const publicRoutes = [
     {path: config.routes.tutorDetail, component: TutorDetail},
     {path: config.routes.infoUser, component: InfoUser},
     {path: config.routes.infoLogin, component: InfoLogin},
-    {path: config.routes.listClassTeach, component: ClassTeach},
+    {path: config.routes.classTeach, component: ClassTeach},
+    {path: config.routes.classStudy, component: ClassStudy},
 
 ];
 const privateRoutes = [];

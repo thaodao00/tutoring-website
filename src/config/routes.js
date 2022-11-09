@@ -14,8 +14,8 @@ const routes = {
     tutorDetail: '/tutor-detail',
     infoUser: '/info-user',
     infoLogin: '/info-login',
-    listClassTeach: '/list-class-teach',
-    listClassStudy: '/list-class-study',
+    classTeach: '/class-teach',
+    classStudy: '/class-study',
 
 
 }
