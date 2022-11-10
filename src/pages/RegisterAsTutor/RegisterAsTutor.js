@@ -62,8 +62,8 @@ function RegisterAsTutor(props) {
                                 className={cx('description')}> Giới tính <FaStarOfLife className={cx('icon-label')}/>
                             </Form.Label>
                             <ButtonGroup role={"group"} size="lg" className="mb-2">
-                                <span className='btn-gender active'>Nam</span>
-                                <span className={'btn-gender'}>Nữ</span>
+                                <button className='btn-gender'>Nam</button>
+                                <button className='btn-gender'>Nữ</button>
                             </ButtonGroup>
                         </Col>
                     </Col>

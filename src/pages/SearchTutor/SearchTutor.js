@@ -110,7 +110,7 @@ function SearchTutor(props) {
                                     <Form.Label className={cx('description', 'gender')}>Giới tính học viên *</Form.Label>
                                     <br/>
                                     <ButtonGroup size="lg" className="mb-2">
-                                        <Button className={cx('btn-gender', 'active')}>Nam</Button>
+                                        <Button className={cx('btn-gender')}>Nam</Button>
                                         <Button className={cx('btn-gender')}>Nữ</Button>
                                         <Button className={cx('btn-gender')}>Có cả nam và nữ</Button>
                                     </ButtonGroup>
@@ -131,7 +131,7 @@ function SearchTutor(props) {
                                     <Form.Label className={cx('description', 'gender')}>Giới tính</Form.Label>
                                     <br/>
                                     <ButtonGroup size="lg" className="mb-2">
-                                        <Button className={cx('btn-gender', 'active')}>Nam</Button>
+                                        <Button className={cx('btn-gender')}>Nam</Button>
                                         <Button className={cx('btn-gender')}>Nữ</Button>
                                         <Button className={cx('btn-gender')}>Tùy</Button>
                                     </ButtonGroup>

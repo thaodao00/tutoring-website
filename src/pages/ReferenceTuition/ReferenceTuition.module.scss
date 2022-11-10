@@ -69,13 +69,12 @@
     &:focus {
       outline: none;
       box-shadow: none;
-
-    }
-
-    &.active {
-      color: white;
+      color: var(--white);
       background-color: var(--primary);
+
     }
+
+
   }
 
 

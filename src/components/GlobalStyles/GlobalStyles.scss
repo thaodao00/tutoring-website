@@ -104,7 +104,7 @@ body {
 
   // reset css button react-bootstrap
   .btn-check:checked + .btn, :not(.btn-check) + .btn:active, .btn:first-child:active, .btn.active, .btn.show {
-    border: 1px solid var(--primary);
+    border: 1px solid currentColor;
     outline: none;
     box-shadow: none;
     background-color: var(--primary);
@@ -122,8 +122,21 @@ body {
     align-items: center;
     justify-content: center;
     color: var(--white);
-    background-color: #5cb85c;
+    background-color: #5cb85c !important;
     border-color: #4cae4c;
+  }
+  .btn-primary{
+   background-color: #337ab7;
+  }
+  .btn-default{
+    background-color: var(--white) !important;
+    border-color: #e6e6e6;
+    color: var(--text-color);
+    &:hover{
+      background-color: #EEEEEE !important;
+      border-color: #EEEEEE;
+      color: var(--text-color);
+    }
   }
   // customer datepicker
   .react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name{
@@ -262,7 +275,6 @@ ul {
   border: 1px solid #EEEEEE;
   cursor: pointer;
   border-radius: 4px;
-
   &:first-child {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -277,6 +289,10 @@ ul {
     color: #333;
     background: #e6e6e6;
 
+  }
+  &:focus{
+    color: var(--white);
+    background-color: var(--primary);
   }
 
   &.active {

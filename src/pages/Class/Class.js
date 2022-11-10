@@ -37,7 +37,7 @@ function Class(props) {
                                     </Form.Select>
                                 </Col>
                                 <Col lg={2} md={12} sm={12}>
-                                    <Button className={cx('btn-search', 'text-center')} size="lg">
+                                    <Button className={cx('btn-search', 'text-center','btn-success')} size="lg">
                                         <FontAwesomeIcon icon={faSearch} className={cx('search-icon')} />
                                         Tìm
                                     </Button>
