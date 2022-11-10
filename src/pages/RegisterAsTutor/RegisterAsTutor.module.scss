@@ -33,6 +33,7 @@
 }
 
 
+
 button.value{
   display: inline-block;
   width: 30px;
@@ -57,8 +58,32 @@ button.value{
     background-color: var(--primary);
   }
 
+}
+.btn-gender {
+  background-color: var(--white);
+  color: var(--text-color);
+  font-weight: 300;
+  font-size: 1.4rem;
+  height: 48px;
+  border-color: var(--border-color);
+
+  &:hover {
+    background-color: #EEEEEE;
+    color: var(--text-color);
+    border-color: var(--border-color);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+    color: var(--white);
+    background-color: var(--primary);
+
+  }
+
 
 }
+
 .day-name{
   display: inline-block;
   color: #666;

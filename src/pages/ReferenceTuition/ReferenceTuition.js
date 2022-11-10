@@ -101,7 +101,7 @@ function ReferenceTuition(props) {
                                     <Form.Label className={cx('description', 'gender', 'mt-20')}>Giới tính học
                                         viên</Form.Label>
                                     <ButtonGroup size="lg" className="mb-2">
-                                        <Button className={cx('btn-gender', 'active')}>Nam</Button>
+                                        <Button className={cx('btn-gender')}>Nam</Button>
                                         <Button className={cx('btn-gender')}>Nữ</Button>
                                         <Button className={cx('btn-gender')}>Cả 2</Button>
                                     </ButtonGroup>
@@ -113,7 +113,7 @@ function ReferenceTuition(props) {
                                 <Col lg={3} md={maxWidth1024 ? 6 : 3} bsPrefix={convertTablet()}>
                                     <Form.Label className={cx('description', 'gender')}>Giới tính</Form.Label>
                                     <ButtonGroup size="lg" className="mb-2">
-                                        <Button className={cx('btn-gender', 'active')}>Nam</Button>
+                                        <Button className={cx('btn-gender')}>Nam</Button>
                                         <Button className={cx('btn-gender')}>Nữ</Button>
                                         <Button className={cx('btn-gender')}>Cả 2</Button>
                                     </ButtonGroup>

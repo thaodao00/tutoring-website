@@ -23,10 +23,13 @@ function Header() {
     const isUser = true
     const refOverClickOutSide = useRef()
     const [isShow, setIsShow] = useState(false)
+    useOnClickOutside(refOverClickOutSide, () => setIsShow(!isShow))
     const toggleDropdown = () => {
         setIsShow(!isShow)
+        console.log(isShow)
     }
-    useOnClickOutside(refOverClickOutSide, toggleDropdown)
+
+
     const myNav = [
         {
             id: 1,
@@ -160,7 +163,7 @@ function Header() {
                                 <img src={Avatar} alt=""/>
                             </div>
                             {
-                                isShow && (
+                                isShow ? (
                                     <ul ref={refOverClickOutSide} className={cx('dropdown-user')}>
                                         {
                                             accountLinks.map((item, index) => {
@@ -180,7 +183,7 @@ function Header() {
 
 
                                     </ul>
-                                )
+                                ):''
                             }
                         </div>
                     )
