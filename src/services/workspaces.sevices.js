@@ -8,4 +8,5 @@ export const getTutors = async () => {
 }
 export const getInfoTutor = async (userId) => {
     return await instance.get(`/v1/auths/user/${userId}`)
+
 }

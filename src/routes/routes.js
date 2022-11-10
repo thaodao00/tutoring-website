@@ -7,11 +7,11 @@ import SearchTutor from '~/pages/SearchTutor/SearchTutor';
 import RegisterAsTutor from '~/pages/RegisterAsTutor/RegisterAsTutor';
 import ReferenceTuition from '~/pages/ReferenceTuition/ReferenceTuition';
 import TutorDetail from '~/pages/TutorDetail/TutorDetail';
-import Contract from '~/pages/Contract/Contract';
 import Contacts from "~/pages/Contacts/Contacts";
 import InfoUser from "~/pages/InforUser";
 import InfoLogin from "~/pages/InfoLogin";
 import ClassTeach from "~/pages/ClassTeach";
+import ClassStudy from "~/pages/ClassStudy";
 import config from "~/config";
 
 
