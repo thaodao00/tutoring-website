@@ -18,21 +18,21 @@ import config from "~/config";
 
 const publicRoutes = [
 
-    {path: '/', component: Home},
-    {path: config.routes.home, component: Home},
-    {path: config.routes.class, component: Class},
-    {path: config.routes.tutor, component: Tutor},
-    {path: config.routes.login, component: Login},
-    {path: config.routes.posts, component: Posts},
-    {path: config.routes.contacts, component: Contacts},
-    {path: config.routes.searchTutor, component: SearchTutor},
-    {path: config.routes.registerAsTutor, component: RegisterAsTutor},
-    {path: config.routes.ReferenceTuition, component: ReferenceTuition},
-    {path: config.routes.contract, component: Contacts},
-    {path: config.routes.tutorDetail, component: TutorDetail},
-    {path: config.routes.infoUser, component: InfoUser},
-    {path: config.routes.infoLogin, component: InfoLogin},
-    {path: config.routes.listClassTeach, component: ClassTeach},
+    { path: '/', component: Home },
+    { path: config.routes.home, component: Home },
+    { path: config.routes.class, component: Class },
+    { path: config.routes.tutor, component: Tutor },
+    { path: config.routes.login, component: Login },
+    { path: config.routes.posts, component: Posts },
+    { path: config.routes.contacts, component: Contacts },
+    { path: config.routes.searchTutor, component: SearchTutor },
+    { path: config.routes.registerAsTutor, component: RegisterAsTutor },
+    { path: config.routes.ReferenceTuition, component: ReferenceTuition },
+    { path: config.routes.contract, component: Contract },
+    { path: config.routes.tutorDetail, component: TutorDetail },
+    { path: config.routes.infoUser, component: InfoUser },
+    { path: config.routes.infoLogin, component: InfoLogin },
+    { path: config.routes.listClassTeach, component: ClassTeach },
 
 ];
 const privateRoutes = [];

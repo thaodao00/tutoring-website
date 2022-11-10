@@ -11,7 +11,7 @@ const routes = {
     registerAsTutor: '/register-as-tutor',
     ReferenceTuition: '/reference-tuition',
     contract: '/contract',
-    tutorDetail: '/tutor-detail',
+    tutorDetail: '/tutor-detail/:id',
     infoUser: '/info-user',
     infoLogin: '/info-login',
     listClassTeach: '/list-class-teach',

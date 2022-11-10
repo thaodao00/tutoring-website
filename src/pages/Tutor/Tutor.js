@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './Tutor.module.scss';
-import {Col, Row} from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 
 import GoodTutor from '~/layout/components/GoodTutor/GoodTutor';
 
@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
 import PaginationTutor from "~/layout/common/PaginationTutor";
+import { TutorItem } from './TutorItem/TutorItem';
 const cx = classNames.bind(styles);
 function Tutor() {
     const dataTutor = [
@@ -154,70 +155,11 @@ function Tutor() {
                     </div>
                     <div className={cx('col-lg-9 col-md-12 col-sm-12 mt-5')}>
                         <div className='row'>
-                            {dataTutor.map((item, index) => {
-                                return (<Button to="/tutor-detail" className={cx("col-lg-4 col-md-6 col-sm-12 card", "box-card")} key={index}>
-                                    <div className={cx('box-item')}>
-                                        <img style={{ height: '255px' }} src={item.avatar} className="card-img-top" alt="..." />
-                                        <div className={cx("card-body", "card-bottom")}>
-                                            <div className="card-text">
-                                                <h4 className={cx('text-name')}>
-                                                    {item.name}
-                                                </h4>
-                                                <ul className={cx('text-list')}>
-                                                    <li className={cx('text-item', 'textOverflow')}>
-                                                        <FontAwesomeIcon icon={faLocationDot} className={cx('item-icon')} />
-                                                        {item.address}
-                                                    </li>
-                                                    <li className={cx('text-item')}>
-                                                        <FontAwesomeIcon icon={faGraduationCap} className={cx('item-icon')} />
-                                                        {index.position}
-                                                    </li>
-                                                    <li className={cx('text-item', 'textOverflow')}>
-                                                        <FontAwesomeIcon icon={faBookBookmark} className={cx('item-icon')} />
-                                                        {item.subject}                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Button>)
-                            })}
-
-
-
-
-                        </div>
-                        <div className={cx('col-12')}>
-                            {/*<div className={cx('box-pagination')}>*/}
-                            {/*    <nav aria-label="Page navigation example">*/}
-                            {/*        <ul className={cx("pagination")}>*/}
-                            {/*            <li className={cx("page-item", "pagination-item")}>*/}
-                            {/*                <Link className={cx("page-link")} href="#" aria-label="Previous">*/}
-                            {/*                    <span aria-hidden="true">&laquo;</span>*/}
-                            {/*                </Link>*/}
-                            {/*            </li>*/}
-                            {/*            <li className={cx("page-item", "pagination-item")}>*/}
-                            {/*                <Link className={cx("page-link")} href="#">1</Link>*/}
-                            {/*            </li>*/}
-                            {/*            <li className={cx("page-item", "pagination-item")}>*/}
-                            {/*                <Link className={cx("page-link")} href="#">2</Link>*/}
-                            {/*            </li>*/}
-                            {/*            <li className={cx("page-item", "pagination-item")}>*/}
-                            {/*                <Link className={cx("page-link")} href="#">3</Link>*/}
-                            {/*            </li>*/}
-                            {/*            <li className="page-item">*/}
-                            {/*                <Link className="page-link" href="#" aria-label="Next">*/}
-                            {/*                    <span aria-hidden="true">&raquo;</span>*/}
-                            {/*                </Link>*/}
-                            {/*            </li>*/}
-                            {/*        </ul>*/}
-                            {/*    </nav>*/}
-                            {/*</div>*/}
-
-
+                         <TutorItem/>
                         </div>
                         <Row>
                             <Col xs={12} lg={12} md={12}>
-                                <PaginationTutor/>
+                                <PaginationTutor />
                             </Col>
                         </Row>
                     </div>
