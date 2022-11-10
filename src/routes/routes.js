@@ -13,6 +13,7 @@ import InfoLogin from "~/pages/InfoLogin";
 import ClassTeach from "~/pages/ClassTeach";
 import ClassStudy from "~/pages/ClassStudy";
 import config from "~/config";
+import Contract from "~/pages/Contract/Contract";
 
 
 
@@ -32,7 +33,8 @@ const publicRoutes = [
     { path: config.routes.tutorDetail, component: TutorDetail },
     { path: config.routes.infoUser, component: InfoUser },
     { path: config.routes.infoLogin, component: InfoLogin },
-    { path: config.routes.listClassTeach, component: ClassTeach },
+    { path: config.routes.classTeach, component: ClassTeach },
+    { path: config.routes.classStudy, component: ClassStudy },
 
 ];
 const privateRoutes = [];
