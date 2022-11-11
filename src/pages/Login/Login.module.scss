@@ -1,16 +1,13 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+    margin: 0 auto !important;
     .rows {
         text-align: -webkit-center;
         width: -webkit-fill-available;
+
         form {
             padding: 20px;
             box-shadow: 0 10px 20px rgb(0 0 0 / 10%);
-            margin-top: 50px;
-            margin-bottom: 50px;
+            margin: 50px;
         }
 
         h4 {

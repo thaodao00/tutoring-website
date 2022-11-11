@@ -5,8 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faNavicon, faPhoneFlip, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { NavLink } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '~/redux/auth/actions';
 const cx = classNames.bind(style);
 function Header() {
+    const auth = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+    const handleLogout = () => {
+        dispatch(logout());
+    };
     const myNav = [
         {
             id: 1,
@@ -77,10 +84,25 @@ function Header() {
                     </span>
                 </div>
                 <div>
-                    <FontAwesomeIcon icon={faUser} className={cx('login-icon')} />
-                    <Button to="/login" className={cx('text-login')}>
-                        Đăng Nhập
-                    </Button>
+                    {auth.user ? (
+                        <>
+                            <FontAwesomeIcon icon={faUser} className={cx('login-icon')} />
+                            <Button to="/#" className={cx('text-login')}>
+                                {auth.user.name}
+                            </Button>
+                            <span className={cx('wid20')}></span>
+                            <Button to="/#" className={cx('text-login')} onClick={handleLogout}>
+                                Đăng xuất
+                            </Button>
+                        </>
+                    ) : (
+                        <>
+                            <FontAwesomeIcon icon={faUser} className={cx('login-icon')} />
+                            <Button to="/login" className={cx('text-login')}>
+                                Đăng Nhập
+                            </Button>
+                        </>
+                    )}
                 </div>
             </div>
             <div>
