@@ -26,7 +26,7 @@ function Login() {
     return (
         <div className={cx('container')}>
             <div className={cx('rows')}>
-                <div className={cx('col-md-4', 'col-md-offset-4')}>
+                <div className={cx('col-md-4', 'col-md-offset-4')} style={{ margin: '0 auto' }}>
                     <form className={cx('form-login', 'ng-pristine', 'ng-valid')}>
                         <center>
                             <h4 className={cx('heading-title heading-line-bottom ')}>Đăng nhập tài khoản</h4>
@@ -55,11 +55,11 @@ function Login() {
                                     marginBottom: '20px',
                                 }}
                             >
-                                {/* <i className="fas fa-phone"></i> Đăng nhập */}
+                                <i className="fas fa-phone"></i> Đăng nhập
                             </button>
                         </div>
                         <div className={cx('hr-empty')}></div>
-                        <a
+                        <button
                             href="#"
                             className={cx('btn btn-lg btn-block btn-facebook')}
                             style={{
@@ -68,8 +68,8 @@ function Login() {
                             }}
                         >
                             <i className="fab fa-facebook-f"></i> Đăng nhập <b>Facebook</b>
-                        </a>
-                        <a
+                        </button>
+                        <button
                             href="#"
                             className={cx('btn btn-lg btn-block btn-google')}
                             style={{
@@ -77,7 +77,7 @@ function Login() {
                             }}
                         >
                             <i className="fab fa-google"></i> Đăng nhập <b>Google</b>
-                        </a>
+                        </button>
                     </form>
                 </div>
             </div>
