@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import classNames from 'classnames/bind';
 import {Button, ButtonGroup, Col, Container, FloatingLabel, Row} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
@@ -11,6 +11,7 @@ import {address, areas, subjects} from "~/utils/FakeData";
 import DateItem from "~/pages/RegisterAsTutor/DateItem";
 import OptionItem from "~/pages/ReferenceTuition/OptionItem";
 import DayTutor from "~/layout/common/DayTutor";
+import {fetchSubject, getAllClass, getSubject} from "~/services/workspaces.sevices";
 
 
 const cx = classNames.bind(styles);
@@ -20,12 +21,14 @@ function RegisterAsTutor(props) {
 
     const [isDisabled, setIsDisabled] = useState(false)
     const animatedComponents = makeAnimated();
-    const array = [1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
-    const renderSquares = (numbs) => {
-        return numbs.map((num, index) => (
-            <DateItem  key={index}  value={num} />
-        ));
-    };
+    const [subjects, setSubjects] = useState([])
+    useEffect(() => {
+        // get subjects
+        fetchSubject(subjects).then(subject => setSubjects(subject) );
+
+    }, [])
+
+
 
 
     return (
@@ -79,7 +82,11 @@ function RegisterAsTutor(props) {
                         <Form.Label
                             className={cx('description')}> Địa chỉ<FaStarOfLife className={cx('icon-label')}/>
                         </Form.Label>
-                        <Form.Control size='sm' type="text" placeholder="Nhập vị trí"/>
+                        <Form.Control
+                            id='address'
+                            size='sm'
+                            type="text"
+                            placeholder="Nhập vị trí"/>
                     </Col>
 
                 </Row>
@@ -169,7 +176,7 @@ function RegisterAsTutor(props) {
                 <Row>
                     <Col lg={12}>
                         <Form.Label
-                            className={cx('description')}> Thời gian bạn có thể nhân lớp
+                            className={cx('description')}> Thời gian bạn có học
                         </Form.Label>
                         <DayTutor/>
                         <p className={cx('note')}>(Thời gian được hiển thị từ 0 giờ -> 23 giờ)</p>
@@ -180,8 +187,8 @@ function RegisterAsTutor(props) {
                     <Col lg={12}>
                         <center>
                             <Button
-                                style={{marginTop:'20px'}}
-                                className={cx('btn','btn-success')}
+                                style={{marginTop: '20px'}}
+                                className={cx('btn', 'btn-success')}
                                 size="lg">
                                 Đăng ký làm gia sư
                             </Button>

@@ -1,12 +1,12 @@
 // ReferenceTuition
 export const subjects = [
-    {label: "2D", value: 355},
-    {label: "3D Max", value: 54},
-    {label: "3Ds Max", value: 43},
-    {label: "Aerobic", value: 61},
-    {label: "Ảo thuật", value: 965},
-    {label: "Bơi lội", value: 46},
-    {label: "Bóng chuyền", value: 58}
+    {id:1,label: "2D"},
+    {id:2,label: "3D Max"},
+    {id:3,label: "3Ds Max"},
+    {id:4,label: "Aerobic"},
+    {id:5,label: "Ảo thuật"},
+    {id:6,label: "Bơi lội"},
+    {id:7,label: "Bóng chuyền"}
 ];
 export const ours = [
     {our: '-------'},
