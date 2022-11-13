@@ -2,421 +2,416 @@
 @import '~bootstrap/scss/bootstrap';
 
 :root {
-  --primary: #43b14b;
-  --sub: yellow;
-  --black: #000;
-  --white: #fff;
-  --text-color: #161823;
-  --font-family: 'Open Sans', sans-serif;
-  --padding: 60px;
-  --text-danger: #a94442;
-  --padding-top: 60px;
-  --padding-bottom: 60px;
-  // Default layout
-  --default-layout-header-height: 195px;
-
-
+    --primary: #43b14b;
+    --sub: yellow;
+    --black: #000;
+    --white: #fff;
+    --text-color: #161823;
+    --font-family: 'Open Sans', sans-serif;
+    --padding: 60px;
+    --text-danger: #a94442;
+    --padding-top: 60px;
+    --padding-bottom: 60px;
+    // Default layout
+    --default-layout-header-height: 195px;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 html {
-  font-size: 62.5%;
+    font-size: 62.5%;
 }
 
 body {
-  font-family: var(--font-family);
-  font-size: 1.6rem;
-  line-height: 1.7;
-  text-rendering: optimizeSpeed;
-  color: var(--text-color);
-  overflow-y: overlay;
-  ::selection{
-    background-color: #333;
-    color: white;
-  }
-
-  //reset css input react-bootstrap
-  textarea:focus,
-  textarea.form-control:focus,
-  input.form-control:focus,
-  input[type=text]:focus,
-  input[type=password]:focus,
-  input[type=email]:focus,
-  input[type=number]:focus,
-  [type=text].form-control:focus,
-  [type=password].form-control:focus,
-  [type=email].form-control:focus,
-  [type=tel].form-control:focus,
-  [contenteditable].form-control:focus {
-    box-shadow: none;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-  }
-
-  .custom-file-input {
-    color: transparent;
-  }
-
-  input.btn-upload {
-    width: 100px;
-    height: 37px;
-    margin-bottom: 20px;
-    margin-right: 4px;
-  }
-
-  .btn-upload::-webkit-file-upload-button {
-    visibility: hidden;
-  }
-
-  .btn-upload::before {
-    content: 'Đổi ảnh';
-    color: var(--white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    max-width: 200px;
-    width: 100%;
-    background-color: #c9302c;
-    border: 1px solid #999;
-    border-radius: 3px;
-    padding: 6px 8px 7px 8px;
-    outline: none;
-    white-space: nowrap;
-    -webkit-user-select: none;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 10pt;
-
-  }
-
-  .btn-upload:hover::before {
-    background-color: var(--text-danger);
-  }
-
-  .btn-upload:active {
-    outline: 0;
-  }
-
-
-  // reset css button react-bootstrap
-  .btn-check:checked + .btn, :not(.btn-check) + .btn:active, .btn:first-child:active, .btn.active, .btn.show {
-    border: 1px solid currentColor;
-    outline: none;
-    box-shadow: none;
-    background-color: var(--primary);
-  }
-
-  .btn {
-    font-size: 1.4rem;
-    padding: 8px 22px;
-    line-height: 1.38;
-  }
-
-
-  .btn-success {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-    background-color: #5cb85c !important;
-    border-color: #4cae4c;
-  }
-  .btn-primary{
-   background-color: #337ab7;
-  }
-  .btn-default{
-    background-color: var(--white) !important;
-    border-color: #e6e6e6;
+    font-family: var(--font-family);
+    font-size: 1.6rem;
+    line-height: 1.7;
+    text-rendering: optimizeSpeed;
     color: var(--text-color);
-    &:hover{
-      background-color: #EEEEEE !important;
-      border-color: #EEEEEE;
-      color: var(--text-color);
+    overflow-y: overlay;
+    ::selection {
+        background-color: #333;
+        color: white;
     }
-  }
-  // customer datepicker
-  .react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name{
-    width: 3rem;
-    line-height: 3rem;
-  }
-  .react-datepicker__current-month, .react-datepicker-time__header, .react-datepicker-year-header{
-    font-size: 1.6rem;
-  }
-  .react-datepicker__day-names{
-    font-size: 1.6rem;
-  }
-  .react-datepicker__day, .react-datepicker__month-text, .react-datepicker__quarter-text, .react-datepicker__year-text{
-    font-size: 1.6rem;
-    border: 1px solid #ccc;
-  }
-  //Css for react-select library
-  .form-select {
-    font-size: 1.4rem;
-  }
 
-  .form-select:focus {
-    outline: none;
-    box-shadow: none;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-  }
-
-  .react-select__control:focus {
-    outline: none;
-    box-shadow: none;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-  }
-
-  .react-select__control:hover {
-    border: 1px solid #ccc
-  }
-
-  .react-select__control {
-    padding: 4px 0;
-    box-shadow: none;
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
-  }
-
-  .react-select__dropdown-indicator.react-select__indicator {
-    display: none;
-  }
-
-  .react-select__indicators {
-    display: none;
-  }
-
-  .react-select__option--is-focused {
-    background-color: #5897FB;
-  }
-
-  .react-select__multi-value__remove:hover {
-    background-color: #e6e6e6;
-    color: rgba(0, 0, 0, 0.5);
-
-  }
-  // customer pagination
-  .pagination .page-item .page-link{
-    padding: 9px 14px;
-
-
-
-  }
-
-}
-
-// Scrollbar CSS
-html *::-webkit-scrollbar {
-  border-radius: 0;
-  width: 8px;
-}
-
-html *::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.15);
-}
-
-html *::-webkit-scrollbar-track {
-  border-radius: 0;
-  background-color: rgba(0, 0, 0, 0);
-}
-
-button,
-input {
-  outline: none;
-  border: none;
-}
-
-a {
-  color: var(--text-color);
-  text-decoration: none;
-}
-
-li {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-ul {
-  margin: 0;
-  padding: 0;
-}
-
-.line-bottom {
-  position: relative;
-  margin: 20px 0;
-
-  &:after {
-    border: 1px solid #1e3148;
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 50px;
-    bottom: -1px;
-  }
-}
-
-.description {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-top: 16px;
-  margin-bottom: 16px;
-}
-
-.btn-gender {
-  font-size: 1.4rem;
-  padding: 8px 22px;
-  background-color: var(--white);
-  color: var(--text-color);
-  border: 1px solid #EEEEEE;
-  cursor: pointer;
-  border-radius: 4px;
-  &:first-child {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
-  &:last-child {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-
-  &:hover {
-    color: #333;
-    background: #e6e6e6;
-
-  }
-  &:focus{
-    color: var(--white);
-    background-color: var(--primary);
-  }
-
-  &.active {
-    background-color: var(--primary);
-    color: var(--white);
-  }
-}
-
-
-.form-control-none-radius {
-  display: block;
-  width: 100%;
-  height: 34px;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857143;
-  color: #555;
-  background-color: #fff;
-  background-image: none;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
-  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
-  -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
-  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-}
-
-.form-control,
-.form-control-none-radius,
-.btn-outline-secondary {
-  font-size: 1.4rem;
-  height: 48px;
-  padding: 4px 20px;
-}
-
-.btn-outline-secondary {
-  background-color: var(--primary);
-  border: 1px solid var(--primary);
-  color: var(--white);
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-
-  &:hover {
-    background-color: #358c3b;
-  }
-
-  &:active {
-    background-color: #358c3b;
-  }
-}
-
-.accordion-item {
-  border: none;
-}
-
-.accordion-button::after {
-  display: none;
-}
-
-.carousel.carousel-slider .control-arrow {
-  display: none;
-}
-
-//custom carousel
-.carousel {
-  .carousel-status {
-    display: none;
-  }
-
-  .thumbs {
-    display: none;
-  }
-
-  .control-dots {
-    margin: 50px 0;
-
-    .dot {
-      width: 12px;
-      height: 12px;
+    //reset css input react-bootstrap
+    textarea:focus,
+    textarea.form-control:focus,
+    input.form-control:focus,
+    input[type='text']:focus,
+    input[type='password']:focus,
+    input[type='email']:focus,
+    input[type='number']:focus,
+    [type='text'].form-control:focus,
+    [type='password'].form-control:focus,
+    [type='email'].form-control:focus,
+    [type='tel'].form-control:focus,
+    [contenteditable].form-control:focus {
+        box-shadow: none;
+        border: 1px solid rgba(0, 0, 0, 0.3);
     }
-  }
 
-  .slider {
-    margin-bottom: 50px;
-  }
+    .custom-file-input {
+        color: transparent;
+    }
 
-  .thumbs-wrapper {
-    display: none;
-  }
+    input.btn-upload {
+        width: 100px;
+        height: 37px;
+        margin-bottom: 20px;
+        margin-right: 4px;
+    }
 
-  .carousel .control-arrow {
-    display: none !important;
-  }
-}
+    .btn-upload::-webkit-file-upload-button {
+        visibility: hidden;
+    }
 
-//custom pagination
-.page-link {
-  color: #333;
-  font-weight: bold;
-  font-size: 1.6rem;
-  padding: 10px 20px;
-  border: 1px solid #ccc;
+    .btn-upload::before {
+        content: 'Đổi ảnh';
+        color: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 200px;
+        width: 100%;
+        background-color: #c9302c;
+        border: 1px solid #999;
+        border-radius: 3px;
+        padding: 6px 8px 7px 8px;
+        outline: none;
+        white-space: nowrap;
+        -webkit-user-select: none;
+        font-size: 1.6rem;
+        line-height: 1.7;
+        text-rendering: optimizeSpeed;
+        color: var(--text-color);
+        overflow-y: overlay;
+        ::selection {
+            background-color: #333;
+            color: white;
+        }
 
-  &:hover {
-    color: #333;
+        //reset css input react-bootstrap
+        textarea:focus,
+        textarea.form-control:focus,
+        input.form-control:focus,
+        input[type='text']:focus,
+        input[type='password']:focus,
+        input[type='email']:focus,
+        input[type='number']:focus,
+        [type='text'].form-control:focus,
+        [type='password'].form-control:focus,
+        [type='email'].form-control:focus,
+        [type='tel'].form-control:focus,
+        [contenteditable].form-control:focus {
+            box-shadow: none;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+        }
 
-  }
+        // reset css button react-bootstrap
+        .btn-check:checked + .btn,
+        :not(.btn-check) + .btn:active,
+        .btn:first-child:active,
+        .btn.active,
+        .btn.show {
+            border: 1px solid var(--primary);
+            outline: none;
+            box-shadow: none;
+            background-color: var(--primary);
+        }
+        .btn {
+            font-size: 1.4rem;
+            padding: 8px 22px;
+            line-height: 1.38;
+        }
 
-  @media screen and (max-width: 600px) {
-    font-size: 1.2rem;
-    padding: 4px 12px;
-  }
-  @media screen and (max-width: 374px) {
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 30px;
-    width: 32px;
-  }
+        .btn-success {
+            color: var(--white);
+            background-color: #5cb85c;
+            border-color: #4cae4c;
+        }
+        // customer datepicker
+        .react-datepicker__day-name,
+        .react-datepicker__day,
+        .react-datepicker__time-name {
+            width: 3rem;
+            line-height: 3rem;
+        }
+        .react-datepicker__current-month,
+        .react-datepicker-time__header,
+        .react-datepicker-year-header {
+            font-size: 1.6rem;
+        }
+        .react-datepicker__day-names {
+            font-size: 1.6rem;
+        }
+        .react-datepicker__day,
+        .react-datepicker__month-text,
+        .react-datepicker__quarter-text,
+        .react-datepicker__year-text {
+            font-size: 1.6rem;
+            border: 1px solid #ccc;
+        }
+        //Css for react-select library
+        .form-select {
+            font-size: 1.4rem;
+        }
 
-}
-.page-item.active .page-link{
-  background-color: #1e3148;
-  border: 1px solid #ccc;
+        .form-select:focus {
+            outline: none;
+            box-shadow: none;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+        }
+
+        .react-select__control:focus {
+            outline: none;
+            box-shadow: none;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+        }
+
+        .react-select__control:hover {
+            border: 1px solid #ccc;
+        }
+
+        .react-select__control {
+            padding: 4px 0;
+            box-shadow: none;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+
+        .react-select__dropdown-indicator.react-select__indicator {
+            display: none;
+        }
+
+        .react-select__indicators {
+            display: none;
+        }
+
+        .react-select__option--is-focused {
+            background-color: #5897fb;
+        }
+
+        .react-select__multi-value__remove:hover {
+            background-color: #e6e6e6;
+            color: rgba(0, 0, 0, 0.5);
+        }
+        // customer pagination
+        .pagination .page-item .page-link {
+            padding: 9px 14px;
+        }
+    }
+
+    // Scrollbar CSS
+    html *::-webkit-scrollbar {
+        border-radius: 0;
+        width: 8px;
+    }
+
+    html *::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0.15);
+    }
+
+    html *::-webkit-scrollbar-track {
+        border-radius: 0;
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    button,
+    input {
+        outline: none;
+        border: none;
+    }
+
+    a {
+        color: var(--text-color);
+        text-decoration: none;
+    }
+
+    li {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    .line-bottom {
+        position: relative;
+        margin: 20px 0;
+
+        &:after {
+            border: 1px solid #1e3148;
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 50px;
+            bottom: -1px;
+        }
+    }
+
+    .description {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 16px;
+        margin-bottom: 16px;
+    }
+
+    .btn-gender {
+        font-size: 1.4rem;
+        padding: 8px 22px;
+        background-color: var(--white);
+        color: var(--text-color);
+        border: 1px solid #eeeeee;
+        cursor: pointer;
+        border-radius: 4px;
+        &:first-child {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        &:last-child {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        &:hover {
+            color: #333;
+            background: #e6e6e6;
+        }
+        &:focus {
+            color: var(--white);
+            background-color: var(--primary);
+        }
+
+        &.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+    }
+
+    .form-control-none-radius {
+        display: block;
+        width: 100%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+        box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+        -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+        -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+        transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    }
+
+    .form-control,
+    .form-control-none-radius,
+    .btn-outline-secondary {
+        font-size: 1.4rem;
+        height: 48px;
+        padding: 4px 20px;
+    }
+
+    .btn-outline-secondary {
+        background-color: var(--primary);
+        border: 1px solid var(--primary);
+        color: var(--white);
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+
+        &:hover {
+            background-color: #358c3b;
+        }
+
+        &:active {
+            background-color: #358c3b;
+        }
+    }
+
+    .accordion-item {
+        border: none;
+    }
+
+    .accordion-button::after {
+        display: none;
+    }
+
+    .carousel.carousel-slider .control-arrow {
+        display: none;
+    }
+
+    //custom carousel
+    .carousel {
+        .carousel-status {
+            display: none;
+        }
+
+        .thumbs {
+            display: none;
+        }
+
+        .control-dots {
+            margin: 50px 0;
+
+            .dot {
+                width: 12px;
+                height: 12px;
+            }
+        }
+
+        .slider {
+            margin-bottom: 50px;
+        }
+
+        .thumbs-wrapper {
+            display: none;
+        }
+
+        .carousel .control-arrow {
+            display: none !important;
+        }
+    }
+
+    //custom pagination
+    .page-link {
+        color: #333;
+        font-weight: bold;
+        font-size: 1.6rem;
+        padding: 10px 20px;
+        border: 1px solid #ccc;
+
+        &:hover {
+            color: #333;
+        }
+
+        @media screen and (max-width: 600px) {
+            font-size: 1.2rem;
+            padding: 4px 12px;
+        }
+        @media screen and (max-width: 374px) {
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 30px;
+            width: 32px;
+        }
+    }
+    .page-item.active .page-link {
+        background-color: #1e3148;
+        border: 1px solid #ccc;
+    }
 }

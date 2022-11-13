@@ -1,34 +1,39 @@
-import {useRef, useState} from "react";
+import { useRef, useState } from 'react';
 import classNames from 'classnames/bind';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faNavicon, faPhoneFlip, faUser} from '@fortawesome/free-solid-svg-icons';
-import {faEnvelope} from '@fortawesome/free-regular-svg-icons';
-import {Link, NavLink} from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faNavicon, faPhoneFlip, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
+import { Link, NavLink } from 'react-router-dom';
 
 import style from './Header.module.scss';
 import Button from '~/components/Button';
-import config from "~/config";
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '~/redux/auth/actions';
+import config from '~/config';
 import Avatar from '~/assets/avatar/default-avatar.png';
-import {MdNotifications} from 'react-icons/md'
-import {BsFillInfoCircleFill} from 'react-icons/bs';
-import {FaUserCircle, FaUserGraduate} from 'react-icons/fa';
-import {BsCardList} from 'react-icons/bs';
-import {TbEyeglass2, TbLogout} from 'react-icons/tb'
-import {useOnClickOutside} from "~/components/Hooks/useOnClickOutside";
-
+import { MdNotifications } from 'react-icons/md';
+import { BsFillInfoCircleFill } from 'react-icons/bs';
+import { FaUserCircle, FaUserGraduate } from 'react-icons/fa';
+import { BsCardList } from 'react-icons/bs';
+import { TbEyeglass2, TbLogout } from 'react-icons/tb';
+import { useOnClickOutside } from '~/components/Hooks/useOnClickOutside';
 
 const cx = classNames.bind(style);
 
 function Header() {
-    const isUser = true
-    const refOverClickOutSide = useRef()
-    const [isShow, setIsShow] = useState(false)
-    useOnClickOutside(refOverClickOutSide, () => setIsShow(!isShow))
+    const auth = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+    const handleLogout = () => {
+        dispatch(logout());
+    };
+    const isUser = false;
+    const refOverClickOutSide = useRef();
+    const [isShow, setIsShow] = useState(false);
+    useOnClickOutside(refOverClickOutSide, () => setIsShow(!isShow));
     const toggleDropdown = () => {
-        setIsShow(!isShow)
-        console.log(isShow)
-    }
-
+        setIsShow(!isShow);
+        console.log(isShow);
+    };
 
     const myNav = [
         {
@@ -81,54 +86,48 @@ function Header() {
     const accountLinks = [
         {
             name: 'Thông tin cá nhân',
-            icon: <BsFillInfoCircleFill/>,
+            icon: <BsFillInfoCircleFill />,
             to: config.routes.infoUser,
         },
         {
             name: 'Thông tin đăng nhập',
-            icon: <FaUserCircle/>,
+            icon: <FaUserCircle />,
             to: config.routes.infoLogin,
-
         },
         {
             name: 'Danh sách lớp dạy',
-            icon: <BsCardList/>,
+            icon: <BsCardList />,
             to: config.routes.classTeach,
-
         },
         {
             name: 'Danh sách lớp học',
-            icon: <BsCardList/>,
+            icon: <BsCardList />,
             to: config.routes.classStudy,
             separate: true,
-
         },
         {
             name: 'Đăng ký tìm gia sư',
-            icon: <TbEyeglass2/>,
+            icon: <TbEyeglass2 />,
             to: config.routes.searchTutor,
-
         },
         {
             name: 'Đăng ký làm gia sư',
-            icon: <FaUserGraduate/>,
+            icon: <FaUserGraduate />,
             to: config.routes.registerAsTutor,
             separate: true,
-
         },
         {
             name: 'logout',
-            icon: <TbLogout/>,
+            icon: <TbLogout />,
             to: config.routes.logout,
-
         },
-    ]
+    ];
     return (
         <div className={cx('wrapper')}>
             <div className={cx('header-top')}>
                 <div className={cx('header-top-block')}>
                     <span className={cx('phone')}>
-                        <FontAwesomeIcon icon={faPhoneFlip} className={cx('phone-icon')}/>
+                        <FontAwesomeIcon icon={faPhoneFlip} className={cx('phone-icon')} />
                         <Button href="tel: 09222222" className={cx('text-phone')}>
                             092.222.222
                         </Button>
@@ -138,58 +137,63 @@ function Header() {
                         </Button>
                     </span>
                     <span className={cx('mail')}>
-                        <FontAwesomeIcon icon={faEnvelope} className={cx('mail-icon')}/>
+                        <FontAwesomeIcon icon={faEnvelope} className={cx('mail-icon')} />
                         <Button href="mailto:daykem@gmail.com" className={cx('text-mail')}>
                             daykem@gmail.com
                         </Button>
                     </span>
                 </div>
-                {
-                    !isUser ? (
-                        <div>
-                            <FontAwesomeIcon icon={faUser} className={cx('login-icon')}/>
-                            <Button to="/login" className={cx('text-login')}>
-                                Đăng Nhập
-                            </Button>
+                {!auth.user ? (
+                    <div>
+                        <FontAwesomeIcon icon={faUser} className={cx('login-icon')} />
+                        <Button to="/login" className={cx('text-login')}>
+                            Đăng Nhập
+                        </Button>
+                    </div>
+                ) : (
+                    <div className={cx('user')}>
+                        <div className={cx('notice')}>
+                            <MdNotifications className={cx('icon-notice')} />
+                            <span className={cx('badge')}>99+</span>
                         </div>
-                    ) : (
-                        <div className={cx('user')}>
-                            <div className={cx('notice')}>
-                                <MdNotifications className={cx('icon-notice')}/>
-                                <span className={cx('badge')}>99+</span>
-                            </div>
-                            <span onClick={toggleDropdown} className={cx('user-name')}>Tài khoản 8609 </span>
-                            <div onClick={toggleDropdown} className={cx('avatar')}>
-                                <img src={Avatar} alt=""/>
-                            </div>
-                            {
-                                isShow ? (
-                                    <ul ref={refOverClickOutSide} className={cx('dropdown-user')}>
-                                        {
-                                            accountLinks.map((item, index) => {
-                                                return (
-                                                    <li onClick={toggleDropdown} key={index}
-                                                        className={cx('item', `${item.separate ? 'separate' : ''}`)}>
-                                                        {item.icon}
-                                                        <Link to={item.to}
-                                                              className={cx('item-link')}
-                                                        >
-                                                            {item.name}
-                                                        </Link>
-                                                    </li>
-                                                )
-                                            })
-                                        }
-
-
-                                    </ul>
-                                ):''
-                            }
+                        <span onClick={toggleDropdown} className={cx('user-name')}>
+                            {auth.user.name}{' '}
+                        </span>
+                        <div onClick={toggleDropdown} className={cx('avatar')}>
+                            <img src={Avatar} alt="" />
                         </div>
-                    )
-                }
-
-
+                        {isShow ? (
+                            <ul ref={refOverClickOutSide} className={cx('dropdown-user')}>
+                                {accountLinks.map((item, index) => {
+                                    return (
+                                        <li
+                                            onClick={toggleDropdown}
+                                            key={index}
+                                            className={cx('item', `${item.separate ? 'separate' : ''}`)}
+                                        >
+                                            {item.icon}
+                                            {item.name == 'logout' ? (
+                                                <>
+                                                    <Link onClick={handleLogout} className={cx('item-link')}>
+                                                        {item.name}
+                                                    </Link>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Link to={item.to} className={cx('item-link')}>
+                                                        {item.name}
+                                                    </Link>
+                                                </>
+                                            )}
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        ) : (
+                            ''
+                        )}
+                    </div>
+                )}
             </div>
             <div>
                 <div className={cx('d-flex', 'header-bottom')}>
@@ -212,7 +216,7 @@ function Header() {
                                     aria-expanded="false"
                                     aria-label="Toggle navigation"
                                 >
-                                    <FontAwesomeIcon icon={faNavicon}/>
+                                    <FontAwesomeIcon icon={faNavicon} />
                                 </button>
                             </div>
                             <div className={cx('collapse navbar-collapse')} id="navbarNavAltMarkup">
@@ -223,13 +227,13 @@ function Header() {
                                                 className={cx('nav-item')}
                                                 key={index}
                                                 to={nav.to}
-                                                style={({isActive}) =>
+                                                style={({ isActive }) =>
                                                     isActive
                                                         ? {
-                                                            color: 'white',
-                                                            background: '#43b14b',
-                                                            borderRadius: '30px',
-                                                        }
+                                                              color: 'white',
+                                                              background: '#43b14b',
+                                                              borderRadius: '30px',
+                                                          }
                                                         : null
                                                 }
                                             >
