@@ -16,7 +16,6 @@ export const Subject = () => {
             const { data, status } = response?.data
             if (data) {
                 setData(data)
-                console.log(data);
             }
         }
         fetchData()
