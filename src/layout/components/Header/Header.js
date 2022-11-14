@@ -1,65 +1,125 @@
+import { useRef, useState } from 'react';
 import classNames from 'classnames/bind';
-import style from './Header.module.scss';
-import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faNavicon, faPhoneFlip, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+
+import style from './Header.module.scss';
+import Button from '~/components/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '~/redux/auth/actions';
+import config from '~/config';
+import Avatar from '~/assets/avatar/default-avatar.png';
+import { MdNotifications } from 'react-icons/md';
+import { BsFillInfoCircleFill } from 'react-icons/bs';
+import { FaUserCircle, FaUserGraduate } from 'react-icons/fa';
+import { BsCardList } from 'react-icons/bs';
+import { TbEyeglass2, TbLogout } from 'react-icons/tb';
+import { useOnClickOutside } from '~/components/Hooks/useOnClickOutside';
+
 const cx = classNames.bind(style);
+
 function Header() {
     const auth = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const handleLogout = () => {
         dispatch(logout());
     };
+    const isUser = false;
+    const refOverClickOutSide = useRef();
+    const [isShow, setIsShow] = useState(false);
+    useOnClickOutside(refOverClickOutSide, () => setIsShow(!isShow));
+    const toggleDropdown = () => {
+        setIsShow(!isShow);
+        console.log(isShow);
+    };
+
     const myNav = [
         {
             id: 1,
             title: 'Trang chủ',
-            to: '/home',
+            to: config.routes.home,
         },
         {
             id: 2,
             title: 'Lớp mới',
             tag: 'Hot',
-            to: '/class',
+            to: config.routes.class,
         },
         {
             id: 3,
             title: 'Gia sư',
-            to: '/tutor',
+            to: config.routes.tutor,
         },
         {
             id: 4,
             title: 'Học phí tham khảo',
             tag: 'Mới',
-            to: '/reference-tuition',
+            to: config.routes.ReferenceTuition,
         },
         {
             id: 5,
             title: 'Tìm gia sư',
 
-            to: '/searchTutor',
+            to: config.routes.searchTutor,
         },
         {
             id: 6,
             title: 'Đăng ký làm gia sư',
 
-            to: '/register-as-tutor',
+            to: config.routes.registerAsTutor,
         },
         {
             id: 7,
             title: 'Bài viết',
 
-            to: '/posts',
+            to: config.routes.posts,
         },
         {
             id: 8,
             title: 'Liên hệ',
 
-            to: '/contacts',
+            to: config.routes.contacts,
+        },
+    ];
+    const accountLinks = [
+        {
+            name: 'Thông tin cá nhân',
+            icon: <BsFillInfoCircleFill />,
+            to: config.routes.infoUser,
+        },
+        {
+            name: 'Thông tin đăng nhập',
+            icon: <FaUserCircle />,
+            to: config.routes.infoLogin,
+        },
+        {
+            name: 'Danh sách lớp dạy',
+            icon: <BsCardList />,
+            to: config.routes.classTeach,
+        },
+        {
+            name: 'Danh sách lớp học',
+            icon: <BsCardList />,
+            to: config.routes.classStudy,
+            separate: true,
+        },
+        {
+            name: 'Đăng ký tìm gia sư',
+            icon: <TbEyeglass2 />,
+            to: config.routes.searchTutor,
+        },
+        {
+            name: 'Đăng ký làm gia sư',
+            icon: <FaUserGraduate />,
+            to: config.routes.registerAsTutor,
+            separate: true,
+        },
+        {
+            name: 'logout',
+            icon: <TbLogout />,
+            to: config.routes.logout,
         },
     ];
     return (
@@ -83,27 +143,57 @@ function Header() {
                         </Button>
                     </span>
                 </div>
-                <div>
-                    {auth.user ? (
-                        <>
-                            <FontAwesomeIcon icon={faUser} className={cx('login-icon')} />
-                            <Button to="/#" className={cx('text-login')}>
-                                {auth.user.name}
-                            </Button>
-                            <span className={cx('wid20')}></span>
-                            <Button to="/#" className={cx('text-login')} onClick={handleLogout}>
-                                Đăng xuất
-                            </Button>
-                        </>
-                    ) : (
-                        <>
-                            <FontAwesomeIcon icon={faUser} className={cx('login-icon')} />
-                            <Button to="/login" className={cx('text-login')}>
-                                Đăng Nhập
-                            </Button>
-                        </>
-                    )}
-                </div>
+                {!auth.user ? (
+                    <div>
+                        <FontAwesomeIcon icon={faUser} className={cx('login-icon')} />
+                        <Button to="/login" className={cx('text-login')}>
+                            Đăng Nhập
+                        </Button>
+                    </div>
+                ) : (
+                    <div className={cx('user')}>
+                        <div className={cx('notice')}>
+                            <MdNotifications className={cx('icon-notice')} />
+                            <span className={cx('badge')}>99+</span>
+                        </div>
+                        <span onClick={toggleDropdown} className={cx('user-name')}>
+                            {auth.user.name}{' '}
+                        </span>
+                        <div onClick={toggleDropdown} className={cx('avatar')}>
+                            <img src={Avatar} alt="" />
+                        </div>
+                        {isShow ? (
+                            <ul ref={refOverClickOutSide} className={cx('dropdown-user')}>
+                                {accountLinks.map((item, index) => {
+                                    return (
+                                        <li
+                                            onClick={toggleDropdown}
+                                            key={index}
+                                            className={cx('item', `${item.separate ? 'separate' : ''}`)}
+                                        >
+                                            {item.icon}
+                                            {item.name == 'logout' ? (
+                                                <>
+                                                    <Link onClick={handleLogout} className={cx('item-link')}>
+                                                        {item.name}
+                                                    </Link>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Link to={item.to} className={cx('item-link')}>
+                                                        {item.name}
+                                                    </Link>
+                                                </>
+                                            )}
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        ) : (
+                            ''
+                        )}
+                    </div>
+                )}
             </div>
             <div>
                 <div className={cx('d-flex', 'header-bottom')}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import classNames from 'classnames/bind';
 import {Button, Col, Container, Row} from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
@@ -9,14 +9,28 @@ import 'animate.css';
 import ClassItem from "~/pages/Class/ClassItem";
 import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
 import {FaHandPointRight} from "react-icons/fa";
-import {data, tagLinks} from "~/utils/FakeData";
+import {tagLinks} from "~/utils/FakeData";
 import PaginationTutor from "~/layout/common/PaginationTutor";
+import {getAllClass} from "~/services/workspaces.sevices";
 
 
 const cx = classNames.bind(styles);
 
 
 function Class(props) {
+    const [data, setData] = useState([])
+    useEffect(() => {
+        async function fetchData() {
+            const response = await getAllClass();
+            const {data, status} = response?.data.data
+            if (data ) {
+                setData(data)
+            }
+        }
+
+        fetchData()
+
+    }, [])
 
     return (
         <div className={cx('wrapper')}>
@@ -37,7 +51,7 @@ function Class(props) {
                                     </Form.Select>
                                 </Col>
                                 <Col lg={2} md={12} sm={12}>
-                                    <Button className={cx('btn-search', 'text-center')} size="lg">
+                                    <Button className={cx('btn-search', 'text-center', 'btn-success')} size="lg">
                                         <FontAwesomeIcon icon={faSearch} className={cx('search-icon')}/>
                                         Tìm
                                     </Button>
@@ -47,7 +61,7 @@ function Class(props) {
                         </div>
                         <div className={cx('information')}>
                             {
-                                data.map((item) => {
+                                 data.map((item) => {
                                     return (
                                         <ClassItem key={item.id} data={item}/>
                                     )
@@ -89,7 +103,7 @@ function Class(props) {
                             <div className={cx('tag')}>
                                 <h5 className={cx('need-title', 'line-bottom')}>Gia sư cần biết</h5>
                                 {
-                                    tagLinks.map((item)=>{
+                                    tagLinks.map((item) => {
                                         return (
                                             <a key={item.id} href='' className={cx('tag-link')}>{item.tagName}</a>
                                         )

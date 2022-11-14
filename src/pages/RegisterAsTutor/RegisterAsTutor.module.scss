@@ -32,32 +32,8 @@
   }
 }
 
-.btn-gender {
-  font-size: 1.4rem ;
-  padding: 8px 22px ;
-  background-color: var(--white) ;
-  color: var(--text-color) ;
-  border: 1px solid #EEEEEE;
-  cursor: pointer;
-  border-radius: 4px;
-  &:first-child {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  &:last-child{
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-  &:hover {
-    color:#333;
-    background: #e6e6e6;
 
-  }
-  &.active {
-    background-color: var(--primary);
-    color: var(--white);
-  }
-}
+
 button.value{
   display: inline-block;
   width: 30px;
@@ -82,8 +58,32 @@ button.value{
     background-color: var(--primary);
   }
 
+}
+.btn-gender {
+  background-color: var(--white);
+  color: var(--text-color);
+  font-weight: 300;
+  font-size: 1.4rem;
+  height: 48px;
+  border-color: var(--border-color);
+
+  &:hover {
+    background-color: #EEEEEE;
+    color: var(--text-color);
+    border-color: var(--border-color);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+    color: var(--white);
+    background-color: var(--primary);
+
+  }
+
 
 }
+
 .day-name{
   display: inline-block;
   color: #666;
