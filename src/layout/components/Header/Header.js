@@ -167,7 +167,7 @@ function Header() {
                                             className={cx('item', `${item.separate ? 'separate' : ''}`)}
                                         >
                                             {item.icon}
-                                            {item.name == 'logout' ? (
+                                            {item.name == 'Đăng xuất' ? (
                                                 <>
                                                     <Link onClick={handleLogout} className={cx('item-link')}>
                                                         {item.name}
