@@ -1,7 +1,8 @@
+import instance from '~/interceptors/axios';
 import api from '~/utils/axios';
 
 export const loginService = async (email, password) =>
-    await api
+    await instance
         .post('/v1/auths/login', { email, password })
         .then((res) => {
             return res.data;

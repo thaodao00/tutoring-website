@@ -71,12 +71,6 @@ function Header() {
             to: config.routes.registerAsTutor,
         },
         {
-            id: 7,
-            title: 'Bài viết',
-
-            to: config.routes.posts,
-        },
-        {
             id: 8,
             title: 'Liên hệ',
 
@@ -85,15 +79,16 @@ function Header() {
     ];
     const accountLinks = [
         {
-            name: 'Thông tin cá nhân',
-            icon: <BsFillInfoCircleFill />,
-            to: config.routes.infoUser,
-        },
-        {
             name: 'Thông tin đăng nhập',
             icon: <FaUserCircle />,
             to: config.routes.infoLogin,
         },
+        {
+            name: 'Thông tin cá nhân',
+            icon: <BsFillInfoCircleFill />,
+            to: config.routes.infoUser,
+        },
+
         {
             name: 'Danh sách lớp dạy',
             icon: <BsCardList />,
@@ -117,7 +112,7 @@ function Header() {
             separate: true,
         },
         {
-            name: 'logout',
+            name: 'Đăng xuất',
             icon: <TbLogout />,
             to: config.routes.logout,
         },
@@ -230,10 +225,10 @@ function Header() {
                                                 style={({ isActive }) =>
                                                     isActive
                                                         ? {
-                                                              color: 'white',
-                                                              background: '#43b14b',
-                                                              borderRadius: '30px',
-                                                          }
+                                                            color: 'white',
+                                                            background: '#43b14b',
+                                                            borderRadius: '30px',
+                                                        }
                                                         : null
                                                 }
                                             >
