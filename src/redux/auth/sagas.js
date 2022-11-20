@@ -1,6 +1,6 @@
 import { takeLatest, call, put, takeEvery } from 'redux-saga/effects';
-import { SIGNUP_REQUESTING, SIGNUP_SUCCESS, SIGNUP_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGIN } from './constants';
-import { loginService, getUserService } from './services';
+import { SIGNUP_REQUESTING, SIGNUP_SUCCESS, SIGNUP_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGIN, SIGNUP } from './constants';
+import { loginService, signupService, getUserService } from './services';
 
 import history from '~/utils/history';
 
@@ -19,15 +19,32 @@ function* loginSaga(action) {
             yield put({ type: LOGIN_SUCCESS, payload: { user: user.data } });
             history.back();
         } else {
-            yield put({ type: LOGIN_FAIL });
+            yield put({ type: LOGIN_FAIL, payload: { error: response.message } });
         }
     } catch (error) {
         yield put({ type: LOGIN_FAIL, error });
     }
 }
 
+function* signupSaga(action) {
+    const { email, name, password } = action.payload;
+    console.log('signup: ', email, '|', name, '|', password);
+    try {
+        const response = yield call(signupService, { email, name, password });
+        console.log(response);
+        if (response.status == 1) {
+            yield put({ type: SIGNUP_SUCCESS, payload: { message: response.message } });
+        } else {
+            yield put({ type: SIGNUP_ERROR, payload: { error: response.message } });
+        }
+    } catch (error) {
+        yield put({ type: SIGNUP_ERROR, payload: { error: 'Vui lòng thử lại' } });
+    }
+}
+
 function* authSagas() {
     yield takeEvery(LOGIN, loginSaga);
+    yield takeEvery(SIGNUP, signupSaga);
 }
 
 export default authSagas;

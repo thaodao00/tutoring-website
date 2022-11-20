@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames/bind';
 import styles from './Login.module.scss';
 import { login } from '~/redux/auth/actions';
+import Button from '~/components/Button/Button';
+import history from '~/utils/history';
+
 const cx = classNames.bind(styles);
 
 function Login() {
@@ -15,7 +18,9 @@ function Login() {
     const auth = useSelector((state) => state.auth);
 
     useEffect(() => {
-        console.log(auth);
+        if (auth.user) {
+            history.replace('/');
+        }
     }, [auth]);
 
     const handleLogin = (e) => {
@@ -31,12 +36,17 @@ function Login() {
                         <center>
                             <h4 className={cx('heading-title heading-line-bottom ')}>Đăng nhập tài khoản</h4>
                         </center>
+                        <center>
+                            <p className={cx('text-error', 'font-size-14', 'text-center', 'text-c-red')}>
+                                {auth.error}
+                            </p>
+                        </center>
                         <div>
                             <input
                                 onChange={(e) => setEmail(e.target.value)}
                                 className={cx('form-control-none-radius ng-pristine ng-untouched ng-valid ng-empty ')}
-                                placeholder="Số điện thoại"
-                                ng-model="phone"
+                                placeholder="Email"
+                                ng-model="email"
                             ></input>
                             <input
                                 onChange={(e) => setPassword(e.target.value)}
@@ -58,6 +68,13 @@ function Login() {
                                 <i className="fas fa-phone"></i> Đăng nhập
                             </button>
                         </div>
+                        <div className={cx('register-span')}>
+                            <span> Bạn chưa có tài khoản? </span>
+                            <Button to="/register" className={cx('text-register')}>
+                                Đăng Ký
+                            </Button>
+                        </div>
+
                         <div className={cx('hr-empty')}></div>
                         <button
                             href="#"
