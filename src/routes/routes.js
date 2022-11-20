@@ -3,22 +3,21 @@ import Class from '~/pages/Class/Class';
 import Tutor from '~/pages/Tutor/Tutor';
 import Login from '~/pages/Login/Login';
 import Posts from '~/pages/Posts/Posts';
+import Register from '~/pages/Register/Register';
+
 import SearchTutor from '~/pages/SearchTutor/SearchTutor';
 import RegisterAsTutor from '~/pages/RegisterAsTutor/RegisterAsTutor';
 import ReferenceTuition from '~/pages/ReferenceTuition/ReferenceTuition';
 import TutorDetail from '~/pages/TutorDetail/TutorDetail';
-import Contacts from "~/pages/Contacts/Contacts";
-import InfoUser from "~/pages/InforUser";
-import InfoLogin from "~/pages/InfoLogin";
-import ClassTeach from "~/pages/ClassTeach";
-import ClassStudy from "~/pages/ClassStudy";
-import config from "~/config";
-import Contract from "~/pages/Contract/Contract";
-
-
+import Contacts from '~/pages/Contacts/Contacts';
+import InfoUser from '~/pages/InforUser';
+import InfoLogin from '~/pages/InfoLogin';
+import ClassTeach from '~/pages/ClassTeach';
+import ClassStudy from '~/pages/ClassStudy';
+import config from '~/config';
+import Contract from '~/pages/Contract/Contract';
 
 const publicRoutes = [
-
     { path: '/', component: Home },
     { path: config.routes.home, component: Home },
     { path: config.routes.class, component: Class },
@@ -35,7 +34,7 @@ const publicRoutes = [
     { path: config.routes.infoLogin, component: InfoLogin },
     { path: config.routes.classTeach, component: ClassTeach },
     { path: config.routes.classStudy, component: ClassStudy },
-
+    { path: config.routes.register, component: Register },
 ];
 const privateRoutes = [];
 export { publicRoutes, privateRoutes };
