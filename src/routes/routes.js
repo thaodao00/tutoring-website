@@ -2,7 +2,9 @@ import Home from '~/pages/Home/Home';
 import Class from '~/pages/Class/Class';
 import Tutor from '~/pages/Tutor/Tutor';
 import Login from '~/pages/Login/Login';
+
 import Register from '~/pages/Register/Register';
+
 import SearchTutor from '~/pages/SearchTutor/SearchTutor';
 import RegisterAsTutor from '~/pages/RegisterAsTutor/RegisterAsTutor';
 import ReferenceTuition from '~/pages/ReferenceTuition/ReferenceTuition';
