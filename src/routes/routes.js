@@ -2,9 +2,7 @@ import Home from '~/pages/Home/Home';
 import Class from '~/pages/Class/Class';
 import Tutor from '~/pages/Tutor/Tutor';
 import Login from '~/pages/Login/Login';
-import Posts from '~/pages/Posts/Posts';
 import Register from '~/pages/Register/Register';
-
 import SearchTutor from '~/pages/SearchTutor/SearchTutor';
 import RegisterAsTutor from '~/pages/RegisterAsTutor/RegisterAsTutor';
 import ReferenceTuition from '~/pages/ReferenceTuition/ReferenceTuition';
@@ -23,7 +21,6 @@ const publicRoutes = [
     { path: config.routes.class, component: Class },
     { path: config.routes.tutor, component: Tutor },
     { path: config.routes.login, component: Login },
-    { path: config.routes.posts, component: Posts },
     { path: config.routes.contacts, component: Contacts },
     { path: config.routes.searchTutor, component: SearchTutor },
     { path: config.routes.registerAsTutor, component: RegisterAsTutor },
