@@ -8,6 +8,14 @@ export const loginService = async (email, password) =>
         })
         .catch((e) => e.response?.data);
 
+export const signupService = async (data) =>
+    await api
+        .post('/v1/auths/register', data)
+        .then((res) => {
+            return res.data;
+        })
+        .catch((e) => e.response?.data);
+
 export const getUserService = async () =>
     await api
         .get('/v1/auths/user')
