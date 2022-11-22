@@ -2,7 +2,8 @@ import Home from '~/pages/Home/Home';
 import Class from '~/pages/Class/Class';
 import Tutor from '~/pages/Tutor/Tutor';
 import Login from '~/pages/Login/Login';
-
+import ForgotPassword from '~/pages/ForgotPassword/ForgotPassword';
+import UpdatePassword from '~/pages/ForgotPassword/UpdatePassword';
 import Register from '~/pages/Register/Register';
 
 import SearchTutor from '~/pages/SearchTutor/SearchTutor';
@@ -34,6 +35,8 @@ const publicRoutes = [
     { path: config.routes.classTeach, component: ClassTeach },
     { path: config.routes.classStudy, component: ClassStudy },
     { path: config.routes.register, component: Register },
+    { path: config.routes.forgotPassword, component: ForgotPassword },
+    { path: config.routes.updatePassword, component: UpdatePassword },
 ];
 const privateRoutes = [];
 export { publicRoutes, privateRoutes };

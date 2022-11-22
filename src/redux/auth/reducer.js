@@ -1,5 +1,18 @@
-import { SIGNUP, LOADING, LOGIN_FAIL, LOGIN_SUCCESS, LOGIN, LOGOUT, RESET_MESSAGE } from './constants';
-import { SIGNUP_REQUESTING, SIGNUP_SUCCESS, SIGNUP_ERROR } from './constants';
+import {
+    SIGNUP,
+    LOADING,
+    LOGIN_FAIL,
+    LOGIN_SUCCESS,
+    LOGIN,
+    LOGOUT,
+    RESET_MESSAGE,
+    SIGNUP_SUCCESS,
+    SIGNUP_ERROR,
+    UPDATE_PASSWORD,
+    FORGOT_PASSWORD,
+    FORGOT_PASSWORD_SUCCESS,
+    FORGOT_PASSWORD_FAIL,
+} from './constants';
 
 const initialState = {
     user: null,
@@ -26,6 +39,14 @@ function authReducer(state = initialState, action) {
             return { ...state, loading: false, error: action.payload.error, message: null };
         case RESET_MESSAGE:
             return { ...state, loading: false, error: null, message: null };
+        case UPDATE_PASSWORD:
+            return { ...state, loading: false, error: null, message: null };
+        case FORGOT_PASSWORD:
+            return { ...state, loading: false, error: null, message: null };
+        case FORGOT_PASSWORD_SUCCESS:
+            return { ...state, loading: false, message: action.payload.message, error: null };
+        case FORGOT_PASSWORD_FAIL:
+            return { ...state, loading: false, error: action.payload.error, message: null };
         default:
             return state;
     }
