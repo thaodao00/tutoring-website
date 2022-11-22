@@ -15,6 +15,7 @@ const routes = {
     infoLogin: '/info-login',
     classTeach: '/class-teach',
     classStudy: '/class-study',
-
-}
+    forgotPassword: 'forgotPassword',
+    updatePassword: 'updatePassword',
+};
 export default routes;

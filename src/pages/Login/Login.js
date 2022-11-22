@@ -9,6 +9,8 @@ import Button from '~/components/Button/Button';
 import history from '~/utils/history';
 import LoadingOverlay from 'react-loading-overlay';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import RootNavigator from '~/utils/navigate';
 
 const cx = classNames.bind(styles);
 
@@ -17,16 +19,14 @@ function Login() {
         register,
         formState: { errors },
         handleSubmit,
-        getValues,
-        watch,
-        setError,
     } = useForm();
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     // const [name, setEmail] = useState("")
     const auth = useSelector((state) => state.auth);
-
+    const navigate = useNavigate();
+    RootNavigator.setNavigate(navigate);
     useEffect(() => {
         dispatch(reset());
         // if (auth.user) {
@@ -110,6 +110,11 @@ function Login() {
                                 >
                                     <i className="fas fa-phone"></i> Đăng nhập
                                 </button>
+                            </div>
+                            <div className={cx('forgot-span')}>
+                                <Button to="/forgotPassword" className={cx('text-forgot')}>
+                                    Quên mật khẩu?
+                                </Button>
                             </div>
                             <div className={cx('register-span')}>
                                 <span> Bạn chưa có tài khoản? </span>
