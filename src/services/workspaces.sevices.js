@@ -23,7 +23,10 @@ export const createClass = async (data) => {
     const request = await instance.post('/v1/class-room/', data)
     return request.data
 }
+export const createPayment = async (body) => {
+    return await instance.post('/v1/payment/', body)
 
+}
 export const fetchSubject = async (subject) => {
     const response = await getSubject();
     const { data, status } = response?.data
