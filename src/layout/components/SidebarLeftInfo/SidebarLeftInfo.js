@@ -11,6 +11,7 @@ import { HiOutlineLogout } from "react-icons/hi";
 import classNames from "classnames/bind";
 import styles from "./SidebarLeftInfo.module.scss";
 import Button from '~/components/Button';
+import { useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
@@ -45,6 +46,7 @@ function SidebarLeftInfo(data) {
             editRef.current.classList.add(cx('hide'))
         }
     }
+    const auth = useSelector((state) => state.auth);
     return (
         <div className={cx('sidebar-left')}>
             <div className={cx('avatar')}>
@@ -69,8 +71,8 @@ function SidebarLeftInfo(data) {
                 }
             </div>
             <div className={cx('info')}>
-                <h4 className={cx('account')}>{data.data.name}</h4>
-                <p className={cx('info-item')}>ID: <span>{data.data.id}</span> <br /> <Button className={cx('btn-logout')}><p>Đăng xuất</p></Button></p>
+                <h4 className={cx('account')}>{auth.user.name}</h4>
+                <p className={cx('info-item')}>ID: <span>{auth.user.id}</span> <br /> <Button className={cx('btn-logout')}><p>Đăng xuất</p></Button></p>
 
             </div>
         </div>
