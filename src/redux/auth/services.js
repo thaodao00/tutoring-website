@@ -24,3 +24,19 @@ export const getUserService = async () =>
             return res.data;
         })
         .catch((e) => e.response?.message);
+
+export const updatePasswordService = async (data) =>
+    await api
+        .post('/v1/auths/forgot-password')
+        .then((res) => {
+            return res.data;
+        })
+        .catch((e) => e.response?.message);
+
+export const forgotPasswordService = async (data) =>
+    await api
+        .get('/v1/auths/forgot-password')
+        .then((res) => {
+            return res.data;
+        })
+        .catch((e) => e.response?.message);

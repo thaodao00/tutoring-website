@@ -5,6 +5,7 @@ import styles from './Home.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import { useNavigate } from 'react-router-dom';
 import {
     faCalendarAlt,
     faClock,
@@ -27,8 +28,12 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a lo
 import { Carousel } from 'react-responsive-carousel';
 import GoodTutor from '~/layout/components/GoodTutor/GoodTutor';
 import { Subject } from '~/layout/components/Subject/Subject';
+import RootNavigator from '~/utils/navigate';
 const cx = classNames.bind(styles);
 function Home() {
+    const navigate = useNavigate();
+    RootNavigator.setNavigate(navigate);
+    console.log(navigate);
     const [show1, setShow1] = useState(true);
     const [show2, setShow2] = useState(false);
     const [show3, setShow3] = useState(false);

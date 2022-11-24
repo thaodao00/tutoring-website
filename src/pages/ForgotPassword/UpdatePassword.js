@@ -1,102 +1,95 @@
+import React, { useState } from 'react';
 import classNames from 'classnames/bind';
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import styles from './Register.module.scss';
-import Button from '~/components/Button/Button';
-import { reset, signup } from '~/redux/auth/actions';
-import LoadingOverlay from 'react-loading-overlay';
+import styles from './UpdatePassword.module.scss';
 import { useForm } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
+import api from '~/utils/axios';
+import LoadingOverlay from 'react-loading-overlay';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const cx = classNames.bind(styles);
-function Register() {
+
+function UpdatePassword(props) {
+    const location = useLocation();
+    const { email } = location.state;
     const {
         register,
         formState: { errors },
         handleSubmit,
         getValues,
-        watch,
-        setError,
     } = useForm();
 
-    const dispatch = useDispatch();
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
+    const [codeOTP, setCodeOTP] = useState('');
     const [password, setPassword] = useState('');
-    const [confimPass, setConfirmpass] = useState('');
-    const auth = useSelector((state) => state.auth);
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState(null);
 
-    useEffect(() => {
-        dispatch(reset());
-    }, []);
+    const handleForgotPass = async () => {
+        setLoading(true);
+        setMessage(null);
+        await api
+            .post('v1/auths/forgot-password/', { email, password, otp: parseInt(codeOTP) })
+            .then((res) => {
+                return res.data;
+            })
+            .then((res) => {
+                setMessage(res.message);
+                if (res.status == 1) {
+                    NotificationManager.success('Đã cập nhật mật khẩu mới');
+                } else {
+                    NotificationManager.error(res.message);
+                }
+            })
+            .catch((e) => setMessage(e.response?.message));
 
-    const onSubmit = (data) => {
-        if (watch('confirmPassword') !== watch('password')) {
-            return setError('confirmPassword', { type: 'validate', message: 'Mật khẩu không khớp' });
-        }
-        dispatch(signup(email, name, password));
+        setLoading(false);
     };
 
     return (
-        <LoadingOverlay active={auth.loading} spinner text="Đang đăng ký">
+        <LoadingOverlay active={loading} spinner text="Vui lòng chờ">
             <div className={cx('container')}>
                 <div className={cx('rows')}>
                     <div className={cx('col-md-4', 'col-md-offset-4')} style={{ margin: '0 auto' }}>
-                        <form className={cx('form-login', 'ng-pristine', 'ng-valid')} onSubmit={handleSubmit(onSubmit)}>
+                        <form
+                            className={cx('form-login', 'ng-pristine', 'ng-valid')}
+                            onSubmit={handleSubmit(handleForgotPass)}
+                        >
                             <center>
-                                <h4 className={cx('heading-title heading-line-bottom ')}>Đăng ký tài khoản</h4>
-                            </center>
-                            <center>
-                                <p className={cx('text-error', 'font-size-14', 'text-center', 'text-c-red')}>
-                                    {auth.error}
-                                </p>
-                                <p className={cx('text-error', 'font-size-14', 'text-center', 'text-c-primary')}>
-                                    {auth.message}
-                                </p>
+                                <h4 className={cx('heading-title heading-line-bottom ')}>Cập nhật mật khẩu mới</h4>
                             </center>
                             <div>
                                 <input
-                                    name="name"
-                                    onInput={(e) => setName(e.target.value)}
+                                    onInput={(e) => setCodeOTP(e.target.value)}
                                     className={cx(
                                         'form-control-none-radius ng-pristine ng-untouched ng-valid ng-empty ',
                                     )}
-                                    placeholder="Họ tên"
+                                    placeholder="Nhập mã OTP"
                                     ng-model="text"
-                                    {...register('name', { required: true })}
-                                ></input>
-                                <div className={cx('error')}>
-                                    <error className={cx('text-error')}>
-                                        {errors.name?.type === 'required' && 'Họ tên là bắt buộc'}
-                                    </error>
-                                </div>
-                                <input
-                                    onInput={(e) => setEmail(e.target.value)}
-                                    name="email"
-                                    className={cx(
-                                        'form-control-none-radius ng-pristine ng-untouched ng-valid ng-empty ',
-                                    )}
-                                    placeholder="Email"
-                                    ng-model="email"
-                                    {...register('email', {
+                                    name="codeOTP"
+                                    onKeyPress={(event) => {
+                                        if (!/[0-9]/.test(event.key)) {
+                                            event.preventDefault();
+                                        }
+                                    }}
+                                    {...register('codeOTP', {
                                         required: true,
-                                        pattern: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
                                     })}
                                 ></input>
                                 <div className={cx('error')}>
                                     <error className={cx('text-error')}>
-                                        {errors.email?.type === 'required' && 'Email là bắt buộc'}
-                                        {errors.email?.type === 'pattern' && 'Email sai định dạng'}
+                                        {errors.codeOTP?.type === 'required' && 'Mã OTP là bắt buộc'}
                                     </error>
                                 </div>
                                 <input
                                     onInput={(e) => setPassword(e.target.value)}
-                                    name="password"
                                     className={cx(
                                         'form-control-none-radius ng-pristine ng-untouched ng-valid ng-empty ',
                                     )}
-                                    placeholder="Mật Khẩu"
+                                    placeholder="Mật khẩu"
                                     type="password"
                                     ng-model="pass"
+                                    name="password"
                                     {...register('password', {
                                         required: true,
                                         minLength: 3,
@@ -136,9 +129,9 @@ function Register() {
                                     </error>
                                 </div>
                                 {/* // eslint-disable-next-line jsx-a11y/anchor-is-valid, jsx-a11y/anchor-is-valid,
-                    jsx-a11y/anchor-is-valid */}
-                                <Button
-                                    // onClick={handleSignup}
+                            jsx-a11y/anchor-is-valid */}
+                                <button
+                                    // onClick={handleLogin}
                                     type="submit"
                                     className={cx('btn btn-lg btn-block btn-phone ')}
                                     style={{
@@ -146,21 +139,16 @@ function Register() {
                                         marginBottom: '20px',
                                     }}
                                 >
-                                    <i className="fas fa-phone"></i> Đăng ký
-                                </Button>
-                                <div className={cx('login-span')}>
-                                    <span> Bạn đã có tài khoản? </span>
-                                    <Button to="/login" className={cx('text-login')}>
-                                        Đăng Nhập
-                                    </Button>
-                                </div>
+                                    <i className="fas fa-phone"></i> Gửi
+                                </button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+            <NotificationContainer />
         </LoadingOverlay>
     );
 }
 
-export default Register;
+export default UpdatePassword;
