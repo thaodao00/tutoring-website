@@ -106,12 +106,11 @@ function Wallet() {
                     <Card>
                         <CardBody>
                             <CardTitle className='mb-50'><h3 className='fw-bolder mt-2'>Ví của bạn</h3></CardTitle>
-                            {/* <h5 className='fw-bolder mt-2'>SỐ DƯ</h5> */}
                             <div className='d-flex justify-content-between border-bottom mb-1 pb-1'>
                                 <h1 className='text-success fw-bolder'>355 Điểm</h1>
                             </div>
-                            <p className='mb-0'>
-                                Để có thêm điểm bạn phải nạp tiền qua paypal
+                            <p className='mb-2 pb-2 pt-5'>
+                                Để có thêm điểm bạn phải nạp tiền qua Paypal
                             </p>
                         </CardBody>
                     </Card>
@@ -235,7 +234,7 @@ function Wallet() {
                 </div>
             </div>
 
-            <Card className='mt-5'>
+            <Card className='mt-0'>
                 <CardHeader>
                     <CardTitle><h3 className='fw-bolder'>Lịch sử giao dịch</h3></CardTitle>
                 </CardHeader>
