@@ -1,20 +1,19 @@
 .wrapper {
-  padding-top: var(--padding-top);
-  padding-bottom: var(--padding-bottom);
-
+    padding-top: var(--padding-top);
+    padding-bottom: var(--padding-bottom);
 }
-
 
 // css information
 .information {
-  padding-left: 12px !important;
+    padding-left: 12px !important;
 }
 
 .title {
-  font-weight: 500;
-  color: #333;
-  font-size: 2.6rem;
-  margin-top: 0 !important;
+    font-weight: 500;
+    color: #333;
+    font-size: 2.6rem;
+    margin-top: 0 !important;
 }
-
-
+.wallet {
+    z-index: 0;
+}
