@@ -14,7 +14,7 @@ instance.interceptors.request.use(
                 ...config,
                 headers: {
                     ...headers,
-                    Authorization: `Bearer ${accessToken}`
+                    'Access-Token': `Token ${accessToken}`,
                 }
             }
 

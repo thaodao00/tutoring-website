@@ -44,28 +44,21 @@
         input {
             margin-bottom: 20px;
         }
+        input::placeholder {
+            font-weight: bold;
+            opacity: 0.5;
+        }
         .hr-empty {
             border-bottom: solid 1px #ccc;
             margin-bottom: 20px;
         }
-        .register-span {
+        .login-span {
             display: flex;
-            .text-register {
+            .text-login {
                 margin-left: 10px;
                 color: cadetblue;
             }
-            .text-register :hover {
-                color: darkcyan;
-            }
-        }
-
-        .forgot-span {
-            text-align: right;
-            .text-forgot {
-                margin-left: 10px;
-                color: cadetblue;
-            }
-            .text-forgot :hover {
+            .text-login :hover {
                 color: darkcyan;
             }
         }
@@ -73,6 +66,7 @@
         button {
             width: 100%;
             line-height: 30px;
+            text-align: left;
             color: white;
             position: relative;
             display: block;

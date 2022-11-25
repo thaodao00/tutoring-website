@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DefaultLayout from './layout/DefaultLayout/DefaultLayout';
 import { publicRoutes } from './routes';
+import { createBrowserHistory } from 'history';
 
 function App() {
     return (
-        <Router>
+        <Router history={createBrowserHistory()}>
             <div className="App">
                 <Routes>
                     {publicRoutes.map((route, index) => {

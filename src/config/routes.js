@@ -5,7 +5,6 @@ const routes = {
     login: '/login',
     logout: '/logout',
     register: '/register',
-    posts: '/posts',
     contacts: '/contacts',
     searchTutor: '/searchTutor',
     registerAsTutor: '/register-as-tutor',
@@ -16,7 +15,7 @@ const routes = {
     infoLogin: '/info-login',
     classTeach: '/class-teach',
     classStudy: '/class-study',
-
-
-}
+    forgotPassword: 'forgotPassword',
+    updatePassword: 'updatePassword',
+};
 export default routes;
