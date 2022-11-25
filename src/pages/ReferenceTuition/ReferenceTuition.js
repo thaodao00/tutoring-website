@@ -122,9 +122,9 @@ function ReferenceTuition(props) {
                                     <Form.Label className={cx('description')}>Trình độ</Form.Label>
                                     <Form.Select style={{padding: '14px 18px'}} size='lg'>
                                         {
-                                            levels.map((item, index) => {
+                                            levels.map((item) => {
                                                 return (
-                                                    <OptionItem key={index} children={item.level}/>
+                                                    <OptionItem key={item.id} children={item.level}/>
                                                 )
                                             })
                                         }

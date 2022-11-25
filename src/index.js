@@ -30,11 +30,11 @@ root.render(
 
     <Provider store={store}>
         <PersistGate persistor={persistor}>
-            <React.StrictMode>
+            {/*<React.StrictMode>*/}
                 <GlobalStyles>
                     <App />
                 </GlobalStyles>
-            </React.StrictMode>
+            {/*</React.StrictMode>*/}
         </PersistGate>
     </Provider>,
 

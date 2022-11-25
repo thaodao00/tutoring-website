@@ -9,27 +9,31 @@ export const subjects = [
     {id:7,label: "Bóng chuyền"}
 ];
 export const ours = [
-    {our: '-------'},
-    {our: '30 phút'},
-    {our: '45 phút'},
-    {our: '60 phút'},
-    {our: '90 phút'},
-    {our: '2 giờ'},
-    {our: '2.5 giờ'},
-    {our: '3 giờ'},
+    {id: 1, value: 30 * 60, our: '30 Phút'},
+    {id: 2, value: 45 * 60, our: '45 Phút'},
+    {id: 3, value: 60 * 60, our: '1h'},
+    {id: 4, value: 90 * 60, our: '1h 30 Phút'},
+    {id: 5, value: 2 * 60 * 60, our: '2h'},
+    {id: 6, value: 2.5 * 60 * 60, our: '2.5h'},
+    {id: 7, value: 3 * 60 * 60, our: '3h'},
 
 ]
 export const levels = [
-    {level: 'Tùy'},
-    {level: 'Sinh viên'},
-    {level: 'Giáo viên'},
-    {level: 'Đã tốt nghiệp'},
+    {id: 1, value: 'STUDENT', level: 'sinh viên'},
+    {id: 2, value: 'TEACHER', level: 'giáo viên'},
 ]
 export const follows = [
     {follow: 'Tháng'},
     {follow: 'Buổi'},
     {follow: 'Tuần'},
     {follow: 'Giờ'},
+]
+//searchTutor
+export const genders = [
+    {id: 1, value: 'MALE', gender: 'Nam'},
+    {id: 2, value: 'FEMALE', gender: 'Nữ'},
+    {id: 3, value: 'ALL', gender: 'Cả 2'},
+
 ]
 
 // Class
