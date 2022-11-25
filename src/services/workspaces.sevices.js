@@ -45,6 +45,14 @@ export const getWard = async (idDistrict) => {
     const request = await instance.get(`/v1/address/wards/district/${idDistrict}`)
     return request.data
 }
+export const getGrade = async () => {
+    return await instance.get('/v1/grades/get-all')
+}
+export const fetchGrade = async (subject) => {
+    const response = await getGrade();
+    const {data, status} = response?.data
+    return data
+}
 
 export const createPayment = async (body) => {
     return await instance.post('/v1/payment/', body)
