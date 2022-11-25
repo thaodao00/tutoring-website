@@ -6,9 +6,9 @@ import styles from './ReferenceTuition.module.scss';
 const cx = classNames.bind(styles);
 
 function OptionItem(props) {
-    const {children} = props
+    const {children, value} = props
     return (
-        <option>{children}</option>
+        <option value={value}>{children}</option>
     );
 }
 
