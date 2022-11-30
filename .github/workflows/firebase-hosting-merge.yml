@@ -17,3 +17,6 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TUTOR_WEBSITE_52ADD }}'
           channelId: live
           projectId: tutor-website-52add
+        env:
+          BUILD_SCRIPT: npm build
+          FOLDER: build
