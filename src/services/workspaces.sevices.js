@@ -50,7 +50,7 @@ export const getGrade = async () => {
 }
 export const fetchGrade = async (subject) => {
     const response = await getGrade();
-    const {data, status} = response?.data
+    const { data, status } = response?.data
     return data
 }
 
@@ -67,4 +67,10 @@ export const fetchSubject = async (subject) => {
         })
 
     }
+}
+export const getCoin = async () => {
+    return await instance.get('v1/payment/')
+}
+export const getHistoryPayment = async () => {
+    return await instance.get('v1/payment/history')
 }
