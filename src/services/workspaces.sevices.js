@@ -74,3 +74,6 @@ export const getCoin = async () => {
 export const getHistoryPayment = async () => {
     return await instance.get('v1/payment/history')
 }
+export const updateUser = async (body) => {
+    return await instance.put('v1/auths/user', body)
+}
