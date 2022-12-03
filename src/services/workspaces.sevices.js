@@ -77,3 +77,6 @@ export const getHistoryPayment = async () => {
 export const updateUser = async (body) => {
     return await instance.put('v1/auths/user', body)
 }
+export const getClassById = async (id) => {
+    return await instance.get(`v1/class-room/?user_id=${id}`)
+}

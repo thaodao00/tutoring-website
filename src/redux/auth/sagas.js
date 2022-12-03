@@ -13,11 +13,15 @@ import {
     FORGOT_PASSWORD,
     FORGOT_PASSWORD_SUCCESS,
     FORGOT_PASSWORD_FAIL,
+    UPDATE_INFO_USER_SUCCESS,
+    UPDATE_INFO_USER_FAIL,
+    UPDATE_INFO_USER,
 } from './constants';
 import { loginService, signupService, getUserService, updatePasswordService, forgotPasswordService } from './services';
 
 // import history from '~/utils/history';
 import RootNavigate from '~/utils/navigate';
+import { updateUser } from '~/services/workspaces.sevices';
 
 function* loginSaga(action) {
     const { email, password } = action.payload;
@@ -42,7 +46,21 @@ function* loginSaga(action) {
         yield put({ type: LOGIN_FAIL, error });
     }
 }
+function* updateInfoSaga(action) {
+    try {
+        const { id, name, gender, phone, birthday, introduce } = action.payload;
+        const { data, status, message } = yield call(updateUser, { id, name, gender, phone, birthday, introduce })
+        if (status === 1) {
+            yield put({ type: UPDATE_INFO_USER_SUCCESS, payload: { user: data, message: message } })
+        }
+        else {
+            yield put({ type: UPDATE_INFO_USER_FAIL, payload: { error: message } })
+        }
 
+    } catch (error) {
+
+    }
+}
 function* signupSaga(action) {
     const { email, name, password } = action.payload;
     console.log('signup: ', email, '|', name, '|', password);
@@ -80,6 +98,7 @@ function* updatePasswordSaga(action) {
         yield put({ type: UPDATE_PASSWORD_FAIL, payload: { error: 'Vui lòng thử lại' } });
     }
 }
+
 function* forgotPasswordSaga(action) {
     const { email } = action.payload;
     try {
@@ -101,6 +120,7 @@ function* authSagas() {
     yield takeEvery(SIGNUP, signupSaga);
     yield takeEvery(UPDATE_PASSWORD, updatePasswordSaga);
     yield takeEvery(FORGOT_PASSWORD, forgotPasswordSaga);
+    yield takeEvery(UPDATE_INFO_USER, updateInfoSaga)
 }
 
 export default authSagas;

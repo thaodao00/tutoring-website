@@ -12,10 +12,12 @@ import classNames from "classnames/bind";
 import styles from "./SidebarLeftInfo.module.scss";
 import Button from '~/components/Button';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { getInfoTutor } from '~/services/workspaces.sevices';
 
 const cx = classNames.bind(styles);
 
-function SidebarLeftInfo(data) {
+function SidebarLeftInfo() {
     const [selectedImage, setSelectedImage] = useState(null);
     const links = [
         {
@@ -36,6 +38,7 @@ function SidebarLeftInfo(data) {
         }
     ]
     const [isEdit, setIsEdit] = useState(false)
+    const [data, setData] = useState(false)
     const editRef = useRef(null)
     const handleEditAvatar = () => {
         setIsEdit(!isEdit)
@@ -47,11 +50,21 @@ function SidebarLeftInfo(data) {
         }
     }
     const auth = useSelector((state) => state.auth);
+    useEffect(() => {
+        async function fetchData() {
+            const response = await getInfoTutor(auth.user.id)
+            const { data } = response.data
+            if (data) {
+                setData(data)
+            }
+        }
+        fetchData()
+    }, [])
     return (
         <div className={cx('sidebar-left')}>
             <div className={cx('avatar')}>
                 <img alt="not fount"
-                    src={selectedImage == null ? `${Avatar}` : URL.createObjectURL(selectedImage)} />
+                    src={selectedImage == null ? `${auth.user.urlAvt}` : URL.createObjectURL(selectedImage)} />
                 <span ref={editRef} onClick={handleEditAvatar}
                     className={cx('edit')}>Chỉnh sửa avatar</span>
                 {

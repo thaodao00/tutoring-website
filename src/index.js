@@ -11,9 +11,8 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 
 import IndexReducer from './index-reducer';
 import IndexSagas from './index-sagas';
-
+import "react-loading-skeleton/dist/skeleton.css";
 const sagaMiddleware = createSagaMiddleware();
-
 // const composeSetup =
 //     process.env.NODE_ENV !== 'production' && typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
 //         ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -30,9 +29,9 @@ root.render(
     <Provider store={store}>
         <PersistGate persistor={persistor}>
             {/*<React.StrictMode>*/}
-                <GlobalStyles>
-                    <App />
-                </GlobalStyles>
+            <GlobalStyles>
+                <App />
+            </GlobalStyles>
             {/*</React.StrictMode>*/}
         </PersistGate>
     </Provider>,
