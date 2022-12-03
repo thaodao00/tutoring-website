@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { getTutors } from '~/services/workspaces.sevices';
 import Avatar from '~/assets/avatar/default-avatar.png'
 import { Fragment } from 'react';
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 const cx = classNames.bind(styles);
 export const TutorItem = () => {
     // const dataTutor = [
@@ -56,6 +57,7 @@ export const TutorItem = () => {
             setLoading(false)
             const response = await getTutors()
             const { data } = response.data
+            console.log(data);
             if (data) {
                 setData(data)
             }
@@ -63,6 +65,34 @@ export const TutorItem = () => {
         }
         fetchData()
     }, [])
+    const Loading = () => {
+        return (
+            <div className=' container row'>
+
+                <div className='col-md-4'>
+                    <SkeletonTheme color="#666" highlightColor="#999">
+                        <p>
+                            <Skeleton height={400} />
+                        </p>
+                    </SkeletonTheme>;
+                </div>
+                <div className='col-md-4'>
+                    <SkeletonTheme color="#666" highlightColor="#999">
+                        <p>
+                            <Skeleton height={400} />
+                        </p>
+                    </SkeletonTheme>;
+                </div>
+                <div className='col-md-4'>
+                    <SkeletonTheme color="#666" highlightColor="#999">
+                        <p>
+                            <Skeleton height={400} />
+                        </p>
+                    </SkeletonTheme>;
+                </div>
+            </div>
+        )
+    }
     return (
         <>
             <Fragment>
@@ -73,7 +103,7 @@ export const TutorItem = () => {
                                 <Button to={`/tutor-detail/${item.id}`} className={cx("col-lg-4 col-md-6 col-sm-12 card", "box-card")} key={index}>
 
                                     <div className={cx('box-item')}>
-                                        <img style={{ height: '255px' }} src={item.avatar ? item.avatar : Avatar} className="card-img-top" alt="..." />
+                                        <img style={{ height: '255px' }} src={item.urlAvt ? item.urlAvt : Avatar} className="card-img-top" alt="..." />
                                         <div className={cx("card-body", "card-bottom")}>
                                             <div className="card-text">
                                                 <h4 className={cx('text-name')}>
@@ -100,7 +130,7 @@ export const TutorItem = () => {
                             )
                         })}</Fragment>
 
-                ) : (<div className={cx("text-loading")}>XIN CHỜ TRONG GIÂY LÁT <FontAwesomeIcon className={cx("loading")} icon={faSpinner}></FontAwesomeIcon></div>)}
+                ) : (<Loading />)}
             </Fragment>
         </>
     )

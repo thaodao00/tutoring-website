@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
-function SidebarLeftInfo(data) {
+function SidebarLeftInfo() {
     const [selectedImage, setSelectedImage] = useState(null);
     const links = [
         {

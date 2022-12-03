@@ -33,3 +33,27 @@
         font-size: 1.4rem;
     }
 }
+.loading {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #dce0dc;
+}
+.loading-icon {
+    color: var(--primary);
+    margin-right: 4px;
+    cursor: pointer;
+}
+.loading-icon {
+    animation: spinner 0.8s linear;
+}
+@keyframes spinner {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
