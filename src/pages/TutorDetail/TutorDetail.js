@@ -9,7 +9,6 @@ import { useParams } from 'react-router-dom';
 import Avatar from '~/assets/avatar/default-avatar.png'
 import { Fragment } from 'react';
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import { height } from '@fortawesome/free-solid-svg-icons/faSearch';
 
 const cx = classNames.bind(styles);
 function TutorDetail() {
@@ -32,7 +31,7 @@ function TutorDetail() {
     }, [])
     const Loading = () => {
         return (
-            <div className=' container m-5 row'>
+            <div className=' container m-5 p-5 row'>
                 <div className='col-md-6'>
                     <SkeletonTheme color="#666" highlightColor="#999">
                         <p>
@@ -57,37 +56,37 @@ function TutorDetail() {
         <>
             <Fragment>
                 {loading ?
-                    (<div className={cx('wrapper')}>
-                        <div className="container">
+                    (<div className={cx('wrapper', "container")}>
+                        <div className="container m-4">
                             <div className="row">
                                 <div className="col-lg-4 text-center d-flex flex-column" data-aos="fade-right">
-                                    <img src={data.urlAvt ? data.urlAvt : Avatar} alt="" height="300px" />
-                                    <div>
-                                        <Button className={cx('mt-5', 'btn')}>Chọn</Button>
-                                    </div>
+                                    <img src={data.urlAvt ? data.urlAvt : Avatar} alt="" height="400px" />
                                 </div>
-                                <div className="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
-                                    <h1 className={cx('text-uppercase', 'name')}>{data.name}</h1>
-                                    <div className="row">
-                                        <div className="col-lg-12">
-                                            <ul className={cx('list')}>
-                                                <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faBirthdayCake} /> <strong> NĂM SINH:</strong> <span className='text-break'>{new Date(data.birthday).toLocaleDateString()}</span></li>
-                                                <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faMapLocation} /><strong> NƠI Ở:</strong> <span className='text-break'>{data.address}</span></li>
-                                                <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faGraduationCap} /> <strong>SỐ ĐIỆN THOẠI:</strong> <span className='text-break'>{data.phone}</span></li>
-                                                <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faGraduationCap} /> <strong> TRÌNH ĐỘ:</strong> <span className='text-break'>{data?.position || ""}</span></li>
-                                                <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faBook} /> <strong> MÔN DẠY:</strong>
-                                                    <span className='text-break'>{data.subject ? data.subject : ""}
-                                                    </span>
-                                                </li>
-                                                <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faLocationDot} /> <strong> ĐỊA ĐIỂM DẠY HỌC:</strong> <span className='text-break'>{data.teaching_place ? data.teaching_place : ""}</span></li>
-                                            </ul>
-                                        </div>
-                                        <div className='col-lg-12 mt-3'>
-                                            <strong className={cx('title')}>GIỚI THIỆU BẢN THÂN</strong>
-                                            <p className={cx('describe')}>
-                                                {data.introduce ? data.introduce : ""}
+                                <div className="col-lg-8 pt-4 content" data-aos="fade-left">
+                                    <div className='mx-5 px-5'>
 
-                                            </p>
+                                        <h1 className={cx('text-uppercase', 'name')}>{data.name}</h1>
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <ul className={cx('list')}>
+                                                    <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faBirthdayCake} /> <strong> NĂM SINH:</strong> <span className='text-break'>{new Date(data.birthday).toLocaleDateString()}</span></li>
+                                                    <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faMapLocation} /><strong> NƠI Ở:</strong> <span className='text-break'>{data.address}</span></li>
+                                                    <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faGraduationCap} /> <strong>SỐ ĐIỆN THOẠI:</strong> <span className='text-break'>{data.phone}</span></li>
+                                                    <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faGraduationCap} /> <strong> TRÌNH ĐỘ:</strong> <span className='text-break'>{data?.position || ""}</span></li>
+                                                    <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faBook} /> <strong> MÔN DẠY:</strong>
+                                                        <span className='text-break'>{data.subject ? data.subject : ""}
+                                                        </span>
+                                                    </li>
+                                                    <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faLocationDot} /> <strong> ĐỊA ĐIỂM DẠY HỌC:</strong> <span className='text-break'>{data.teaching_place ? data.teaching_place : ""}</span></li>
+                                                </ul>
+                                            </div>
+                                            <div className='col-lg-12 mt-3'>
+                                                <strong className={cx('title')}>GIỚI THIỆU BẢN THÂN</strong>
+                                                <p className={cx('describe')}>
+                                                    {data.introduce ? data.introduce : ""}
+
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

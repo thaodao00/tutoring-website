@@ -21,10 +21,10 @@ function InfoUser(props) {
         <div className={cx('wrapper')}>
             <Container>
                 <Row>
-                    <Col lg={3} md={3} className='mb-5' >
+                    <Col lg={4} md={3} className='mb-5' >
                         <SidebarLeftInfo />
                     </Col>
-                    <Col lg={9} md={3}>
+                    <Col lg={8} md={3}>
                         <UserTabs active={active} toggleTab={toggleTab} />
                     </Col>
                 </Row>

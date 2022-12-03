@@ -110,17 +110,17 @@ export const TutorItem = () => {
                                                     {item.name}
                                                 </h4>
                                                 <ul className={cx('text-list')}>
-                                                    <li className={cx('text-item', 'textOverflow')}>
+                                                    {/* <li className={cx('text-item', 'textOverflow')}>
                                                         <FontAwesomeIcon icon={faLocationDot} className={cx('item-icon')} />
                                                         {item.address}
-                                                    </li>
-                                                    <li className={cx('text-item')}>
-                                                        <FontAwesomeIcon icon={faGraduationCap} className={cx('item-icon')} />
-                                                        {index.position ? item.position : ""}
-                                                    </li>
+                                                    </li> */}
+                                                    {/* <li className={cx('text-item')}>
+                                                        <FontAwesomeIcon icon={faGraduationCap} className={cx('item-icon')} />Ngày sinh:
+                                                        {index.birthday ? item.birthday : ""}
+                                                    </li> */}
                                                     <li className={cx('text-item', 'textOverflow')}>
-                                                        <FontAwesomeIcon icon={faBookBookmark} className={cx('item-icon')} />
-                                                        {item.subject ? item.subject : ""}
+                                                        <FontAwesomeIcon icon={faBookBookmark} className={cx('item-icon')} />Giới thiêu:{" "}
+                                                        {item.introduce ? item.introduce.substring(0, 16) : ""}...
                                                     </li>
                                                 </ul>
                                             </div>
