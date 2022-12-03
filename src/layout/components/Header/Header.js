@@ -17,6 +17,8 @@ import { FaUserCircle, FaUserGraduate } from 'react-icons/fa';
 import { BsCardList } from 'react-icons/bs';
 import { TbEyeglass2, TbLogout } from 'react-icons/tb';
 import { useOnClickOutside } from '~/components/Hooks/useOnClickOutside';
+import { useEffect } from 'react';
+import { getInfoTutor } from '~/services/workspaces.sevices';
 
 const cx = classNames.bind(style);
 
@@ -29,12 +31,22 @@ function Header() {
     const isUser = false;
     const refOverClickOutSide = useRef();
     const [isShow, setIsShow] = useState(false);
+    const [data, setData] = useState({})
     useOnClickOutside(refOverClickOutSide, () => setIsShow(!isShow));
     const toggleDropdown = () => {
         setIsShow(!isShow);
         console.log(isShow);
     };
-
+    useEffect(() => {
+        async function fetchData() {
+            const response = await getInfoTutor(auth.user.id)
+            const { data } = response.data
+            if (data) {
+                setData(data)
+            }
+        }
+        fetchData()
+    }, [])
     const myNav = [
         {
             id: 1,
@@ -89,11 +101,11 @@ function Header() {
             to: config.routes.infoUser,
         },
 
-        {
-            name: 'Danh sách lớp dạy',
-            icon: <BsCardList />,
-            to: config.routes.classTeach,
-        },
+        // {
+        //     name: 'Danh sách lớp dạy',
+        //     icon: <BsCardList />,
+        //     to: config.routes.classTeach,
+        // },
         {
             name: 'Danh sách lớp học',
             icon: <BsCardList />,
@@ -155,7 +167,7 @@ function Header() {
                             {auth.user.name}{' '}
                         </span>
                         <div onClick={toggleDropdown} className={cx('avatar')}>
-                            <img src={Avatar} alt="" />
+                            <img className='rounded-circle' src={data.urlAvt ? data.urlAvt : Avatar} alt="" />
                         </div>
                         {isShow ? (
                             <ul ref={refOverClickOutSide} className={cx('dropdown-user')}>

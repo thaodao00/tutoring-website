@@ -24,34 +24,7 @@ function Wallet() {
 
 
     const [current, setCurrent] = useState()
-    // const [orderId, setOrderID] = useState()
     const currentRef = useRef()
-    const recentDevicesArr = [
-        {
-            device: 'Dell XPS 15',
-            location: 'United States',
-            browser: 'Chrome on Windows',
-            activity: '10, Jan 2021 20:07'
-        },
-        {
-            location: 'Ghana',
-            device: 'Google Pixel 3a',
-            browser: 'Chrome on Android',
-            activity: '11, Jan 2021 10:16'
-        },
-        {
-            location: 'Mayotte',
-            device: 'Apple iMac',
-            browser: 'Chrome on MacOS',
-            activity: '11, Jan 2021 12:10'
-        },
-        {
-            location: 'Mauritania',
-            device: 'Apple iPhone XR',
-            browser: 'Chrome on iPhone',
-            activity: '12, Jan 2021 8:29'
-        }
-    ]
     currentRef.current = current
 
     const body = {
@@ -59,7 +32,6 @@ function Wallet() {
         "method": "PAYPAL",
         "transactionId": orderID
     }
-
     const fetchCoin = async () => {
         const res = await getCoin()
         const { data } = res?.data
@@ -208,30 +180,38 @@ function Wallet() {
                 <CardHeader className={cx('history-title')}>
                     <CardTitle><h3 className='fw-bolder'>Lịch sử giao dịch</h3></CardTitle>
                 </CardHeader>
-                <Table className='text-nowrap text-center' responsive>
-                    <thead>
-                        <tr>
-                            <th className='text-start'>Mã số</th>
-                            <th>Số tiền</th>
-                            <th>Phương thức</th>
-                            <th>Ngày tạo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {history.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td className='text-start'>
-                                        {item.transactionId}
-                                    </td>
-                                    <td>{item.amount} {item.currencyCode}</td>
-                                    <td><FaPaypal className='text-primary' />{item.method}</td>
-                                    <td>{new Date(item.createdAt).toLocaleDateString()}</td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </Table>
+                {history.length === 0 ? (<div className={cx('history-none')}>
+                    <h1>Bạn chưa có lịch sử giao dịch!!!</h1>
+                    <img src='https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/c8fcab6d-bfd2-464b-895c-b0731ff3ee9e/ddew82u-19bc3c11-950c-42d8-812b-91ca019fffcd.png' height={100} alt='' /></div>) : (
+                    <Table className='text-nowrap text-center' responsive>
+                        <thead>
+                            <tr>
+                                <th className='text-start'>Mã số</th>
+                                <th>Số tiền</th>
+                                <th>Phương thức</th>
+                                <th>Ngày tạo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <>  {history.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td className='text-start'>
+                                            {item.transactionId}
+                                        </td>
+                                        <td>{item.amount} {item.currencyCode}</td>
+                                        <td><FaPaypal className='text-primary' />{item.method}</td>
+                                        <td>{new Date(item.createdAt).toLocaleDateString()}</td>
+                                    </tr>
+                                )
+                            })}
+                            </>
+
+                        </tbody>
+                    </Table>
+                )}
+
+
             </Card>
         </div>
     )

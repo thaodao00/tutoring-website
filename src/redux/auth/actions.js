@@ -1,4 +1,4 @@
-import { FORGOT_PASSWORD, LOGIN, LOGOUT, RESET_MESSAGE, SIGNUP, UPDATE_PASSWORD } from './constants';
+import { FORGOT_PASSWORD, LOGIN, LOGOUT, RESET_MESSAGE, SIGNUP, UPDATE_INFO_USER, UPDATE_PASSWORD } from './constants';
 
 export function login(email, password) {
     return {
@@ -33,6 +33,12 @@ export function forgotPassword(email) {
     };
 }
 
+export function updateInfoUser(id, name, gender, phone, birthday, introduce) {
+    return {
+        type: UPDATE_INFO_USER,
+        payload: { id, name, gender, phone, birthday, introduce }
+    }
+}
 export function logout() {
     return {
         type: LOGOUT,

@@ -19,4 +19,12 @@
 }
 .history-title {
     background-color: var(--primary);
+    color: white;
+}
+.history-none {
+    display: flex;
+    justify-content: center;
+    height: 180px;
+    align-items: center;
+    flex-direction: column;
 }
