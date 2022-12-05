@@ -1,9 +1,11 @@
 import classNames from 'classnames/bind';
 import React, {useEffect, useState} from 'react';
-import {Button, Col, Container, FloatingLabel, Row} from "react-bootstrap";
+import {Button, Col, Container, Row} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {Formik} from 'formik';
+import * as yup from 'yup';
 
 import styles from '../ReferenceTuition/ReferenceTuition.module.scss';
 import {genders, ours} from "~/utils/FakeData";
@@ -11,9 +13,8 @@ import OptionItem from "~/pages/ReferenceTuition/OptionItem";
 import {useMediaQuery} from "react-responsive";
 import ReasonTutor from "~/layout/common/ReasonTutor";
 import {
-    createClass,
-    fetchLevel,
     fetchGrade,
+    fetchLevel,
     fetchProvinces,
     fetchSubject,
     getDistrict,
@@ -67,6 +68,8 @@ function SearchTutor(props) {
         time: 0
 
     }
+
+
     const [formValue, setFormValue] = useState(classTutor)
     const handleInput = (e) => {
         const {name, value} = e.target
@@ -77,6 +80,15 @@ function SearchTutor(props) {
         const getSubjectId = e.target.value
         setSubjectId(getSubjectId)
     }
+    const [grade, setGrade] = useState([])
+    const [gradeId, setGradeId] = useState(1)
+    const handleSelectGrade = (e) => {
+        const getGradeId = e.target.value
+        setGradeId(getGradeId)
+    }
+    useEffect(() => {
+        fetchGrade(grade).then(grade => setGrade(grade))
+    }, [])
     const [gender, setGender] = useState(1)
     const handleSelectGender = (e) => {
         const getGender = e.target.value
@@ -117,7 +129,6 @@ function SearchTutor(props) {
 
 
     }
-    // console.log('dis :' + districtId)
 
 
     useEffect(() => {
@@ -132,13 +143,30 @@ function SearchTutor(props) {
     }, [provenceId, districtId])
 
 
-    const [wardId, setWardId] = useState(1)
-
+    const [wardId, setWardId] = useState(107)
 
     const handleSelectWardId = (e) => {
         const getWardId = e.target.value
         setWardId(getWardId)
     }
+    const getFullAddress = (array, id) => {
+        for (let item of array) {
+            if (item.id === id) {
+                return item.name
+            }
+        }
+
+    }
+    const [fullAddress,setFullAddress] = useState('Phường An Khánh,Tp Thủ Đức,TP.HCM')
+    console.log(fullAddress)
+    useEffect(() => {
+        getFullAddress(provinces, parseInt(provenceId))
+        getFullAddress(district, parseInt(districtId))
+        getFullAddress(ward, parseInt(wardId))
+        setFullAddress(getFullAddress(provinces, parseInt(provenceId)) +',' + getFullAddress(district, parseInt(districtId)) +',' + getFullAddress(ward, parseInt(wardId)))
+    }, [provenceId,districtId,wardId])
+
+
     const [our, setOur] = useState(30 * 60)
     const handleSelectOur = (e) => {
         const getOur = e.target.value
@@ -151,21 +179,22 @@ function SearchTutor(props) {
         return new Date(dateStr);
     });
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
 
+    // console.log(getFullAddress(ward,wardId))
+
+    const handleSubmit = (values) => {
         const newFormValue = {
             tuition: parseInt(formValue.tuition),
-            title: formValue.title,
-            description: formValue.description,
+            title: values.title,
+            description: values.description,
             subjectId: parseInt(subjectId),
-            gradeId: 1,
+            gradeId: parseInt(gradeId),
             createdBy: 30,
             classRequirement: {
                 genderTutor: gender,
                 address: {
-                    address: formValue.address,
-                    fullAddress: formValue.fullAddress,
+                    address: values.address,
+                    fullAddress: values.address +','+ fullAddress,
                     wardId: parseInt(wardId),
                     type: 'CLASS'
                 },
@@ -187,254 +216,315 @@ function SearchTutor(props) {
 
         }
         console.log(newFormValue)
-        createClass(newFormValue).then(res => res)
-
+        // createClass(newFormValue).then(res => res)
 
     }
 
 
-    // const animatedComponents = makeAnimated();
+    const schema = yup.object().shape({
+        title: yup.string().required(),
+        address: yup.string().required(),
+        description: yup.string().required(),
+    });
+
+
     return (
         <div className={cx('wrapper')}>
             <Container>
                 <Row>
                     <Col sm={12} md={8} lg={8}>
-                        <div className={cx('detail-content')} onSubmit={handleSubmit}>
+                        <div className={cx('detail-content')}>
                             <h3 className={cx('title')}>Mô tả yêu cầu tìm gia sư </h3>
-                            <Row>
-                                <Col lg={12}>
-                                    <Form.Label className={cx('description')}>Tóm tắt yêu cầu (tối đa 20 từ)
-                                        *</Form.Label>
-                                    <Form.Control
-                                        name='title'
-                                        onChange={handleInput}
-                                        value={formValue.title}
-                                        size='sm'
-                                        type="text"
-                                        placeholder="Ví dụ: Tìm gia sư tiếng Anh tại Quận 6 Hồ Chí Minh"
-                                    />
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col lg={6}>
-                                    <Form.Label className={cx('description')}>Địa điểm dạy *</Form.Label>
-                                    <Form.Control
-                                        name="address"
-                                        onChange={handleInput}
-                                        value={formValue.address}
-                                        size='sm'
-                                        type="text"
-                                        placeholder="Nhập vị trí"
-                                    />
-                                </Col>
-                                <Col lg={maxWidth1200 ? 6 : 2} bsPrefix={convertTablet()} md={maxWidth1024 ? 6 : 2}
-                                     sm={12}>
-                                    <Form.Label className={cx('description')}>Số học viên *</Form.Label>
-                                    <Form.Control
-                                        name='amountStudent'
-                                        onChange={handleInput}
-                                        onKeyPress={handleOnKeyPress}
-                                        value={formValue.amountStudent}
-                                        size="sm"
-                                        type="number"
-                                    />
-                                </Col>
-                                <Col lg={maxWidth1200 ? 6 : 2} bsPrefix={convertTablet()} md={maxWidth1024 ? 6 : 2}
-                                     sm={12}>
-                                    <Form.Label className={cx('description')}>Ngày bắt đầu *</Form.Label>
-                                    <DatePicker
-                                        selected={startDate}
-                                        onChange={(date) => setStartDate(date)}
-                                        showDisabledMonthNavigation
-                                        minDate={new Date()}
-                                        className={cx('date')}
-                                    />
-
-                                </Col>
-                                <Col lg={maxWidth1200 ? 6 : 2} bsPrefix={convertTablet()} md={maxWidth1024 ? 6 : 2}
-                                     sm={12}>
-                                    <Form.Label className={cx('description')}>Ngày kết thúc *</Form.Label>
-                                    <DatePicker
-                                        selected={endDate}
-                                        onChange={(date) => setEndDate(date)}
-                                        showDisabledMonthNavigation
-                                        minDate={new Date()}
-                                        className={cx('date')}
-                                    />
-
-                                </Col>
-
-                            </Row>
-                            <Row>
-                                <Col lg={3}>
-                                    <Form.Label
-                                        className={cx('description')}>Tỉnh*
-                                    </Form.Label>
-                                    <Form.Select
-                                        onChange={handleSelectProvince}
-                                        style={{padding: '14px 18px'}}
-                                        size='lg'>
-                                        {
-                                            provinces.map((item) => {
-                                                return (
-                                                    <OptionItem key={item.id} value={item.id} children={item.name}/>
-                                                )
-                                            })
-                                        }
-                                    </Form.Select>
-                                </Col>
-                                <Col lg={3}>
-                                    <Form.Label className={cx('description')}>Huyện*</Form.Label>
-                                    <Form.Select style={{padding: '14px 18px'}}
-                                                 onChange={handleSelectDistrict}
-                                                 size='lg'>
-                                        {
-                                            district.map((item) => {
-                                                return (
-                                                    <OptionItem key={item.id} value={item.id} children={item.name}/>
-                                                )
-                                            })
-                                        }
-                                    </Form.Select>
-                                </Col>
-                                <Col lg={6}>
-                                    <Form.Label className={cx('description')}>Phường *</Form.Label>
-                                    <Form.Select style={{padding: '14px 18px'}}
-                                                 onChange={handleSelectWardId}
-                                                 size='lg'>
-                                        {
-                                            ward.map((item) => {
-                                                return (
-                                                    <OptionItem key={item.id} value={item.id} children={item.name}/>
-                                                )
-                                            })
-                                        }
-                                    </Form.Select>
-                                </Col>
-
-                            </Row>
-                            <Row>
-                                <Col lg={12}>
-                                    <Form.Label className={cx('description')}>Địa chỉ đầy đủ*</Form.Label>
-                                    <Form.Control
-                                        name="fullAddress"
-                                        onChange={handleInput}
-                                        value={formValue.fullAddress}
-                                        size='sm'
-                                        type="text"
-                                        placeholder="Nhập vị trí"
-                                    />
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col lg={maxWidth1200 ? 4 : 2} style={{padding: '12px 12px'}}>
-                                    <Form.Label className={cx('description')}>Giờ mỗi buổi</Form.Label>
-                                    <Form.Select style={{padding: '14px 18px'}}
-                                                 onChange={handleSelectOur}
-                                                 size='lg'>
-                                        {
-                                            ours.map((item) => {
-                                                return (
-                                                    <OptionItem value={item.value} key={item.id} children={item.our}/>
-                                                )
-                                            })
-                                        }
-                                    </Form.Select>
-                                </Col>
-                                <Col lg={6} className={cx('item')}>
-                                    <Form.Label
-                                        className={cx('description')}>Môn dạy
-                                    </Form.Label>
-                                    <Form.Label
-                                        className={cx('note')}>*
-                                    </Form.Label>
-                                    <Form.Select onChange={handleSelectSubject} style={{padding: '14px 18px'}}
-                                                 size='lg'>
-                                        {
-                                            subjects.map((item) => {
-                                                return (
-                                                    <OptionItem key={item.id} value={item.id} children={item.name}/>
-                                                )
-                                            })
-                                        }
-                                    </Form.Select>
-                                </Col>
-
-                                {/*<Col lg={6} className={cx('item')}>*/}
-                                {/*    <Form.Label className={cx('description', 'gender')}>Giới tính học viên*/}
-                                {/*        *</Form.Label>*/}
-                                {/*    <br/>*/}
-                                {/*    <ButtonGroup size="lg" className="mb-2">*/}
-                                {/*        <Button className={cx('btn-gender')}>Nam</Button>*/}
-                                {/*        <Button className={cx('btn-gender')}>Nữ</Button>*/}
-                                {/*        <Button className={cx('btn-gender')}>Có cả nam và nữ</Button>*/}
-                                {/*    </ButtonGroup>*/}
-                                {/*</Col>*/}
-                            </Row>
-                            <Row>
-                                <Col lg={12}>
-                                    <Form.Label
-                                        className={cx('description')}> Thời gian bạn có thể nhân lớp
-                                    </Form.Label>
-                                    <DatepickerMultiple dates={dates} setDates={setDates}/>
-
-                                </Col>
-                            </Row>
-                            <h3 className={cx('title')}>Yêu cầu gia sư</h3>
-                            <Row>
-                                <Col lg={4}>
-                                    <Form.Label className={cx('description')}>Giới tính</Form.Label>
-                                    <Form.Select onChange={handleSelectGender} style={{padding: '14px 18px'}} size='lg'>
-                                        {
-                                            genders.map((item) => {
-                                                return (
-                                                    <OptionItem value={item.value} key={item.id}
-                                                                children={item.gender}/>
-                                                )
-                                            })
-                                        }
-                                    </Form.Select>
-                                </Col>
-                                <Col lg={2}>
-                                    <Form.Label className={cx('description')}>Trình độ</Form.Label>
-                                    <Form.Select style={{padding: '14px 18px'}} size='lg' onChange={handleSelectLevel}>
-                                        {
-                                            level.map((item) => {
-                                                return (
-                                                    <OptionItem value={item.id} key={item.id} children={item.name}/>
-                                                )
-                                            })
-                                        }
-                                    </Form.Select>
-                                </Col>
-                                <Col lg={2}>
-                                    <Form.Label className={cx('description')}>Học phí(vnđ)</Form.Label>
-                                    <Form.Control
-                                        name='tuition'
-                                        onChange={handleInput}
-                                        value={formValue.tuition}
-                                        size="sm"
-                                        type="number"
-                                        placeholder="ví dụ: 300000"/>
-                                </Col>
+                            <Formik
+                                validationSchema={schema}
+                                onSubmit={handleSubmit}
+                                initialValues={{
+                                    title: formValue.title,
+                                    address: formValue.address,
+                                    description: formValue.description,
 
 
-                            </Row>
-                            <Row>
-                                <Col lg={12}>
-                                    <Form.Label className={cx('description')}>Mô tả chi tiết *</Form.Label>
-                                    <FloatingLabel controlId="floatingTextarea2" label=''>
-                                        <Form.Control
-                                            name="description"
-                                            onChange={handleInput}
-                                            value={formValue.description}
-                                            as="textarea"
-                                            placeholder="Leave a comment here"
-                                            style={{height: '115px'}}
-                                        />
-                                    </FloatingLabel>
-                                </Col>
-                            </Row>
+                                }}
+                            >
+                                {({
+                                      handleSubmit,
+                                      handleChange,
+                                      handleBlur,
+                                      values,
+                                      touched,
+                                      isValid,
+                                      errors,
+                                  }) => (
+                                    <Form noValidate onSubmit={handleSubmit}>
+                                        <Row>
+                                            <Form.Group as={Col} lg={12}
+                                                        className="position-relative">
+                                                <Form.Label className={cx('description')}>Tóm tắt yêu cầu (tối đa 20
+                                                    từ)*</Form.Label>
+                                                <Form.Control
+                                                    name='title'
+                                                    onChange={handleChange}
+                                                    value={values.title}
+                                                    isInvalid={!!errors.title}
+                                                    size='sm'
+                                                    type="text"
+                                                    placeholder="Ví dụ: Tìm gia sư tiếng Anh tại Quận 6 Hồ Chí Minh"
+                                                />
+                                                <Form.Control.Feedback type="invalid">
+                                                    Title Không được để trống
+                                                </Form.Control.Feedback>
+                                            </Form.Group>
+                                        </Row>
+                                        <Row>
+                                            <Form.Group as={Col} lg={6} className="position-relative">
+                                                <Form.Label className={cx('description')}>Địa điểm dạy *</Form.Label>
+                                                <Form.Control
+                                                    name="address"
+                                                    onChange={handleChange}
+                                                    value={values.address}
+                                                    isInvalid={!!errors.address}
+                                                    size='sm'
+                                                    type="text"
+                                                    placeholder="Nhập vị trí"
+                                                />
+                                                <Form.Control.Feedback type="invalid" tooltip>
+                                                    {errors.address}
+                                                </Form.Control.Feedback>
+                                            </Form.Group>
+                                            <Col lg={maxWidth1200 ? 6 : 2} bsPrefix={convertTablet()}
+                                                 md={maxWidth1024 ? 6 : 2}
+                                                 sm={12}>
+                                                <Form.Label className={cx('description')}>Số học viên *</Form.Label>
+                                                <Form.Control
+                                                    name='amountStudent'
+                                                    onChange={handleInput}
+                                                    onKeyPress={handleOnKeyPress}
+                                                    value={formValue.amountStudent}
+                                                    size="sm"
+                                                    type="text"
+                                                />
+                                            </Col>
+                                            <Col lg={maxWidth1200 ? 6 : 2} bsPrefix={convertTablet()}
+                                                 md={maxWidth1024 ? 6 : 2}
+                                                 sm={12}>
+                                                <Form.Label className={cx('description')}>Ngày bắt đầu *</Form.Label>
+                                                <DatePicker
+                                                    selected={startDate}
+                                                    onChange={(date) => setStartDate(date)}
+                                                    showDisabledMonthNavigation
+                                                    minDate={new Date()}
+                                                    className={cx('date')}
+                                                />
+
+                                            </Col>
+                                            <Col lg={maxWidth1200 ? 6 : 2} bsPrefix={convertTablet()}
+                                                 md={maxWidth1024 ? 6 : 2}
+                                                 sm={12}>
+                                                <Form.Label className={cx('description')}>Ngày kết thúc *</Form.Label>
+                                                <DatePicker
+                                                    selected={endDate}
+                                                    onChange={(date) => setEndDate(date)}
+                                                    showDisabledMonthNavigation
+                                                    minDate={new Date()}
+                                                    className={cx('date')}
+                                                />
+
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col lg={3}>
+                                                <Form.Label
+                                                    className={cx('description')}>Tỉnh*
+                                                </Form.Label>
+                                                <Form.Select
+                                                    onChange={handleSelectProvince}
+                                                    style={{padding: '14px 18px'}}
+                                                    size='lg'>
+                                                    {
+                                                        provinces.map((item) => {
+                                                            return (
+                                                                <OptionItem key={item.id} value={item.id}
+                                                                            children={item.name}/>
+                                                            )
+                                                        })
+                                                    }
+                                                </Form.Select>
+                                            </Col>
+                                            <Col lg={3}>
+                                                <Form.Label className={cx('description')}>Huyện*</Form.Label>
+                                                <Form.Select style={{padding: '14px 18px'}}
+                                                             onChange={handleSelectDistrict}
+                                                             size='lg'>
+                                                    {
+                                                        district.map((item) => {
+                                                            return (
+                                                                <OptionItem key={item.id} value={item.id}
+                                                                            children={item.name}/>
+                                                            )
+                                                        })
+                                                    }
+                                                </Form.Select>
+                                            </Col>
+                                            <Col lg={6}>
+                                                <Form.Label className={cx('description')}>Phường *</Form.Label>
+                                                <Form.Select style={{padding: '14px 18px'}}
+                                                             onChange={handleSelectWardId}
+                                                             size='lg'>
+                                                    {
+                                                        ward.map((item) => {
+                                                            return (
+                                                                <OptionItem key={item.id} value={item.id}
+                                                                            children={item.name}/>
+                                                            )
+                                                        })
+                                                    }
+                                                </Form.Select>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col lg={maxWidth1200 ? 4 : 2} style={{padding: '12px 12px'}}>
+                                                <Form.Label className={cx('description')}>Giờ mỗi buổi</Form.Label>
+                                                <Form.Select style={{padding: '14px 18px'}}
+                                                             onChange={handleSelectOur}
+                                                             size='lg'>
+                                                    {
+                                                        ours.map((item) => {
+                                                            return (
+                                                                <OptionItem value={item.value} key={item.id}
+                                                                            children={item.our}/>
+                                                            )
+                                                        })
+                                                    }
+                                                </Form.Select>
+                                            </Col>
+                                            <Col lg={6} className={cx('item')}>
+                                                <Form.Label
+                                                    className={cx('description')}>Môn dạy
+                                                </Form.Label>
+                                                <Form.Label
+                                                    className={cx('note')}>*
+                                                </Form.Label>
+                                                <Form.Select onChange={handleSelectSubject}
+                                                             style={{padding: '14px 18px'}}
+                                                             size='lg'>
+                                                    {
+                                                        subjects.map((item) => {
+                                                            return (
+                                                                <OptionItem key={item.id} value={item.id}
+                                                                            children={item.name}/>
+                                                            )
+                                                        })
+                                                    }
+                                                </Form.Select>
+                                            </Col>
+                                            <Col lg={2} className={cx('item')}>
+                                                <Form.Label
+                                                    className={cx('description')}>Lớp
+                                                </Form.Label>
+                                                <Form.Label
+                                                    className={cx('note')}>*
+                                                </Form.Label>
+                                                <Form.Select onChange={handleSelectGrade} style={{padding: '14px 18px'}}
+                                                             size='lg'>
+                                                    {
+                                                        grade.map((item) => {
+                                                            return (
+                                                                <OptionItem key={item.id} value={item.id}
+                                                                            children={item.name}/>
+                                                            )
+                                                        })
+                                                    }
+                                                </Form.Select>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col lg={12}>
+                                                <Form.Label
+                                                    className={cx('description')}> Thời gian bạn có thể nhân lớp
+                                                </Form.Label>
+                                                <DatepickerMultiple dates={dates} setDates={setDates}/>
+
+                                            </Col>
+                                        </Row>
+                                        <h3 className={cx('title')}>Yêu cầu gia sư</h3>
+                                        <Row>
+                                            <Col lg={4}>
+                                                <Form.Label className={cx('description')}>Giới tính</Form.Label>
+                                                <Form.Select onChange={handleSelectGender}
+                                                             style={{padding: '14px 18px'}} size='lg'>
+                                                    {
+                                                        genders.map((item) => {
+                                                            return (
+                                                                <OptionItem value={item.value} key={item.id}
+                                                                            children={item.gender}/>
+                                                            )
+                                                        })
+                                                    }
+                                                </Form.Select>
+                                            </Col>
+                                            <Col lg={2}>
+                                                <Form.Label className={cx('description')}>Trình độ</Form.Label>
+                                                <Form.Select style={{padding: '14px 18px'}} size='lg'
+                                                             onChange={handleSelectLevel}>
+                                                    {
+                                                        level.map((item) => {
+                                                            return (
+                                                                <OptionItem value={item.id} key={item.id}
+                                                                            children={item.name}/>
+                                                            )
+                                                        })
+                                                    }
+                                                </Form.Select>
+                                            </Col>
+                                            <Col lg={2}>
+                                                <Form.Label className={cx('description')}>Học phí(vnđ)</Form.Label>
+                                                <Form.Control
+                                                    name='tuition'
+                                                    onChange={handleInput}
+                                                    onKeyPress={handleOnKeyPress}
+                                                    value={formValue.tuition}
+                                                    size="sm"
+                                                    type="text"
+                                                    placeholder="ví dụ: 300000"/>
+
+                                            </Col>
+
+
+                                        </Row>
+                                        <Row>
+                                            <Form.Group as={Col} lg={12} className="position-relative">
+                                                <Form.Label className={cx('description')}>Mô tả chi tiết *</Form.Label>
+                                                <Form.Control
+                                                    name="description"
+                                                    onChange={handleChange}
+                                                    value={values.description}
+                                                    isInvalid={!!errors.description}
+                                                    as="textarea"
+                                                    placeholder="Leave a comment here"
+                                                    style={{height: '115px'}}
+                                                />
+                                                <Form.Control.Feedback type="invalid" tooltip>
+                                                    {errors.description}
+                                                </Form.Control.Feedback>
+                                            </Form.Group>
+                                        </Row>
+                                        <Row>
+                                            <Col lg={12}>
+                                                <center>
+                                                    <Button
+                                                        type='submit'
+                                                        // onClick={handleSubmit}
+                                                        style={{marginTop: '20px'}}
+                                                        className={cx('btn', 'btn-success')}
+                                                        size="lg">
+                                                        Đăng yêu cầu
+                                                    </Button>
+                                                </center>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                )}
+                            </Formik>
 
 
                         </div>
@@ -443,19 +533,20 @@ function SearchTutor(props) {
                         <ReasonTutor/>
                     </Col>
                 </Row>
-                <Row>
-                    <Col lg={12}>
-                        <center>
-                            <Button
-                                onClick={handleSubmit}
-                                style={{marginTop: '20px'}}
-                                className={cx('btn', 'btn-success')}
-                                size="lg">
-                                Đăng yêu cầu
-                            </Button>
-                        </center>
-                    </Col>
-                </Row>
+                {/*<Row>*/}
+                {/*    <Col lg={12}>*/}
+                {/*        <center>*/}
+                {/*            <Button*/}
+                {/*                type='submit'*/}
+                {/*                // onClick={handleSubmit}*/}
+                {/*                style={{marginTop: '20px'}}*/}
+                {/*                className={cx('btn', 'btn-success')}*/}
+                {/*                size="lg">*/}
+                {/*                Đăng yêu cầu*/}
+                {/*            </Button>*/}
+                {/*        </center>*/}
+                {/*    </Col>*/}
+                {/*</Row>*/}
             </Container>
 
 
