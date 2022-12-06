@@ -31,7 +31,7 @@ function Header() {
     const isUser = false;
     const refOverClickOutSide = useRef();
     const [isShow, setIsShow] = useState(false);
-    const [data, setData] = useState({})
+    const [data, setData] = useState({});
     useOnClickOutside(refOverClickOutSide, () => setIsShow(!isShow));
     const toggleDropdown = () => {
         setIsShow(!isShow);
@@ -39,14 +39,14 @@ function Header() {
     };
     useEffect(() => {
         async function fetchData() {
-            const response = await getInfoTutor(auth.user.id)
-            const { data } = response.data
+            const response = await getInfoTutor(auth.user.id);
+            const { data } = response.data;
             if (data) {
-                setData(data)
+                setData(data);
             }
         }
-        fetchData()
-    }, [])
+        fetchData();
+    }, []);
     const myNav = [
         {
             id: 1,
@@ -167,7 +167,7 @@ function Header() {
                             {auth.user.name}{' '}
                         </span>
                         <div onClick={toggleDropdown} className={cx('avatar')}>
-                            <img className='rounded-circle' src={data.urlAvt ? data.urlAvt : Avatar} alt="" />
+                            <img className="rounded-circle" src={auth.user.urlAvt ? auth.user.urlAvt : Avatar} alt="" />
                         </div>
                         {isShow ? (
                             <ul ref={refOverClickOutSide} className={cx('dropdown-user')}>
@@ -237,10 +237,10 @@ function Header() {
                                                 style={({ isActive }) =>
                                                     isActive
                                                         ? {
-                                                            color: 'white',
-                                                            background: '#43b14b',
-                                                            borderRadius: '30px',
-                                                        }
+                                                              color: 'white',
+                                                              background: '#43b14b',
+                                                              borderRadius: '30px',
+                                                          }
                                                         : null
                                                 }
                                             >
