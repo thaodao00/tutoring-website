@@ -16,6 +16,7 @@ import {
     UPDATE_INFO_USER_SUCCESS,
     UPDATE_INFO_USER_FAIL,
     UPDATE_INFO_USER,
+    GET_USER,
 } from './constants';
 import { loginService, signupService, getUserService, updatePasswordService, forgotPasswordService } from './services';
 
@@ -46,20 +47,25 @@ function* loginSaga(action) {
         yield put({ type: LOGIN_FAIL, error });
     }
 }
+function* getUserInfoSaga() {
+    try {
+        // lấy thông tin user
+        const user = yield call(getUserService);
+        if (user) {
+            yield put({ type: LOGIN_SUCCESS, payload: { user: user.data } });
+        }
+    } catch (error) {}
+}
 function* updateInfoSaga(action) {
     try {
         const { id, name, gender, phone, birthday, introduce } = action.payload;
-        const { data, status, message } = yield call(updateUser, { id, name, gender, phone, birthday, introduce })
+        const { data, status, message } = yield call(updateUser, { id, name, gender, phone, birthday, introduce });
         if (status === 1) {
-            yield put({ type: UPDATE_INFO_USER_SUCCESS, payload: { user: data, message: message } })
+            yield put({ type: UPDATE_INFO_USER_SUCCESS, payload: { user: data, message: message } });
+        } else {
+            yield put({ type: UPDATE_INFO_USER_FAIL, payload: { error: message } });
         }
-        else {
-            yield put({ type: UPDATE_INFO_USER_FAIL, payload: { error: message } })
-        }
-
-    } catch (error) {
-
-    }
+    } catch (error) {}
 }
 function* signupSaga(action) {
     const { email, name, password } = action.payload;
@@ -118,9 +124,10 @@ function* forgotPasswordSaga(action) {
 function* authSagas() {
     yield takeEvery(LOGIN, loginSaga);
     yield takeEvery(SIGNUP, signupSaga);
+    yield takeEvery(GET_USER, getUserInfoSaga);
     yield takeEvery(UPDATE_PASSWORD, updatePasswordSaga);
     yield takeEvery(FORGOT_PASSWORD, forgotPasswordSaga);
-    yield takeEvery(UPDATE_INFO_USER, updateInfoSaga)
+    yield takeEvery(UPDATE_INFO_USER, updateInfoSaga);
 }
 
 export default authSagas;
