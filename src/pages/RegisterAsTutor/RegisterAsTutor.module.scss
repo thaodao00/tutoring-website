@@ -1,98 +1,149 @@
 .wrapper {
-  --label-color: #333;
-  padding-top: var(--padding);
-  padding-bottom: var(--padding);
+    --label-color: #333;
+    padding-top: var(--padding);
+    padding-bottom: var(--padding);
 }
 
 .item {
-  margin-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 .title {
-  padding-bottom: 10px;
-  padding-left: 0;
-  margin-bottom: 30px;
-  font-size: 2.4rem;
+    padding-bottom: 10px;
+    padding-left: 0;
+    margin-bottom: 30px;
+    font-size: 2.4rem;
 }
 
 .description {
-  display: flex;
-  align-items: center;
-  font-size: 1.4rem;
-  font-weight: bold;
-  @media screen and (max-width: 600px) {
-    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    @media screen and (max-width: 600px) {
+        font-size: 1.2rem;
+    }
 
-  }
-
-  .icon-label {
-    font-size: 1.5rem;
-    color: var(--text-danger);
-    margin-left: 4px;
-  }
+    .icon-label {
+        font-size: 1.5rem;
+        color: var(--text-danger);
+        margin-left: 4px;
+    }
 }
 
-
-
-button.value{
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  font-weight: 600;
-  text-align: center;
-  color: #ccc;
-  background-color: #EFEFEF;
-  border: 1px solid #ccc;
-  user-select: none;
-  &:hover{
-    cursor: pointer;
-    border: 1px solid #999;
-    background-color: #999;
-    color: var(--white);
-    outline: none;
-  }
-  &:checked{
-    background-color: var(--primary) !important;
-  }
-  &.active{
-    background-color: var(--primary);
-  }
-
+button.value {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    font-weight: 600;
+    text-align: center;
+    color: #ccc;
+    background-color: #efefef;
+    border: 1px solid #ccc;
+    user-select: none;
+    &:hover {
+        cursor: pointer;
+        border: 1px solid #999;
+        background-color: #999;
+        color: var(--white);
+        outline: none;
+    }
+    &:checked {
+        background-color: var(--primary) !important;
+    }
+    &.active {
+        background-color: var(--primary);
+    }
 }
 .btn-gender {
-  background-color: var(--white);
-  color: var(--text-color);
-  font-weight: 300;
-  font-size: 1.4rem;
-  height: 48px;
-  border-color: var(--border-color);
-
-  &:hover {
-    background-color: #EEEEEE;
+    background-color: var(--white);
     color: var(--text-color);
+    font-weight: 300;
+    font-size: 1.4rem;
+    height: 48px;
     border-color: var(--border-color);
-  }
 
-  &:focus {
-    outline: none;
-    box-shadow: none;
-    color: var(--white);
-    background-color: var(--primary);
+    &:hover {
+        background-color: #eeeeee;
+        color: var(--text-color);
+        border-color: var(--border-color);
+    }
 
-  }
-
-
+    &:focus {
+        outline: none;
+        box-shadow: none;
+        color: var(--white);
+        background-color: var(--primary);
+    }
 }
 
-.day-name{
-  display: inline-block;
-  color: #666;
-  width: 70px;
-  text-align: right;
-  padding-right: 5px;
+.day-name {
+    display: inline-block;
+    color: #666;
+    width: 70px;
+    text-align: right;
+    padding-right: 5px;
 }
-.note{
-  font-size: 1.2rem;
-  margin-top: 4px;
-  color: #333;
+.note {
+    font-size: 1.2rem;
+    margin-top: 4px;
+    color: #333;
+}
+@-webkit-keyframes my {
+    0% {
+        color: #f8cd0a;
+    }
+    50% {
+        color: #fff;
+    }
+    100% {
+        color: #f8cd0a;
+    }
+}
+@-moz-keyframes my {
+    0% {
+        color: #f8cd0a;
+    }
+    50% {
+        color: #fff;
+    }
+    100% {
+        color: #f8cd0a;
+    }
+}
+@-o-keyframes my {
+    0% {
+        color: #f8cd0a;
+    }
+    50% {
+        color: #fff;
+    }
+    100% {
+        color: #f8cd0a;
+    }
+}
+@keyframes my {
+    0% {
+        color: #f8cd0a;
+    }
+    50% {
+        color: #fff;
+    }
+    100% {
+        color: #f8cd0a;
+    }
+}
+.text-coin {
+    font-size: 24px;
+    font-weight: bold;
+    -webkit-animation: my 700ms infinite;
+    -moz-animation: my 700ms infinite;
+    -o-animation: my 700ms infinite;
+    animation: my 700ms infinite;
+}
+.text-title {
+    color: var(--primary);
+}
+.overlay {
+    background-color: #4a3a3aab;
 }

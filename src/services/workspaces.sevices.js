@@ -10,15 +10,17 @@ export const getInfoTutor = async (userId) => {
     return await instance.get(`/v1/auths/user/${userId}`)
 
 }
+export const becomeTutor = async (body) => {
+    return await instance.post('/v1/tutors/', body)
+}
 export const changePassword = async (body) => {
     return await instance.put('v1/auths/password', body)
 }
 export const getAllClass = async () => {
     return await instance.get('/v1/class-room/')
 }
-export const createClass = async (data) => {
-    const request = await instance.post('/v1/class-room/', data)
-    return request.data
+export const createClass = async (body) => {
+    return await instance.post('/v1/class-room/', body)
 }
 export const getLevel = async () => {
     return await instance.get(`/v1/class-room/level`)
@@ -79,4 +81,8 @@ export const updateUser = async (body) => {
 }
 export const getClassById = async (id) => {
     return await instance.get(`v1/class-room/?user_id=${id}`)
+}
+
+export const getSubjectByTutor = async () => {
+    return await instance.get('/v1/tutors/subjects')
 }

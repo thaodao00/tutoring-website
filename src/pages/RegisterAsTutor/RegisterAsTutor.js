@@ -1,203 +1,148 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
-import {Button, ButtonGroup, Col, Container, FloatingLabel, Row} from "react-bootstrap";
+import { Button, ButtonGroup, Col, Container, FloatingLabel, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
 import styles from './RegisterAsTutor.module.scss';
-import {FaStarOfLife} from 'react-icons/fa';
-import {address, areas, subjects} from "~/utils/FakeData";
+import { FaCoins, FaStarOfLife } from 'react-icons/fa';
+import { address, areas, subjects } from "~/utils/FakeData";
 import DateItem from "~/pages/RegisterAsTutor/DateItem";
 import OptionItem from "~/pages/ReferenceTuition/OptionItem";
 import DayTutor from "~/layout/common/DayTutor";
-import {fetchSubject, getAllClass, getSubject} from "~/services/workspaces.sevices";
+import { becomeTutor, fetchLevel, fetchSubject, getAllClass, getCoin, getSubject } from "~/services/workspaces.sevices";
 
 
 const cx = classNames.bind(styles);
 
 
 function RegisterAsTutor(props) {
-
-    const [isDisabled, setIsDisabled] = useState(false)
-    const animatedComponents = makeAnimated();
     const [subjects, setSubjects] = useState([])
+    const [levels, setLevels] = useState([])
+    const [coin, setCoins] = useState()
+    const [level, setLevel] = useState('STUDENT')
     useEffect(() => {
-        // get subjects
-        fetchSubject(subjects).then(subject => setSubjects(subject) );
+        fetchSubject(subjects).then(subject => setSubjects(subject));
+        fetchLevel().then(res => setLevels(res))
+    }, [])
+    const [val, setVal] = useState([]);
+
+    const handleChange = (e) => {
+        // Destructuring
+        const { value, checked } = e.target;
+        setVal(subjects)
+        // Case 1 : The user checks the box
+        if (checked) {
+            setVal([...val, value]
+            );
+        }
+        // Case 2  : The user unchecks the box
+        else {
+            setVal(
+                val.filter((e) => e !== value),
+            );
+        }
+    };
+    const fetchBecomeTutor = async () => {
+        const body = {
+            "level": level,
+            "subjectIds": val
+        }
+        console.log(body);
+        if (coin < 48) {
+            alert("Bạn không đủ coin, vui lòng nạp coin!!!")
+        }
+        else {
+            const res = await becomeTutor(body)
+            console.log(res);
+            if (res.status !== 200) {
+                alert('Đăng ký thất bại, vui lòng thử lại!!!')
+            }
+            else if (res.data.stutus === 1) {
+                alert('Đăng ký thành công!!!')
+            }
+        }
+    }
+    const fetchCoin = async () => {
+
+        const res = await getCoin()
+        setCoins(res?.data?.data?.balance)
+    }
+    useEffect(() => {
+        fetchCoin()
 
     }, [])
-
-
-
-
     return (
-        <div className={cx('wrapper')}>
-            <Container>
-                <h3 className={cx('title', 'line-bottom')}>Thông tin cá nhân</h3>
-                <Row>
-                    <Col lg={6} className={cx('item')}>
+        <>
+            <div className={cx('wrapper')}>
+                <Container>
+                    <Row className='d-flex flex-row'>
+                        <Col lg={6} className='pe-5'>
+                            <h3 className={cx('title', 'line-bottom')}>Thông tin Gia sư</h3>
+                            <Col lg={12} className={cx('item')}>
+                                <Form.Label
+                                    className={cx('description')}> Bạn đang là <FaStarOfLife className={cx('icon-label')} />
+                                </Form.Label>
+                                <Form.Select className={cx('list-area', 'fs-4')} value={level} onChange={e => setLevel(e.target.value)} placeholder='Trình độ'>
+                                    {levels.map((item, index) => {
+                                        return (
+                                            <option value={item.id} key={index}>{item.name}</option>
+                                        )
+                                    })}
 
-                        <Form.Label
-                            className={cx('description')}> Họ tên <FaStarOfLife className={cx('icon-label')}/>
-                        </Form.Label>
-                        <Form.Control size='sm' type="text" placeholder="Nhập vị trí"/>
+                                </Form.Select>
+                            </Col>
+                            <Col lg={12} className={cx('item')}>
+                                <Form.Label
+                                    className={cx('description')}>Môn dạy <FaStarOfLife className={cx('icon-label')} />
+                                </Form.Label>
+                                <Row className='d-flex'>
+                                    {subjects.map((item, index) => {
+                                        return (
+                                            <Col lg={3} className="form-check" key={index}>
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id="flexCheckDefault"
+                                                    value={item.id}
+                                                    onChange={handleChange}
+                                                />
+                                                <label className="form-check-label" htmlFor="flexCheckDefault">
+                                                    {item.name}
+                                                </label>
+                                            </Col>
 
-                    </Col>
-                    <Col lg={6} className={cx('item')}>
-                        <Form.Label
-                            className={cx('description')}> Số điện thoại <FaStarOfLife className={cx('icon-label')}/>
-                        </Form.Label>
-                        <Form.Control size='sm' type="text" placeholder="Nhập vị trí"/>
-
-                    </Col>
-                </Row>
-                <Row>
-                    <Col lg={6} className={cx('item')}>
-                        <Form.Label
-                            className={cx('description')}> Email<FaStarOfLife className={cx('icon-label')}/>
-                        </Form.Label>
-                        <Form.Control size='sm' type="text" placeholder="Nhập vị trí"/>
-                    </Col>
-                    <Col lg={4} className={cx('item')}>
-                        <Col md={12} lg={12}>
-                            <Form.Label
-                                className={cx('description')}> Giới tính <FaStarOfLife className={cx('icon-label')}/>
-                            </Form.Label>
-                            <ButtonGroup role={"group"} size="lg" className="mb-2">
-                                <button className='btn-gender'>Nam</button>
-                                <button className='btn-gender'>Nữ</button>
-                            </ButtonGroup>
+                                        )
+                                    })}
+                                </Row>
+                            </Col>
+                            <Col lg={12}>
+                                <center>
+                                    <Button
+                                        style={{ marginTop: '20px' }}
+                                        className={cx('btn', 'btn-success')}
+                                        size="lg" onClick={() => fetchBecomeTutor()}>
+                                        Đăng ký làm gia sư
+                                    </Button>
+                                </center>
+                            </Col>
                         </Col>
-                    </Col>
-                    <Col lg={2} className={cx('item')}>
-                        <Col md={12} lg={12}>
-                            <Form.Label
-                                className={cx('description')}> Năm sinh<FaStarOfLife className={cx('icon-label')}/>
-                            </Form.Label>
-                            <Form.Control size='sm' type="text"/>
+                        <Col lg={6} className="card text-white py-5">
+                            <div className={cx("overlay", "card-img-overlay d-flex flex-column align-items-center justify-content-center")}>
+                                <h5 className={cx("text-title", "card-title fw-bold fs-1")}>ĐĂNG KÝ LÀM GIA SƯ</h5>
+                                <p className="card-text text-center fs-2">
+                                    Để trở thành gia sư, bạn cần cung cấp thêm thông tin vào bên dưới,<br />bạn cần chi trả <span className={cx('text-coin', ' fs-1 fw-bold')}>48 coin <FaCoins /></span> để trở thành gia sư.
+                                </p>
+                            </div>
                         </Col>
-                    </Col>
-                    <Col lg={12} className={cx('item')}>
-                        <Form.Label
-                            className={cx('description')}> Địa chỉ<FaStarOfLife className={cx('icon-label')}/>
-                        </Form.Label>
-                        <Form.Control
-                            id='address'
-                            size='sm'
-                            type="text"
-                            placeholder="Nhập vị trí"/>
-                    </Col>
 
-                </Row>
-                <Row>
-                    <Form.Label
-                        className={cx('description')}>Giới thiệu bản thân
-                        <FaStarOfLife className={cx('icon-label')}/>
-                        <em> (1500 ký tự)</em>
-                    </Form.Label>
-                    <FloatingLabel controlId="floatingTextarea2" label=''>
-                        <Form.Control
-                            as="textarea"
-                            placeholder="Leave a comment here"
-                            style={{height: '115px'}}
-                        />
-                    </FloatingLabel>
-                </Row>
-                <h3 className={cx('title', 'line-bottom')}>Thông tin Gia sư</h3>
-                <Row>
-                    <Col lg={6} className={cx('item')}>
-                        <Form.Label
-                            className={cx('description')}> Bạn đang là <FaStarOfLife className={cx('icon-label')}/>
-                        </Form.Label>
-                        <Form.Control size='sm' type="text"/>
-                    </Col>
-                    <Col lg={6} className={cx('item')}>
-                        <Form.Label
-                            className={cx('description')}>Môn dạy <FaStarOfLife className={cx('icon-label')}/>
-                        </Form.Label>
+                    </Row>
+                </Container>
 
-                        <Select
-                            classNamePrefix='react-select'
-                            options={subjects}
-                            components={animatedComponents}
-                            placeholder='Gõ vào rồi chọn môn'
-                            isMulti
-                        />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col lg={6} className={cx('item')}>
-                        <Form.Label
-                            className={cx('description')}> Khu vực bạn đang ở <FaStarOfLife
-                            className={cx('icon-label')}/>
-                        </Form.Label>
-                        <Form.Select style={{padding: '14px 18px'}} size='lg'>
-                            {
-                                areas.map((item, index) => {
-                                    return (
-                                        <OptionItem key={index} children={item.label}/>
-                                    )
-                                })
-                            }
-                        </Form.Select>
-                    </Col>
-                    <Col lg={6} className={cx('item')}>
-                        <Form.Label
-                            style={{display: 'inline-block'}}
-                            className={cx('description')}> Khu vực bạn có thể dạy
-                            <FaStarOfLife className={cx('icon-label')}/>
-                            <em> (Bạn phải chọn khu vực bạn đang ở)</em>
-                        </Form.Label>
-                        <Select
-                            classNamePrefix='react-select'
-                            options={address}
-                            components={animatedComponents}
-                            isDisabled={isDisabled}
-                            placeholder={isDisabled ? '' : 'Gõ vào rồi chọn địa điểm'}
-                            isMulti
-                        />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col lg={10} className={cx('item')}>
-                        <Form.Label
-                            className={cx('description')}> Trường bạn đã học
-                        </Form.Label>
-                        <Form.Control size='sm' type="text" placeholder='Tên trường'/>
-                    </Col>
-                    <Col lg={2} className={cx('item')}>
-                        <Form.Label
-                            className={cx('description')}> Năm tốt nghiệp
-                        </Form.Label>
-                        <Form.Control size='sm' type="text" placeholder='vd:2000'/>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col lg={12}>
-                        <Form.Label
-                            className={cx('description')}> Thời gian bạn có học
-                        </Form.Label>
-                        <DayTutor/>
-                        <p className={cx('note')}>(Thời gian được hiển thị từ 0 giờ -> 23 giờ)</p>
+            </div>
+        </>
 
-                    </Col>
-                </Row>
-                <Row>
-                    <Col lg={12}>
-                        <center>
-                            <Button
-                                style={{marginTop: '20px'}}
-                                className={cx('btn', 'btn-success')}
-                                size="lg">
-                                Đăng ký làm gia sư
-                            </Button>
-                        </center>
-                    </Col>
-                </Row>
-            </Container>
-
-        </div>
     );
 }
 
