@@ -9,6 +9,7 @@ import { useRef } from 'react'
 import { createPayment, getCoin, getHistoryPayment } from '~/services/workspaces.sevices';
 import { useSelector } from 'react-redux';
 import { FaCoins, FaPaypal } from 'react-icons/fa';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 const cx = classNames.bind(styles);
 
@@ -53,7 +54,14 @@ function Wallet() {
     }, [history])
     useEffect(() => {
         async function fetchData() {
-            await createPayment(body)
+            const res = await createPayment(body)
+            console.log(res, "pay");
+            if (res.data.status === 1) {
+                NotificationManager.success(res.data.message);
+            }
+            else {
+                NotificationManager.error(res.data.message);
+            }
         }
         if (billingDetails.status === "COMPLETED") {
             fetchData();
@@ -213,6 +221,7 @@ function Wallet() {
 
 
             </Card>
+            <NotificationContainer />
         </div>
     )
 }

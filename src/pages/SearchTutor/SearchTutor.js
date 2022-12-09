@@ -25,7 +25,9 @@ import DatepickerMultiple from "~/layout/components/DatepickerMultiple/Datapicke
 import userEvent from '@testing-library/user-event';
 import { useSelector } from 'react-redux';
 import { FaCoins } from 'react-icons/fa';
+import LoadingOverlay from 'react-loading-overlay';
 
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 const cx = classNames.bind(styles);
 
@@ -41,6 +43,8 @@ function SearchTutor(props) {
         return `${isTablet ? 'row' : ''}`
     }
     const [subjects, setSubjects] = useState([])
+    const [loading, setLoading] = useState(false)
+
     // get subject
     useEffect(() => {
         fetchSubject(subjects).then(subject => setSubjects(subject));
@@ -133,7 +137,7 @@ function SearchTutor(props) {
     }, [provenceId, districtId])
 
 
-    const [wardId, setWardId] = useState(1)
+    const [wardId, setWardId] = useState(107)
 
     const handleSelectWardId = (e) => {
         const getWardId = e.target.value
@@ -157,9 +161,10 @@ function SearchTutor(props) {
 
     const handleSubmit = async () => {
         // e.preventDefault();
+        setLoading(true)
         const fullA = "";
-        let districtName = districtId;
-        let provenceName = provenceId;
+        let districtName = ""
+        let provenceName = "";
         let addDetial = formValue.address
         let wardName = ""
         ward.map((item, index) => {
@@ -169,6 +174,21 @@ function SearchTutor(props) {
             return wardName
 
         })
+        provinces.map((item, index) => {
+            if (item.id === parseInt(wardId)) {
+                provenceName = item.name
+            }
+            return provenceName
+
+        })
+        district.map((item, index) => {
+            if (item.id === parseInt(wardId)) {
+                districtName = item.name
+            }
+            return districtName
+
+        })
+
         if (coin < 5) {
             alert("Bạn không đủ coin, vui lòng nạp coin!!!")
         }
@@ -197,12 +217,12 @@ function SearchTutor(props) {
 
             }
             const res = await createClass(newFormValue)
-            console.log(res, "res");
-            if (res.data.status !== 1) {
-                alert('Đăng ký thất bại, vui lòng thử lại!!!')
+            setLoading(false)
+            if (res.data.status === 1) {
+                NotificationManager.success(res.data.message);
             }
             else {
-                alert('Đăng ký thành công!!!')
+                NotificationManager.error(res.data.message);
             }
         }
 
@@ -269,338 +289,343 @@ function SearchTutor(props) {
     }, [])
     return (
         <>
-            <div className="card text-white">
-                <div className={cx('img-class')}></div>
-                <div className={cx("overlay", "card-img-overlay d-flex flex-column align-items-center justify-content-center")}>
-                    <h5 className={cx("text-title", "card-title fw-bold fs-1")}>TÌM GIA SƯ</h5>
-                    <p className="card-text text-center fs-2">
-                        Dễ dàng tiếp cận với các gia sư theo yêu cầu của bản thân, <br /> bạn chỉ cần đăng bài tìm gia sư <br /> với chi phí là<span className={cx('text-coin', ' fs-1 fw-bold')}> 5 coin <FaCoins /></span> cho một bài đăng.
-                    </p>
-                    {/* <p className="card-text"></p> */}
+            <LoadingOverlay active={loading} spinner text="Đang xử lý...">
+                <div className="card text-white">
+                    <div className={cx('img-class')}></div>
+                    <div className={cx("overlay", "card-img-overlay d-flex flex-column align-items-center justify-content-center")}>
+                        <h5 className={cx("text-title", "card-title fw-bold fs-1")}>TÌM GIA SƯ</h5>
+                        <p className="card-text text-center fs-2">
+                            Dễ dàng tiếp cận với các gia sư theo yêu cầu của bản thân, <br /> bạn chỉ cần đăng bài tìm gia sư <br /> với chi phí là<span className={cx('text-coin', ' fs-1 fw-bold')}> 5 coin <FaCoins /></span> cho một bài đăng.
+                        </p>
+                        {/* <p className="card-text"></p> */}
+                    </div>
                 </div>
-            </div>
 
-            <div className={cx('wrapper')}>
-                <Container>
+                <div className={cx('wrapper')}>
+                    <Container>
 
-                    <Row>
-                        <Col sm={12} md={8} lg={8}>
-                            <div className={cx('detail-content')} onSubmit={handleSubmit}>
-                                <h3 className={cx('title')}>Mô tả yêu cầu tìm gia sư </h3>
-                                <Row>
-                                    <Col lg={12}>
-                                        <Form.Label className={cx('description')}>Tóm tắt yêu cầu (tối đa 20 từ)
-                                            *</Form.Label>
-                                        <Form.Control
-                                            name='title'
-                                            onChange={handleInput}
-                                            value={formValue.title}
-                                            size='sm'
-                                            type="text"
-                                            placeholder="Ví dụ: Tìm gia sư tiếng Anh tại Quận 6 Hồ Chí Minh"
-                                        />
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col lg={maxWidth1200 ? 6 : 2} bsPrefix={convertTablet()} md={maxWidth1024 ? 6 : 2}
-                                        sm={12}>
-                                        <Form.Label className={cx('description')}>Số học viên *</Form.Label>
-                                        <Form.Control
-                                            name='amountStudent'
-                                            onChange={handleInput}
-                                            onKeyPress={handleOnKeyPress}
-                                            value={formValue.amountStudent}
-                                            size="sm"
-                                            type="number"
-                                        />
-                                    </Col>
-                                    <Col lg={maxWidth1200 ? 6 : 2} bsPrefix={convertTablet()} md={maxWidth1024 ? 6 : 2}
-                                        sm={12}>
-                                        <Form.Label className={cx('description')}>Ngày bắt đầu *</Form.Label>
-                                        <DatePicker
-                                            selected={startDate}
-                                            onChange={(date) => setStartDate(date)}
-                                            showDisabledMonthNavigation
-                                            minDate={new Date()}
-                                            className={cx('date')}
-                                        />
-
-                                    </Col>
-                                    <Col lg={maxWidth1200 ? 6 : 2} bsPrefix={convertTablet()} md={maxWidth1024 ? 6 : 2}
-                                        sm={12}>
-                                        <Form.Label className={cx('description')}>Ngày kết thúc *</Form.Label>
-                                        <DatePicker
-                                            selected={endDate}
-                                            onChange={(date) => setEndDate(date)}
-                                            showDisabledMonthNavigation
-                                            minDate={new Date()}
-                                            className={cx('date')}
-                                        />
-
-                                    </Col>
-
-                                </Row>
-                                <Row>
-                                    <Col lg={3}>
-                                        <Form.Label
-                                            className={cx('description')}>Tỉnh*
-                                        </Form.Label>
-                                        <Form.Select
-
-                                            onChange={handleSelectProvince}
-                                            style={{ padding: '14px 18px' }}
-                                            size='lg'>
-                                            {
-                                                provinces.map((item) => {
-                                                    return (
-                                                        <OptionItem key={item.id} value={item.name} children={item.name} />
-                                                    )
-                                                })
-                                            }
-                                        </Form.Select>
-                                    </Col>
-                                    <Col lg={3}>
-                                        <Form.Label className={cx('description')}>Huyện*</Form.Label>
-                                        <Form.Select style={{ padding: '14px 18px' }}
-                                            onChange={handleSelectDistrict}
-                                            size='lg'>
-                                            {
-                                                district.map((item) => {
-                                                    return (
-                                                        <OptionItem key={item.id} value={item.name} children={item.name} />
-                                                    )
-                                                })
-                                            }
-                                        </Form.Select>
-                                    </Col>
-                                    <Col lg={6}>
-                                        <Form.Label className={cx('description')}>Phường *</Form.Label>
-                                        <Form.Select style={{ padding: '14px 18px' }}
-                                            onChange={handleSelectWardId}
-                                            size='lg'>
-                                            {
-                                                ward.map((item) => {
-                                                    return (
-                                                        <OptionItem key={item.id} value={item.id} children={item.name} />
-                                                    )
-                                                })
-                                            }
-                                        </Form.Select>
-                                    </Col>
-
-                                </Row>
-                                <Row>
-                                    <Col lg={12}>
-                                        <Form.Label className={cx('description')} >Địa chỉ cụ thể*</Form.Label>
-                                        <Form.Control
-                                            name="address"
-                                            onChange={handleInput}
-                                            value={formValue.address}
-                                            size='sm'
-                                            type="text"
-                                            placeholder="Số nhà, hẻm"
-                                        />
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col lg={maxWidth1200 ? 4 : 2} style={{ padding: '12px 12px' }}>
-                                        <Form.Label className={cx('description')}>Giờ mỗi buổi</Form.Label>
-                                        <Form.Select style={{ padding: '14px 18px' }}
-                                            onChange={handleSelectOur}
-                                            size='lg'>
-                                            {
-                                                ours.map((item) => {
-                                                    return (
-                                                        <OptionItem value={item.value} key={item.id} children={item.our} />
-                                                    )
-                                                })
-                                            }
-                                        </Form.Select>
-                                    </Col>
-                                    <Col lg={6} className={cx('item')}>
-                                        <Form.Label
-                                            className={cx('description')}>Môn dạy
-                                        </Form.Label>
-                                        <Form.Label
-                                            className={cx('note')}>*
-                                        </Form.Label>
-                                        <Form.Select onChange={handleSelectSubject} style={{ padding: '14px 18px' }}
-                                            size='lg'>
-                                            {
-                                                subjects.map((item) => {
-                                                    return (
-                                                        <OptionItem key={item.id} value={item.id} children={item.name} />
-                                                    )
-                                                })
-                                            }
-                                        </Form.Select>
-                                    </Col>
-                                    <Col lg={4} className={cx('item')}>
-                                        <Form.Label
-                                            className={cx('description')}>Khối lớp
-                                        </Form.Label>
-                                        <Form.Label
-                                            className={cx('note')}>*
-                                        </Form.Label>
-                                        <Form.Select value={grade} onChange={e => setGrade(e.target.value)} style={{ padding: '14px 18px' }}
-                                            size='lg'>
-                                            {
-                                                gradeData.map((item) => {
-                                                    return (
-                                                        <OptionItem key={item.id} value={item.id} children={item.name} />
-                                                    )
-                                                })
-                                            }
-                                        </Form.Select>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col lg={12}>
-                                        <Form.Label
-                                            className={cx('description', "m-3")}> Thời gian bạn có thể nhân lớp
-                                        </Form.Label>
-                                    </Col>
-                                    <Col lg={12}>
-                                        {selectList.map((item, i) => {
-                                            return (
-                                                <div className='d-flex mb-2 align-items-end' key={i}>
-                                                    <div className='d-flex flex-column'>
-                                                        <Form.Label
-                                                            className={cx('description', "ms-3")}> Thứ
-                                                        </Form.Label>
-                                                        <select style={{ padding: '12px 12px' }} className="mx-3" name='day' value={parseInt(item.day)} onChange={(e) => handleSelectChange(i, e)}>
-                                                            {day.map((item, index) => {
-                                                                return (
-                                                                    <option key={index} value={item.value}>{item.name}</option>
-                                                                )
-                                                            })}
-                                                        </select>
-                                                    </div>
-                                                    <div className='d-flex flex-column'>
-                                                        <Form.Label
-                                                            className={cx('description', "ms-3")}> Giờ
-                                                        </Form.Label>
-                                                        <select style={{ padding: '12px 12px' }} className="mx-3" name='hours' value={parseInt(item.hours)} onChange={(e) => handleSelectChange(i, e)}>
-                                                            {hours.map((item, index) => {
-                                                                return (
-                                                                    <option key={index} value={item}>{item}</option>
-                                                                )
-                                                            })}
-                                                        </select>
-                                                    </div>
-                                                    <div className='d-flex flex-column'>
-                                                        <Form.Label
-                                                            className={cx('description', "ms-3")}> Phút
-                                                        </Form.Label>
-                                                        <select style={{ padding: '12px 12px' }} className="mx-3 " name='minutes' value={parseInt(item.minutes)} onChange={(e) => handleSelectChange(i, e)}>
-                                                            {minutes.map((item, index) => {
-                                                                return (
-                                                                    <option key={index} value={item} >{item}</option>
-                                                                )
-                                                            })}
-                                                        </select>
-                                                    </div>
-                                                    {selectList.length !== 1 &&
-                                                        <div className='px-3' >
-                                                            <button className='btn btn-dark me-1 fw-bold fs-5 p-3' onClick={() => handleSelectRemove(i)}>
-                                                                XÓA
-                                                            </button>
-                                                        </div>
-
-                                                    }
-                                                    {selectList.length - 1 === i &&
-                                                        <div className='px-3' >
-                                                            <button className='btn btn-dark fw-bold fs-5 p-3' onClick={handleSelectClick}>
-                                                                THÊM
-                                                            </button>
-                                                        </div>
-
-                                                    }
-                                                </div>
-                                            )
-                                        })}
-                                    </Col>
-                                </Row>
-                                <h3 className={cx('title')}>Yêu cầu gia sư</h3>
-                                <Row>
-                                    <Col lg={4}>
-                                        <Form.Label className={cx('description')}>Giới tính</Form.Label>
-                                        <Form.Select onChange={handleSelectGender} style={{ padding: '14px 18px' }} size='lg'>
-                                            {
-                                                genders.map((item) => {
-                                                    return (
-                                                        <OptionItem value={item.value} key={item.id}
-                                                            children={item.gender} />
-                                                    )
-                                                })
-                                            }
-                                        </Form.Select>
-                                    </Col>
-                                    <Col lg={2}>
-                                        <Form.Label className={cx('description')}>Trình độ</Form.Label>
-                                        <Form.Select style={{ padding: '14px 18px' }} size='lg' onChange={handleSelectLevel}>
-                                            {
-                                                level.map((item) => {
-                                                    return (
-                                                        <OptionItem value={item.id} key={item.id} children={item.name} />
-                                                    )
-                                                })
-                                            }
-                                        </Form.Select>
-                                    </Col>
-                                    <Col lg={2}>
-                                        <Form.Label className={cx('description')}>Học phí(vnđ)</Form.Label>
-                                        <Form.Control
-                                            name='tuition'
-                                            onChange={handleInput}
-                                            value={formValue.tuition}
-                                            size="sm"
-                                            type="number"
-                                            placeholder="ví dụ: 300000" />
-                                    </Col>
-
-
-                                </Row>
-                                <Row>
-                                    <Col lg={12}>
-                                        <Form.Label className={cx('description')}>Mô tả chi tiết *</Form.Label>
-                                        <FloatingLabel controlId="floatingTextarea2" label=''>
+                        <Row>
+                            <Col sm={12} md={8} lg={8}>
+                                <div className={cx('detail-content')} onSubmit={handleSubmit}>
+                                    <h3 className={cx('title')}>Mô tả yêu cầu tìm gia sư </h3>
+                                    <Row>
+                                        <Col lg={12}>
+                                            <Form.Label className={cx('description')}>Tóm tắt yêu cầu (tối đa 20 từ)
+                                                *</Form.Label>
                                             <Form.Control
-                                                name="description"
+                                                name='title'
                                                 onChange={handleInput}
-                                                value={formValue.description}
-                                                as="textarea"
-                                                placeholder="Leave a comment here"
-                                                style={{ height: '115px' }}
+                                                value={formValue.title}
+                                                size='sm'
+                                                type="text"
+                                                placeholder="Ví dụ: Tìm gia sư tiếng Anh tại Quận 6 Hồ Chí Minh"
                                             />
-                                        </FloatingLabel>
-                                    </Col>
-                                </Row>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col lg={maxWidth1200 ? 6 : 2} bsPrefix={convertTablet()} md={maxWidth1024 ? 6 : 2}
+                                            sm={12}>
+                                            <Form.Label className={cx('description')}>Số học viên *</Form.Label>
+                                            <Form.Control
+                                                name='amountStudent'
+                                                onChange={handleInput}
+                                                onKeyPress={handleOnKeyPress}
+                                                value={formValue.amountStudent}
+                                                size="sm"
+                                                type="number"
+                                            />
+                                        </Col>
+                                        <Col lg={maxWidth1200 ? 6 : 2} bsPrefix={convertTablet()} md={maxWidth1024 ? 6 : 2}
+                                            sm={12}>
+                                            <Form.Label className={cx('description')}>Ngày bắt đầu *</Form.Label>
+                                            <DatePicker
+                                                selected={startDate}
+                                                onChange={(date) => setStartDate(date)}
+                                                showDisabledMonthNavigation
+                                                minDate={new Date()}
+                                                className={cx('date')}
+                                            />
+
+                                        </Col>
+                                        <Col lg={maxWidth1200 ? 6 : 2} bsPrefix={convertTablet()} md={maxWidth1024 ? 6 : 2}
+                                            sm={12}>
+                                            <Form.Label className={cx('description')}>Ngày kết thúc *</Form.Label>
+                                            <DatePicker
+                                                selected={endDate}
+                                                onChange={(date) => setEndDate(date)}
+                                                showDisabledMonthNavigation
+                                                minDate={new Date()}
+                                                className={cx('date')}
+                                            />
+
+                                        </Col>
+
+                                    </Row>
+                                    <Row>
+                                        <Col lg={3}>
+                                            <Form.Label
+                                                className={cx('description')}>Tỉnh*
+                                            </Form.Label>
+                                            <Form.Select
+
+                                                onChange={handleSelectProvince}
+                                                style={{ padding: '14px 18px' }}
+                                                size='lg'>
+                                                {
+                                                    provinces.map((item) => {
+                                                        return (
+                                                            <OptionItem key={item.id} value={item.name} children={item.name} />
+                                                        )
+                                                    })
+                                                }
+                                            </Form.Select>
+                                        </Col>
+                                        <Col lg={3}>
+                                            <Form.Label className={cx('description')}>Huyện*</Form.Label>
+                                            <Form.Select style={{ padding: '14px 18px' }}
+                                                onChange={handleSelectDistrict}
+                                                size='lg'>
+                                                {
+                                                    district.map((item) => {
+                                                        return (
+                                                            <OptionItem key={item.id} value={item.name} children={item.name} />
+                                                        )
+                                                    })
+                                                }
+                                            </Form.Select>
+                                        </Col>
+                                        <Col lg={6}>
+                                            <Form.Label className={cx('description')}>Phường *</Form.Label>
+                                            <Form.Select style={{ padding: '14px 18px' }}
+                                                onChange={handleSelectWardId}
+                                                size='lg'>
+                                                {
+                                                    ward.map((item) => {
+                                                        return (
+                                                            <OptionItem key={item.id} value={item.id} children={item.name} />
+                                                        )
+                                                    })
+                                                }
+                                            </Form.Select>
+                                        </Col>
+
+                                    </Row>
+                                    <Row>
+                                        <Col lg={12}>
+                                            <Form.Label className={cx('description')} >Địa chỉ cụ thể*</Form.Label>
+                                            <Form.Control
+                                                name="address"
+                                                onChange={handleInput}
+                                                value={formValue.address}
+                                                size='sm'
+                                                type="text"
+                                                placeholder="Số nhà, hẻm"
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col lg={maxWidth1200 ? 4 : 2} style={{ padding: '12px 12px' }}>
+                                            <Form.Label className={cx('description')}>Giờ mỗi buổi</Form.Label>
+                                            <Form.Select style={{ padding: '14px 18px' }}
+                                                onChange={handleSelectOur}
+                                                size='lg'>
+                                                {
+                                                    ours.map((item) => {
+                                                        return (
+                                                            <OptionItem value={item.value} key={item.id} children={item.our} />
+                                                        )
+                                                    })
+                                                }
+                                            </Form.Select>
+                                        </Col>
+                                        <Col lg={6} className={cx('item')}>
+                                            <Form.Label
+                                                className={cx('description')}>Môn dạy
+                                            </Form.Label>
+                                            <Form.Label
+                                                className={cx('note')}>*
+                                            </Form.Label>
+                                            <Form.Select onChange={handleSelectSubject} style={{ padding: '14px 18px' }}
+                                                size='lg'>
+                                                {
+                                                    subjects.map((item) => {
+                                                        return (
+                                                            <OptionItem key={item.id} value={item.id} children={item.name} />
+                                                        )
+                                                    })
+                                                }
+                                            </Form.Select>
+                                        </Col>
+                                        <Col lg={4} className={cx('item')}>
+                                            <Form.Label
+                                                className={cx('description')}>Khối lớp
+                                            </Form.Label>
+                                            <Form.Label
+                                                className={cx('note')}>*
+                                            </Form.Label>
+                                            <Form.Select value={grade} onChange={e => setGrade(e.target.value)} style={{ padding: '14px 18px' }}
+                                                size='lg'>
+                                                {
+                                                    gradeData.map((item) => {
+                                                        return (
+                                                            <OptionItem key={item.id} value={item.id} children={item.name} />
+                                                        )
+                                                    })
+                                                }
+                                            </Form.Select>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col lg={12}>
+                                            <Form.Label
+                                                className={cx('description', "m-3")}> Thời gian bạn có thể nhân lớp
+                                            </Form.Label>
+                                        </Col>
+                                        <Col lg={12}>
+                                            {selectList.map((item, i) => {
+                                                return (
+                                                    <div className='d-flex mb-2 align-items-end' key={i}>
+                                                        <div className='d-flex flex-column'>
+                                                            <Form.Label
+                                                                className={cx('description', "ms-3")}> Thứ
+                                                            </Form.Label>
+                                                            <select style={{ padding: '12px 12px' }} className="mx-3" name='day' value={parseInt(item.day)} onChange={(e) => handleSelectChange(i, e)}>
+                                                                {day.map((item, index) => {
+                                                                    return (
+                                                                        <option key={index} value={item.value}>{item.name}</option>
+                                                                    )
+                                                                })}
+                                                            </select>
+                                                        </div>
+                                                        <div className='d-flex flex-column'>
+                                                            <Form.Label
+                                                                className={cx('description', "ms-3")}> Giờ
+                                                            </Form.Label>
+                                                            <select style={{ padding: '12px 12px' }} className="mx-3" name='hours' value={parseInt(item.hours)} onChange={(e) => handleSelectChange(i, e)}>
+                                                                {hours.map((item, index) => {
+                                                                    return (
+                                                                        <option key={index} value={item}>{item}</option>
+                                                                    )
+                                                                })}
+                                                            </select>
+                                                        </div>
+                                                        <div className='d-flex flex-column'>
+                                                            <Form.Label
+                                                                className={cx('description', "ms-3")}> Phút
+                                                            </Form.Label>
+                                                            <select style={{ padding: '12px 12px' }} className="mx-3 " name='minutes' value={parseInt(item.minutes)} onChange={(e) => handleSelectChange(i, e)}>
+                                                                {minutes.map((item, index) => {
+                                                                    return (
+                                                                        <option key={index} value={item} >{item}</option>
+                                                                    )
+                                                                })}
+                                                            </select>
+                                                        </div>
+                                                        {selectList.length !== 1 &&
+                                                            <div className='px-3' >
+                                                                <button className='btn btn-dark me-1 fw-bold fs-5 p-3' onClick={() => handleSelectRemove(i)}>
+                                                                    XÓA
+                                                                </button>
+                                                            </div>
+
+                                                        }
+                                                        {selectList.length - 1 === i &&
+                                                            <div className='px-3' >
+                                                                <button className='btn btn-dark fw-bold fs-5 p-3' onClick={handleSelectClick}>
+                                                                    THÊM
+                                                                </button>
+                                                            </div>
+
+                                                        }
+                                                    </div>
+                                                )
+                                            })}
+                                        </Col>
+                                    </Row>
+                                    <h3 className={cx('title')}>Yêu cầu gia sư</h3>
+                                    <Row>
+                                        <Col lg={4}>
+                                            <Form.Label className={cx('description')}>Giới tính</Form.Label>
+                                            <Form.Select onChange={handleSelectGender} style={{ padding: '14px 18px' }} size='lg'>
+                                                {
+                                                    genders.map((item) => {
+                                                        return (
+                                                            <OptionItem value={item.value} key={item.id}
+                                                                children={item.gender} />
+                                                        )
+                                                    })
+                                                }
+                                            </Form.Select>
+                                        </Col>
+                                        <Col lg={2}>
+                                            <Form.Label className={cx('description')}>Trình độ</Form.Label>
+                                            <Form.Select style={{ padding: '14px 18px' }} size='lg' onChange={handleSelectLevel}>
+                                                {
+                                                    level.map((item) => {
+                                                        return (
+                                                            <OptionItem value={item.id} key={item.id} children={item.name} />
+                                                        )
+                                                    })
+                                                }
+                                            </Form.Select>
+                                        </Col>
+                                        <Col lg={2}>
+                                            <Form.Label className={cx('description')}>Học phí(vnđ)</Form.Label>
+                                            <Form.Control
+                                                name='tuition'
+                                                onChange={handleInput}
+                                                value={formValue.tuition}
+                                                size="sm"
+                                                type="number"
+                                                placeholder="ví dụ: 300000" />
+                                        </Col>
 
 
-                            </div>
-                        </Col>
-                        <Col sm={12} md={4} lg={4}>
-                            <ReasonTutor />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col lg={12}>
-                            <center>
-                                <Button
-                                    onClick={() => handleSubmit()}
-                                    style={{ marginTop: '20px' }}
-                                    className={cx('btn', 'btn-success')}
-                                    size="lg">
-                                    Đăng yêu cầu
-                                </Button>
-                            </center>
-                        </Col>
-                    </Row>
-                </Container>
+                                    </Row>
+                                    <Row>
+                                        <Col lg={12}>
+                                            <Form.Label className={cx('description')}>Mô tả chi tiết *</Form.Label>
+                                            <FloatingLabel controlId="floatingTextarea2" label=''>
+                                                <Form.Control
+                                                    name="description"
+                                                    onChange={handleInput}
+                                                    value={formValue.description}
+                                                    as="textarea"
+                                                    placeholder="Leave a comment here"
+                                                    style={{ height: '115px' }}
+                                                />
+                                            </FloatingLabel>
+                                        </Col>
+                                    </Row>
 
 
-            </div >
+                                </div>
+                            </Col>
+                            <Col sm={12} md={4} lg={4}>
+                                <ReasonTutor />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col lg={12}>
+                                <center>
+                                    <Button
+                                        onClick={() => handleSubmit()}
+                                        style={{ marginTop: '20px' }}
+                                        className={cx('btn', 'btn-success px-4 py-3')}
+                                        size="lg">
+                                        Đăng yêu cầu
+                                    </Button>
+                                </center>
+                            </Col>
+                        </Row>
+                    </Container>
+
+
+                </div >
+                <NotificationContainer />
+
+            </LoadingOverlay>
+
         </>
 
     );
