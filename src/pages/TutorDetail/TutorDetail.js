@@ -19,12 +19,14 @@ function TutorDetail() {
     const fetchSubjects = async () => {
         const res = await getSubjectByTutor()
         const { data } = res.data
+        console.log(data);
         setSubjects(data)
     }
     useEffect(() => {
         async function fetchData() {
             setLoading(false)
             const response = await getInfoTutor(id)
+
             const { data } = response.data
             if (data) {
                 setData(data)
@@ -78,7 +80,7 @@ function TutorDetail() {
                                                     <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faBirthdayCake} /> <strong> NĂM SINH:</strong> <span className='text-break'>{new Date(data.birthday).toLocaleDateString()}</span></li>
                                                     <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faMapLocation} /><strong> NƠI Ở:</strong> <span className='text-break'>{data.address}</span></li>
                                                     <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faGraduationCap} /> <strong> TRÌNH ĐỘ:</strong> <span className='text-break'>{data?.level === "TEACHER" ? ('Giáo Viên') : ('Học Sinh') || ""}</span></li>
-                                                    <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faBook} /> <strong> MÔN DẠY: </strong>{subjects.map((item, index) => { return (<>{item.name} </>) })}
+                                                    <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faBook} /> <strong> MÔN DẠY: </strong>{subjects.map((item, index) => { return (<span key={index}>{item.name} </span>) })}
                                                         <span className='text-break'>{data.subject ? data.subject : ""}
                                                         </span>
                                                     </li>
