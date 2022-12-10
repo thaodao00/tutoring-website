@@ -89,6 +89,7 @@ function Header() {
             to: config.routes.contacts,
         },
     ];
+
     const accountLinks = [
         {
             name: 'Thông tin đăng nhập',
@@ -228,29 +229,34 @@ function Header() {
                             </div>
                             <div className={cx('collapse navbar-collapse')} id="navbarNavAltMarkup">
                                 <ul className={cx('nav-link')}>
-                                    {myNav.map((nav, index) => {
-                                        return (
-                                            <NavLink
-                                                className={cx('nav-item')}
-                                                key={index}
-                                                to={nav.to}
-                                                style={({ isActive }) =>
-                                                    isActive
-                                                        ? {
-                                                              color: 'white',
-                                                              background: '#43b14b',
-                                                              borderRadius: '30px',
-                                                          }
-                                                        : null
-                                                }
-                                            >
-                                                {nav.title}
-                                                <span className={cx(nav.tag === 'Hot' ? 'tag-hot' : 'tag-new')}>
-                                                    {nav.tag}
-                                                </span>
-                                            </NavLink>
-                                        );
-                                    })}
+
+
+                                    <>
+                                        {myNav.map((nav, index) => {
+                                            return (
+                                                <NavLink
+                                                    className={cx('nav-item')}
+                                                    key={index}
+                                                    to={nav.to}
+                                                    style={({ isActive }) =>
+                                                        isActive
+                                                            ? {
+                                                                color: 'white',
+                                                                background: '#43b14b',
+                                                                borderRadius: '30px',
+                                                            }
+                                                            : null
+                                                    }
+                                                >
+                                                    {nav.title}
+                                                    <span className={cx(nav.tag === 'Hot' ? 'tag-hot' : 'tag-new')}>
+                                                        {nav.tag}
+                                                    </span>
+                                                </NavLink>
+                                            );
+                                        })}
+                                    </>
+
                                 </ul>
                             </div>
                         </div>

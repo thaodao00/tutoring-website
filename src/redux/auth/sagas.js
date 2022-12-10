@@ -54,18 +54,18 @@ function* getUserInfoSaga() {
         if (user) {
             yield put({ type: LOGIN_SUCCESS, payload: { user: user.data } });
         }
-    } catch (error) {}
+    } catch (error) { }
 }
 function* updateInfoSaga(action) {
     try {
-        const { id, name, gender, phone, birthday, introduce } = action.payload;
-        const { data, status, message } = yield call(updateUser, { id, name, gender, phone, birthday, introduce });
+        const { id, name, gender, phone, birthday, introduce, address } = action.payload;
+        const { data, status, message } = yield call(updateUser, { id, name, gender, phone, birthday, introduce, address });
         if (status === 1) {
             yield put({ type: UPDATE_INFO_USER_SUCCESS, payload: { user: data, message: message } });
         } else {
             yield put({ type: UPDATE_INFO_USER_FAIL, payload: { error: message } });
         }
-    } catch (error) {}
+    } catch (error) { }
 }
 function* signupSaga(action) {
     const { email, name, password } = action.payload;

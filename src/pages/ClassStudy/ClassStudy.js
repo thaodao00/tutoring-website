@@ -7,6 +7,8 @@ import { getAllClass, getClassById } from '~/services/workspaces.sevices';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import ClassItem from '../Class/ClassItem';
+import ClassStudyItem from './ClassStudyItem/ClassStudyItem';
 
 
 const cx = classNames.bind(style);
@@ -60,35 +62,16 @@ function ClassStudy(props) {
                 <h1 className={cx('text-center p-5')}>HIỆN TẠI BẠN CHƯA ĐĂNG KÝ LỚP HỌC!!!!</h1>
                 <img src='https://th.bing.com/th/id/R.64a09625d012aa289afe08a16677b525?rik=pepaPel1oqdsyg&pid=ImgRaw&r=0' height={100} alt="class" />
             </div>) : (<> <h1 className='text-center fw-bold'> Danh Sách Lớp Học</h1>
-                <div className='bg-dark p-5 m-5'>
-                    <table className="table table-dark">
-                        <thead>
-                            <tr>
-                                <th scope="col">Mã số lớp</th>
-                                <th scope="col">Tên lớp</th>
-                                <th scope="col">Mô tả</th>
-                                {/* <th scope="col">TÊN HỌC VIÊN</th> */}
-                                <th scope="col">Trạng thái</th>
-                                <th scope="col">Thời gian lớp học</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data.map((item, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <th scope="row"> {item.id}</th>
-                                        <td>{item.title}</td>
-                                        <td>{item.description
-                                        }</td>
-                                        <td>{item.status === "CREATE" ? ("Chưa hoạt động") : ("Đang hoạt động")}</td>
-                                        {/* <td>@mdo</td> */}
-                                        <td>{new Date(item.classRequirement.dateStart).toLocaleDateString()} - {new Date(item.classRequirement.dateEnd).toLocaleDateString()}</td>
-                                    </tr>
-                                )
-                            })}
 
-                        </tbody>
-                    </table>
+                <div className={cx('information')}>
+                    {
+                        data.map((item) => {
+                            return (
+                                <ClassStudyItem key={item.id} data={item} />
+                            )
+                        })
+
+                    }
                 </div>
             </>)}
 

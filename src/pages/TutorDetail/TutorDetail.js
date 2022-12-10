@@ -3,39 +3,37 @@ import classNames from 'classnames/bind';
 import styles from './Tutor-Detail.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBirthdayCake, faBook, faGraduationCap, faLocationDot, faMapLocation, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import Button from '~/components/Button';
 import { getInfoTutor, getSubjectByTutor } from '~/services/workspaces.sevices';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import Avatar from '~/assets/avatar/default-avatar.png'
 import { Fragment } from 'react';
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const cx = classNames.bind(styles);
-function TutorDetail() {
+function TutorDetail(props) {
+    const location = useLocation();
+    const item = location.state;
+    console.log(item);
     const [data, setData] = useState([])
-    const [subjects, setSubjects] = useState({})
+    const [address, setAddress] = useState([])
     const { id } = useParams();
     const [loading, setLoading] = useState(false)
-    const fetchSubjects = async () => {
-        const res = await getSubjectByTutor()
-        const { data } = res.data
-        console.log(data);
-        setSubjects(data)
-    }
+
     useEffect(() => {
         async function fetchData() {
             setLoading(false)
             const response = await getInfoTutor(id)
-
             const { data } = response.data
             if (data) {
                 setData(data)
             }
+
+            setAddress(data?.addresses)
             setLoading(true)
 
         }
         fetchData()
-        fetchSubjects()
+
     }, [])
     const Loading = () => {
         return (
@@ -78,13 +76,10 @@ function TutorDetail() {
                                             <div className="col-lg-12">
                                                 <ul className={cx('list')}>
                                                     <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faBirthdayCake} /> <strong> NĂM SINH:</strong> <span className='text-break'>{new Date(data.birthday).toLocaleDateString()}</span></li>
-                                                    <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faMapLocation} /><strong> NƠI Ở:</strong> <span className='text-break'>{data.address}</span></li>
+                                                    <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faMapLocation} /><strong> NƠI Ở:</strong> <span className='text-break'>{address[0]?.fullAddress || ""}</span></li>
                                                     <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faGraduationCap} /> <strong> TRÌNH ĐỘ:</strong> <span className='text-break'>{data?.level === "TEACHER" ? ('Giáo Viên') : ('Học Sinh') || ""}</span></li>
-                                                    <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faBook} /> <strong> MÔN DẠY: </strong>{subjects.map((item, index) => { return (<span key={index}>{item.name} </span>) })}
-                                                        <span className='text-break'>{data.subject ? data.subject : ""}
-                                                        </span>
+                                                    <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faBook} /> <strong> MÔN DẠY: </strong>{item.map((i, index) => { return (<span key={index}>{i.name} </span>) })}
                                                     </li>
-                                                    {/* <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faLocationDot} /> <strong> ĐỊA ĐIỂM DẠY HỌC:</strong> <span className='text-break'>{data.teaching_place ? data.teaching_place : ""}</span></li> */}
                                                 </ul>
                                             </div>
                                             <div className='col-lg-12 mt-3'>

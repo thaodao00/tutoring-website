@@ -12,43 +12,7 @@ import { Fragment } from 'react';
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 const cx = classNames.bind(styles);
 export const TutorItem = () => {
-    // const dataTutor = [
-    //     {
-    //         name: "Nguyễn Văn A",
-    //         address: "Hà Nội",
-    //         position: "Sinh Viên",
-    //         subject: " Tiếng Anh, Tiếng Anh Giao tiếp, Tiếng Anh lớp 5, Tiếng Anh lớp 6, Tiếng Anh lớp 7, Tiếng Anh lớp 8, Tiếng Anh lớp 9",
-    //         avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop/39352_avatar.jpeg'
-    //     },
-    //     {
-    //         name: "Nguyễn Văn A",
-    //         address: "Hà Nội",
-    //         position: "Sinh Viên",
-    //         subject: " Tiếng Anh, Tiếng Anh Giao tiếp, Tiếng Anh lớp 5, Tiếng Anh lớp 6, Tiếng Anh lớp 7, Tiếng Anh lớp 8, Tiếng Anh lớp 9",
-    //         avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop/39352_avatar.jpeg'
-    //     },
-    //     {
-    //         name: "Nguyễn Văn B",
-    //         address: "Hà Nội",
-    //         position: "Sinh Viên",
-    //         subject: " Tiếng Anh, Tiếng Anh Giao tiếp, Tiếng Anh lớp 5, Tiếng Anh lớp 6, Tiếng Anh lớp 7, Tiếng Anh lớp 8, Tiếng Anh lớp 9",
-    //         avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop/39352_avatar.jpeg'
-    //     },
-    //     {
-    //         name: "Nguyễn Văn C",
-    //         address: "Hà Nội",
-    //         position: "Sinh Viên",
-    //         subject: " Tiếng Anh, Tiếng Anh Giao tiếp, Tiếng Anh lớp 5, Tiếng Anh lớp 6, Tiếng Anh lớp 7, Tiếng Anh lớp 8, Tiếng Anh lớp 9",
-    //         avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop/39352_avatar.jpeg'
-    //     },
-    //     {
-    //         name: "Nguyễn Văn D",
-    //         address: "Hà Nội",
-    //         position: "Sinh Viên",
-    //         subject: " Tiếng Anh, Tiếng Anh Giao tiếp, Tiếng Anh lớp 5, Tiếng Anh lớp 6, Tiếng Anh lớp 7, Tiếng Anh lớp 8, Tiếng Anh lớp 9",
-    //         avatar: 'https://www.daykemtainha.vn/public/files/avatar_crop/39352_avatar.jpeg'
-    //     },
-    // ]
+
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false)
 
@@ -100,7 +64,7 @@ export const TutorItem = () => {
                     <Fragment>
                         {data.map((item, index) => {
                             return (
-                                <Button to={`/tutor-detail/${item.id}`} className={cx("col-lg-4 col-md-6 col-sm-12 card", "box-card")} key={index}>
+                                <Button to={`/tutor-detail/${item.id}`} state={item.subjects} className={cx("col-lg-4 col-md-6 col-sm-12 card", "box-card")} key={index}>
 
                                     <div className={cx('box-item')}>
                                         <img style={{ height: '255px' }} src={item.urlAvt ? item.urlAvt : Avatar} className="card-img-top" alt="..." />
@@ -110,17 +74,9 @@ export const TutorItem = () => {
                                                     {item.name}
                                                 </h4>
                                                 <ul className={cx('text-list')}>
-                                                    {/* <li className={cx('text-item', 'textOverflow')}>
-                                                        <FontAwesomeIcon icon={faLocationDot} className={cx('item-icon')} />
-                                                        {item.address}
-                                                    </li> */}
-                                                    {/* <li className={cx('text-item')}>
-                                                        <FontAwesomeIcon icon={faGraduationCap} className={cx('item-icon')} />Ngày sinh:
-                                                        {index.birthday ? item.birthday : ""}
-                                                    </li> */}
                                                     <li className={cx('text-item', 'textOverflow')}>
                                                         <FontAwesomeIcon icon={faBookBookmark} className={cx('item-icon')} />Giới thiêu:{" "}
-                                                        {item.introduce ? item.introduce.substring(0, 16) : ""}...
+                                                        {item.introduce ? item.introduce.substring(0, 16) : "Giới thiệu bản thân"}...
                                                     </li>
                                                 </ul>
                                             </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './Tutor.module.scss';
-import {Col, Row} from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 
 import GoodTutor from '~/layout/components/GoodTutor/GoodTutor';
 
@@ -13,14 +13,14 @@ import {
     faMapLocation,
     faSearch
 } from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {Link} from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
 import PaginationTutor from "~/layout/common/PaginationTutor";
-import {TutorItem} from './TutorItem/TutorItem';
-import {useState} from 'react';
-import {useEffect} from 'react';
-import {fetchGrade, getSubject} from '~/services/workspaces.sevices';
+import { TutorItem } from './TutorItem/TutorItem';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { fetchGrade, getSubject } from '~/services/workspaces.sevices';
 
 const cx = classNames.bind(styles);
 
@@ -69,14 +69,14 @@ function Tutor() {
     useEffect(() => {
         async function getSubjects() {
             const response = await getSubject()
-            const {data: {data},} = response
+            const { data: { data }, } = response
             console.log(data, "daa");
             if (data) {
                 setSubject(data)
             }
         }
 
-     fetchGrade(grade).then(res => setGrade(res))
+        fetchGrade(grade).then(res => setGrade(res))
 
         getSubjects();
     }, [])
@@ -86,16 +86,11 @@ function Tutor() {
                 <div className={cx('row')}>
                     <div className={cx('col-lg-9 col-md-12 col-sm-12 mt-5')}>
                         <div className='row'>
-                            <TutorItem/>
+                            <TutorItem />
                         </div>
-                        <Row>
-                            <Col xs={12} lg={12} md={12}>
-                                {/* <PaginationTutor /> */}
-                            </Col>
-                        </Row>
                     </div>
                     <div className={cx('col-lg-3 col-md-12 col-sm-12 mt-5')}>
-                        <GoodTutor/>
+                        <GoodTutor />
                     </div>
 
                 </div>

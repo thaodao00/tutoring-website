@@ -3,7 +3,7 @@ import { Col, Row } from "react-bootstrap";
 import { FaAngleDoubleRight, FaBook, FaMapMarkerAlt } from "react-icons/fa";
 import classNames from 'classnames/bind';
 
-import styles from './ClassItem.module.scss';
+import styles from './ClassStudyItem.module.scss';
 import { AiOutlineClockCircle, AiOutlineSchedule } from "react-icons/ai";
 import { BsGenderAmbiguous } from "react-icons/bs";
 import { FiUser } from "react-icons/fi";
@@ -12,12 +12,8 @@ import dayjs from "moment";
 
 const cx = classNames.bind(styles);
 
-function ClassItem(props) {
-    const convertToDate = (date) => {
-        const newDate = new Date(date)
-        dayjs.locale('vi')
-        return 'Thứ' + " " + dayjs(newDate).locale('vi').format('dddd') + ":" + ' ' + newDate.getMonth() + "h" + newDate.getMinutes()
-    }
+function ClassStudyItem(props) {
+
     const convertToMinute = (date) => {
         return date / 60
     }
@@ -40,7 +36,6 @@ function ClassItem(props) {
                         <FaAngleDoubleRight
                             className={cx('icon-arrow', 'animate__animated animate__fadeInLeft animate__infinite infinite')}
                         />
-
                     </div>
                 </div>
                 <div className={cx('fee-block')}>
@@ -48,11 +43,11 @@ function ClassItem(props) {
                         <Col lg={6} md={12}>
                             <h4 className={cx('fee')}><span>Học phí :</span> {formatCurrency(data.tuition)}/Tháng</h4>
                         </Col>
-                        <Col lg={6} md={12}>
-                            <a href='' className={cx('btn-take')}>
-                                <span> Phí: <b>25% ({formatCurrency(data.tuition + data.tuition * 0.25)})</b></span>
-                                <span>Nhận lớp ngay</span>
-                            </a>
+                        <Col lg={3} md={12} className="bg-light rounded-4 p-4" >
+                            <div>
+                                <div className={cx('text-status')}>Ngày tạo : {new Date(data.createdAt).toLocaleDateString()}</div>
+                                <div className={cx('text-status')}>Trạng thái: {data?.status === "CREATE" ? <>Chưa hoạt động</> : <>Đang hoạt động</>}</div>
+                            </div>
                         </Col>
                     </Row>
                 </div>
@@ -126,4 +121,4 @@ function ClassItem(props) {
     );
 }
 
-export default ClassItem;
+export default ClassStudyItem;
