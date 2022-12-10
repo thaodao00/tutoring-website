@@ -15,6 +15,8 @@ import { useState } from 'react';
 import { getUserService } from '~/redux/auth/services';
 import { changePassword } from '~/services/workspaces.sevices';
 import Button from '~/components/Button';
+import LoadingOverlay from 'react-loading-overlay';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 const cx = classNames.bind(styles);
 
@@ -22,7 +24,10 @@ function InfoLogin(props) {
     const [data, setData] = useState({})
     const [oldPass, setOldPass] = useState("")
     const [newPass, setNewPass] = useState("")
+    const [loading, setLoading] = useState(false)
+
     const handleChangePassword = async () => {
+
         const body = {
             oldPassword: oldPass,
             newPassword: newPass
@@ -37,15 +42,15 @@ function InfoLogin(props) {
             return
         }
         else {
-            const response = await changePassword(body)
-            console.log(response);
-            const { data: { status, message } } = response
-            if (status && status === 1) {
-                alert(message)
+            setLoading(true)
+            const res = await changePassword(body)
+            if (res.data.status === 1) {
+                NotificationManager.success(res.data.message);
             }
             else {
-                alert(message)
+                NotificationManager.error(res.data.message);
             }
+            setLoading(false)
             setNewPass("")
             setOldPass('')
         }
@@ -64,55 +69,58 @@ function InfoLogin(props) {
     }, [])
     const maxWidth1200 = useMediaQuery({ maxWidth: 1200 })
     return (
-        <div className={cx('wrapper')}>
-            <Container>
-                <Row>
-                    <Col lg={3} md={3} >
-                        <SidebarLeftInfo data={data} />
-                    </Col>
-                    <Col lg={9} md={9} className={cx('information')}>
-                        <h4 className={cx('title', 'line-bottom')}>Thông tin đăng nhập</h4>
-                        <Row>
-                            <Col lg={4} md={12}>
-                                <Form.Label className={cx('description')}> Tên
+        <LoadingOverlay active={loading} spinner text="Đang xử lý...">
+            <div className={cx('wrapper')}>
+                <Container>
+                    <Row>
+                        <Col lg={4} md={4} >
+                            <SidebarLeftInfo data={data} />
+                        </Col>
+                        <Col lg={8} md={8} className={cx('information')}>
+                            <h4 className={cx('title', 'line-bottom')}>Thông tin đăng nhập</h4>
+                            <Row>
+                                <Col lg={4} md={12}>
+                                    <Form.Label className={cx('description')}> Tên
 
-                                </Form.Label>
-                                <Form.Control disabled size='sm' type="text" value={data.name}
-                                    placeholder="" />
-                            </Col>
-                            <Col lg={4} md={12}>
-                                <Form.Label className={cx('description')} >Email
-                                    {/* <span className={cx('not-check')}>Chưa kiểm duyệt</span> */}
-                                </Form.Label>
-                                <Form.Control disabled size='sm' type="text" value={data.email}
-                                    placeholder="" />
-                            </Col>
-                        </Row>
-                        <h4 className={cx('title', 'line-bottom', 'mt-16')} >
-                            Cập nhật mật khẩu
-                        </h4>
+                                    </Form.Label>
+                                    <Form.Control disabled size='sm' type="text" value={data.name}
+                                        placeholder="" />
+                                </Col>
+                                <Col lg={4} md={12}>
+                                    <Form.Label className={cx('description')} >Email
+                                        {/* <span className={cx('not-check')}>Chưa kiểm duyệt</span> */}
+                                    </Form.Label>
+                                    <Form.Control disabled size='sm' type="text" value={data.email}
+                                        placeholder="" />
+                                </Col>
+                            </Row>
+                            <h4 className={cx('title', 'line-bottom', 'mt-16')} >
+                                Cập nhật mật khẩu
+                            </h4>
 
-                        <Row>
-                            <Col lg={6} md={12}>
-                                <Form.Label className={cx('description')}>Mật khẩu cũ</Form.Label>
-                                <Form.Control size='sm' placeholder='...........' type="password" value={oldPass || ""} onChange={(e) => setOldPass(e.target.value)} />
-                            </Col>
-                            <Col lg={6} md={12}>
-                                <Form.Label className={cx('description')}>Mật khẩu mới</Form.Label>
-                                <Form.Control size='sm' placeholder='...........' type="password" value={newPass || ""} onChange={(e) => setNewPass(e.target.value)} />
-                            </Col>
-                        </Row>
-                        <div className={cx('function')}>
-                            <Button
-                                className={cx('change-pass')} onClick={handleChangePassword}>
-                                Cập nhật
-                            </Button>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
+                            <Row>
+                                <Col lg={6} md={12}>
+                                    <Form.Label className={cx('description')}>Mật khẩu cũ</Form.Label>
+                                    <Form.Control size='sm' placeholder='...........' type="password" value={oldPass || ""} onChange={(e) => setOldPass(e.target.value)} />
+                                </Col>
+                                <Col lg={6} md={12}>
+                                    <Form.Label className={cx('description')}>Mật khẩu mới</Form.Label>
+                                    <Form.Control size='sm' placeholder='...........' type="password" value={newPass || ""} onChange={(e) => setNewPass(e.target.value)} />
+                                </Col>
+                            </Row>
+                            <div className={cx('function')}>
+                                <Button
+                                    className={cx('change-pass')} onClick={handleChangePassword}>
+                                    Cập nhật
+                                </Button>
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+            <NotificationContainer />
+        </LoadingOverlay>
 
-        </div>
     );
 }
 
