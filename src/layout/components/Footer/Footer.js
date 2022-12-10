@@ -44,11 +44,7 @@ function Footer() {
                             </Button>
                         </span>
                     </div>
-                    <img
-                        className={cx('.img-key')}
-                        src="https://images.dmca.com/Badges/dmca-badge-w200-2x1-01.png?ID=3c7d4f4d-5e2a-48cc-916b-ad07927ea1b0"
-                        alt="Error"
-                    />
+
                 </div>
                 <ul className={cx('col-lg-4 col-md-4 col-sm-12', 'list')}>
                     <li className={cx('item')}>Về chúng tôi</li>
@@ -86,13 +82,6 @@ function Footer() {
                             />
                         </a>
                     </div>
-                </div>
-                <div>
-                    <img
-                        className={cx('img-phone')}
-                        src="https://www.daykemtainha.vn/public/images/app-mobile.png"
-                        alt="Error"
-                    />
                 </div>
             </div>
         </div>

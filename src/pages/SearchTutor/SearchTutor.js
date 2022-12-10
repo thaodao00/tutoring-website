@@ -23,11 +23,12 @@ import {
 } from "~/services/workspaces.sevices";
 import DatepickerMultiple from "~/layout/components/DatepickerMultiple/DatapickerMultipe";
 import userEvent from '@testing-library/user-event';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaCoins } from 'react-icons/fa';
 import LoadingOverlay from 'react-loading-overlay';
 
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { getUserInfo } from '~/redux/auth/actions';
 
 const cx = classNames.bind(styles);
 
@@ -39,6 +40,7 @@ function SearchTutor(props) {
     const isTablet = useMediaQuery({ maxWidth: 768 })
     const maxWidth1024 = useMediaQuery({ maxWidth: 1024 })
     const maxWidth1200 = useMediaQuery({ maxWidth: 1200 })
+    const dispatch = useDispatch()
     const convertTablet = () => {
         return `${isTablet ? 'row' : ''}`
     }
@@ -89,13 +91,13 @@ function SearchTutor(props) {
         const getSubjectId = e.target.value
         setSubjectId(getSubjectId)
     }
-    const [gender, setGender] = useState("ALL")
+    const [gender, setGender] = useState("MALE")
     const handleSelectGender = (e) => {
         const getGender = e.target.value
         setGender(getGender)
 
     }
-    const [levelId, setLevelId] = useState("TEACHER")
+    const [levelId, setLevelId] = useState("STUDENT")
     const [level, setLevel] = useState([])
     const handleSelectLevel = (e) => {
         const getLevelId = e.target.value
@@ -137,7 +139,7 @@ function SearchTutor(props) {
     }, [provenceId, districtId])
 
 
-    const [wardId, setWardId] = useState(107)
+    const [wardId, setWardId] = useState(1)
 
     const handleSelectWardId = (e) => {
         const getWardId = e.target.value
@@ -163,8 +165,8 @@ function SearchTutor(props) {
         // e.preventDefault();
         setLoading(true)
         const fullA = "";
-        let districtName = ""
-        let provenceName = "";
+        let districtName = districtId;
+        let provenceName = provenceId;
         let addDetial = formValue.address
         let wardName = ""
         ward.map((item, index) => {
@@ -174,57 +176,45 @@ function SearchTutor(props) {
             return wardName
 
         })
-        provinces.map((item, index) => {
-            if (item.id === parseInt(wardId)) {
-                provenceName = item.name
-            }
-            return provenceName
 
-        })
-        district.map((item, index) => {
-            if (item.id === parseInt(wardId)) {
-                districtName = item.name
-            }
-            return districtName
-
-        })
-
-        if (coin < 5) {
-            alert("Bạn không đủ coin, vui lòng nạp coin!!!")
-        }
-        else {
-            const newFormValue = {
-                tuition: parseInt(formValue.tuition),
-                title: formValue.title,
-                description: formValue.description,
-                subjectId: parseInt(subjectId),
-                gradeId: parseInt(grade),
-                createdBy: user.id,
-                classRequirement: {
-                    genderTutor: gender,
-                    address: {
-                        address: formValue.address,
-                        fullAddress: fullA.concat(addDetial, ", ", wardName, ", ", districtName, ", ", provenceName),
-                        wardId: parseInt(wardId),
-                    },
-                    amountStudent: parseInt(formValue.amountStudent),
-                    level: levelId,
-                    dateStart: startDate.getTime(),
-                    dateEnd: endDate.getTime(),
-                    timeLesson: parseInt(our)
+        const newFormValue = {
+            tuition: parseInt(formValue.tuition),
+            title: formValue.title,
+            description: formValue.description,
+            subjectId: parseInt(subjectId),
+            gradeId: parseInt(grade),
+            createdBy: user.id,
+            classRequirement: {
+                genderTutor: gender,
+                address: {
+                    address: formValue.address,
+                    fullAddress: fullA.concat(addDetial, ", ", wardName, ", ", districtName, ", ", provenceName),
+                    wardId: parseInt(wardId),
                 },
-                requireRelationshipTimeWeeks: selectList
+                amountStudent: parseInt(formValue.amountStudent),
+                level: levelId,
+                dateStart: startDate.getTime(),
+                dateEnd: endDate.getTime(),
+                timeLesson: parseInt(our)
+            },
+            requireRelationshipTimeWeeks: selectList
 
-            }
-            const res = await createClass(newFormValue)
-            setLoading(false)
+        }
+
+        await createClass(newFormValue).then((res) => {
+
             if (res.data.status === 1) {
                 NotificationManager.success(res.data.message);
+
             }
             else {
                 NotificationManager.error(res.data.message);
             }
-        }
+        })
+            .catch((e) => NotificationManager.error(e.response.data.message));
+
+        setLoading(false)
+
 
     }
     ////
@@ -364,13 +354,15 @@ function SearchTutor(props) {
                                     <Row>
                                         <Col lg={3}>
                                             <Form.Label
-                                                className={cx('description')}>Tỉnh*
+                                                className={cx('description')}>Tỉnh *
                                             </Form.Label>
                                             <Form.Select
 
                                                 onChange={handleSelectProvince}
                                                 style={{ padding: '14px 18px' }}
                                                 size='lg'>
+                                                <OptionItem children="Chọn Tỉnh" />
+
                                                 {
                                                     provinces.map((item) => {
                                                         return (
@@ -385,6 +377,8 @@ function SearchTutor(props) {
                                             <Form.Select style={{ padding: '14px 18px' }}
                                                 onChange={handleSelectDistrict}
                                                 size='lg'>
+                                                <OptionItem children="Chọn Huyện" />
+
                                                 {
                                                     district.map((item) => {
                                                         return (
@@ -399,6 +393,8 @@ function SearchTutor(props) {
                                             <Form.Select style={{ padding: '14px 18px' }}
                                                 onChange={handleSelectWardId}
                                                 size='lg'>
+                                                <OptionItem children="Chọn Phường" />
+
                                                 {
                                                     ward.map((item) => {
                                                         return (
@@ -619,11 +615,8 @@ function SearchTutor(props) {
                             </Col>
                         </Row>
                     </Container>
-
-
                 </div >
                 <NotificationContainer />
-
             </LoadingOverlay>
 
         </>
