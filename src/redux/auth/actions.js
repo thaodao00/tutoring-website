@@ -7,6 +7,7 @@ import {
     SIGNUP,
     UPDATE_INFO_USER,
     UPDATE_PASSWORD,
+    LOGIN_GOOGLE,
 } from './constants';
 
 export function login(email, password) {
@@ -16,6 +17,12 @@ export function login(email, password) {
     };
 }
 
+export function login_google(email, name) {
+    return {
+        type: LOGIN_GOOGLE,
+        payload: { email, name },
+    };
+}
 export function getUserInfo() {
     return {
         type: GET_USER,

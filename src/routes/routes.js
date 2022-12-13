@@ -24,6 +24,7 @@ const publicRoutes = [
     { path: config.routes.class, component: Class },
     { path: config.routes.tutor, component: Tutor },
     { path: config.routes.login, component: Login },
+    { path: config.routes.logout, component: Home },
     { path: config.routes.contacts, component: Contacts },
     { path: config.routes.searchTutor, component: SearchTutor },
     { path: config.routes.registerAsTutor, component: RegisterAsTutor },

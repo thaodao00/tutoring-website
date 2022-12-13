@@ -16,7 +16,7 @@
         text-align: -webkit-center;
         width: -webkit-fill-available;
 
-        form {
+        .form-login {
             padding: 20px;
             box-shadow: 0 10px 20px rgb(0 0 0 / 10%);
             .error {
@@ -69,7 +69,9 @@
                 color: darkcyan;
             }
         }
-
+        .login-gg {
+            padding: 0px 15px;
+        }
         button {
             width: 100%;
             line-height: 30px;

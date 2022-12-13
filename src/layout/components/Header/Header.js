@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faNavicon, faPhoneFlip, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { Link, NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import style from './Header.module.scss';
 import Button from '~/components/Button';
@@ -23,11 +24,10 @@ import { getInfoTutor } from '~/services/workspaces.sevices';
 const cx = classNames.bind(style);
 
 function Header() {
+    const navigate = useNavigate();
     const auth = useSelector((state) => state.auth);
     const dispatch = useDispatch();
-    const handleLogout = () => {
-        dispatch(logout());
-    };
+
     const isUser = false;
     const refOverClickOutSide = useRef();
     const [isShow, setIsShow] = useState(false);
@@ -37,16 +37,24 @@ function Header() {
         setIsShow(!isShow);
         console.log(isShow);
     };
+
     useEffect(() => {
         async function fetchData() {
-            const response = await getInfoTutor(auth.user.id);
-            const { data } = response.data;
-            if (data) {
-                setData(data);
+            if (auth.user) {
+                const response = await getInfoTutor(auth.user.id);
+                const { data } = response.data;
+                if (data) {
+                    setData(data);
+                }
             }
         }
         fetchData();
     }, []);
+
+    const handleLogout = () => {
+        dispatch(logout());
+    };
+
     const myNav = [
         {
             id: 1,
@@ -181,7 +189,11 @@ function Header() {
                                             {item.icon}
                                             {item.name == 'Đăng xuất' ? (
                                                 <>
-                                                    <Link onClick={handleLogout} className={cx('item-link')}>
+                                                    <Link
+                                                        to={'/home'}
+                                                        onClick={handleLogout}
+                                                        className={cx('item-link')}
+                                                    >
                                                         {item.name}
                                                     </Link>
                                                 </>
