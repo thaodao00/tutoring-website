@@ -55,10 +55,10 @@ export function forgotPassword(email) {
     };
 }
 
-export function updateInfoUser(id, name, gender, phone, birthday, introduce) {
+export function updateInfoUser(id, name, gender, phone, birthday, introduce, address) {
     return {
         type: UPDATE_INFO_USER,
-        payload: { id, name, gender, phone, birthday, introduce },
+        payload: { id, name, gender, phone, birthday, introduce, address },
     };
 }
 export function logout() {
