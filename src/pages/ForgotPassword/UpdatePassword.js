@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './UpdatePassword.module.scss';
 import { useForm } from 'react-hook-form';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import api from '~/utils/axios';
 import LoadingOverlay from 'react-loading-overlay';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import { useSelector } from 'react-redux';
+import RootNavigator from '~/utils/navigate';
 
 const cx = classNames.bind(styles);
 
 function UpdatePassword(props) {
+    const navigate = useNavigate();
+    RootNavigator.setNavigate(navigate);
     const location = useLocation();
     const { email } = location.state;
     const {
@@ -19,11 +23,17 @@ function UpdatePassword(props) {
         handleSubmit,
         getValues,
     } = useForm();
-
+    const auth = useSelector((state) => state.auth);
     const [codeOTP, setCodeOTP] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(null);
+
+    useEffect(() => {
+        if (auth.user) {
+            navigate('/');
+        }
+    }, [auth]);
 
     const handleForgotPass = async () => {
         setLoading(true);
