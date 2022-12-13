@@ -1,4 +1,4 @@
-import { takeLatest, call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import {
     SIGNUP_SUCCESS,
     SIGNUP_ERROR,
@@ -17,8 +17,16 @@ import {
     UPDATE_INFO_USER_FAIL,
     UPDATE_INFO_USER,
     GET_USER,
+    LOGIN_GOOGLE,
 } from './constants';
-import { loginService, signupService, getUserService, updatePasswordService, forgotPasswordService } from './services';
+import {
+    loginGoogleService,
+    loginService,
+    signupService,
+    getUserService,
+    updatePasswordService,
+    forgotPasswordService,
+} from './services';
 
 // import history from '~/utils/history';
 import RootNavigate from '~/utils/navigate';
@@ -47,6 +55,31 @@ function* loginSaga(action) {
         yield put({ type: LOGIN_FAIL, error });
     }
 }
+
+function* loginGoogleSaga(action) {
+    const { email, name } = action.payload;
+    console.log('login: ', email, ' | ', name);
+    try {
+        yield put({ type: LOADING });
+        const response = yield call(loginGoogleService, email, name);
+        console.log(response);
+        if (response.status == 1) {
+            // lưu token
+            localStorage.setItem('token', response.data);
+
+            // lấy thông tin user
+            const user = yield call(getUserService);
+            yield put({ type: LOGIN_SUCCESS, payload: { user: user.data } });
+
+            RootNavigate.getNavigate()('/');
+        } else {
+            yield put({ type: LOGIN_FAIL, payload: { error: response.message } });
+        }
+    } catch (error) {
+        yield put({ type: LOGIN_FAIL, error });
+    }
+}
+
 function* getUserInfoSaga() {
     try {
         // lấy thông tin user
@@ -128,6 +161,7 @@ function* authSagas() {
     yield takeEvery(UPDATE_PASSWORD, updatePasswordSaga);
     yield takeEvery(FORGOT_PASSWORD, forgotPasswordSaga);
     yield takeEvery(UPDATE_INFO_USER, updateInfoSaga);
+    yield takeEvery(LOGIN_GOOGLE, loginGoogleSaga);
 }
 
 export default authSagas;

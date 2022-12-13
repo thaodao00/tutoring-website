@@ -9,6 +9,14 @@ export const loginService = async (email, password) =>
         })
         .catch((e) => e.response?.data);
 
+export const loginGoogleService = async (email, name) =>
+    await instance
+        .post('/v1/auths/login-gg', { email, name })
+        .then((res) => {
+            return res.data;
+        })
+        .catch((e) => e.response?.data);
+
 export const signupService = async (data) =>
     await api
         .post('/v1/auths/register', data)
