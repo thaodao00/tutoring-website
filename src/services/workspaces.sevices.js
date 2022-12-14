@@ -34,6 +34,11 @@ export const getProvinces = async () => {
     return await instance.get('/v1/address/provinces')
 
 }
+export const pagination = async (currentPage,limit) => {
+    return await instance.get(`https://tutor-service.azurewebsites.net/tutor-service/v1/class-room/?current_page=${currentPage}&max_result=${limit}`)
+
+}
+
 export const fetchProvinces = async (province) => {
     const response = await getProvinces();
     const { data, status } = response?.data
