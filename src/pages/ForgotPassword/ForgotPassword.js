@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames/bind';
 import styles from './ForgotPassword.module.scss';
@@ -8,11 +8,13 @@ import { useNavigate } from 'react-router-dom';
 import LoadingOverlay from 'react-loading-overlay';
 import { forgotPassword } from '~/redux/auth/actions';
 import api from '~/utils/axios';
+import RootNavigator from '~/utils/navigate';
 
 const cx = classNames.bind(styles);
 
 function ForgotPassword(props) {
     const navigate = useNavigate();
+    RootNavigator.setNavigate(navigate);
 
     const {
         register,
@@ -51,6 +53,13 @@ function ForgotPassword(props) {
         // dispatch(forgotPassword(email));
         // update-password
     };
+
+    useEffect(() => {
+        if (auth.user) {
+            navigate('/');
+        }
+    }, [auth]);
+
     return (
         <LoadingOverlay active={loading} spinner text="Đang kiểm tra email">
             <div className={cx('container')}>
