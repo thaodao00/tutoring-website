@@ -11,43 +11,44 @@ import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
 import {FaHandPointRight} from "react-icons/fa";
 import {tagLinks} from "~/utils/FakeData";
 import PaginationTutor from "~/layout/common/PaginationTutor";
-import {getAllClass} from "~/services/workspaces.sevices";
+import {pagination} from "~/services/workspaces.sevices";
 
 
 const cx = classNames.bind(styles);
 
 
 function Class(props) {
+    const [pageCount, setPageCount] = useState(0);
     const [data, setData] = useState([])
-    const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(5);
-    // Get current posts
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost);
-
-    // Change page
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-
+    let maxResult = 1;
     useEffect(() => {
-        async function test (){
-            const response = await getAllClass();
-            const {data, status} = response?.data
-            console.log(data)
-        }
         async function fetchData() {
-            const response = await getAllClass();
-            const {data, status} = response?.data.data
+            const response = await pagination(1, maxResult);
+            const {data, status} = response?.data
+            const total = data.total
+            setPageCount(Math.ceil(total / maxResult));
 
-            if (data) {
-                setData(data)
+            if (data.data) {
+                setData(data.data)
             }
         }
-        test()
+
         fetchData()
 
-    }, [])
+    }, [maxResult])
+    console.log(data)
+    const fetchData = async (currentPage) => {
+        const response = await pagination(currentPage, maxResult);
+        const {data} = await response?.data.data;
+        return data;
+    };
+    const handlePageClick = async (data) => {
+        let currentPage = data.selected + 1;
+
+        const commentsFormServer = await fetchData(currentPage);
+        setData(commentsFormServer);
+    };
+
 
     return (
         <div className={cx('wrapper')}>
@@ -78,7 +79,7 @@ function Class(props) {
                         </div>
                         <div className={cx('information')}>
                             {
-                                currentPosts.map((item) => {
+                                data.map((item) => {
                                     return (
                                         <ClassItem key={item.id} data={item}/>
                                     )
@@ -86,11 +87,7 @@ function Class(props) {
 
                             }
                         </div>
-                        <PaginationTutor postsPerPage={postsPerPage}
-                                         totalPosts={data.length}
-                                         paginate={paginate}
-                                         currentPage={currentPage}
-                        />
+                        <PaginationTutor pageCount={pageCount} handlePageClick={handlePageClick}/>
                     </Col>
 
                     <Col lg={3} md={3} sm={12}>

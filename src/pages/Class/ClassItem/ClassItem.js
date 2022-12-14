@@ -32,7 +32,6 @@ function ClassItem(props) {
 
 
     const { data } = props;
-
     const formatCurrency = (currency) => {
         currency = currency.toLocaleString('vi', { style: 'currency', currency: 'VND' });
         return currency
