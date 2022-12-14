@@ -50,7 +50,7 @@ function ClassItem(props) {
                         </Col>
                         <Col lg={6} md={12}>
                             <a href='' className={cx('btn-take')}>
-                                <span> Phí: <b>25% ({formatCurrency(data.tuition + data.tuition * 0.25)})</b></span>
+                                <span> Phí: <b>20% ({formatCurrency(data.tuition + data.tuition * 0.25)})</b></span>
                                 <span>Nhận lớp ngay</span>
                             </a>
                         </Col>

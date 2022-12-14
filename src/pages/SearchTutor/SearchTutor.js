@@ -165,8 +165,8 @@ function SearchTutor(props) {
         // e.preventDefault();
         setLoading(true)
         const fullA = "";
-        let districtName = districtId;
-        let provenceName = provenceId;
+        let districtName = "";
+        let provenceName = "";
         let addDetial = formValue.address
         let wardName = ""
         ward.map((item, index) => {
@@ -176,7 +176,18 @@ function SearchTutor(props) {
             return wardName
 
         })
-
+        provinces.map((item, index) => {
+            if (item.id === parseInt(provenceId)) {
+                provenceName = item.name
+            }
+            return provenceName
+        })
+        district.map((item, index) => {
+            if (item.id === parseInt(districtId)) {
+                districtName = item.name
+            }
+            return districtName
+        })
         const newFormValue = {
             tuition: parseInt(formValue.tuition),
             title: formValue.title,
@@ -366,7 +377,7 @@ function SearchTutor(props) {
                                                 {
                                                     provinces.map((item) => {
                                                         return (
-                                                            <OptionItem key={item.id} value={item.name} children={item.name} />
+                                                            <OptionItem key={item.id} value={item.id} children={item.name} />
                                                         )
                                                     })
                                                 }
@@ -382,7 +393,7 @@ function SearchTutor(props) {
                                                 {
                                                     district.map((item) => {
                                                         return (
-                                                            <OptionItem key={item.id} value={item.name} children={item.name} />
+                                                            <OptionItem key={item.id} value={item.id} children={item.name} />
                                                         )
                                                     })
                                                 }
@@ -394,7 +405,6 @@ function SearchTutor(props) {
                                                 onChange={handleSelectWardId}
                                                 size='lg'>
                                                 <OptionItem children="Chọn Phường" />
-
                                                 {
                                                     ward.map((item) => {
                                                         return (
