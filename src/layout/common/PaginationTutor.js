@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ReactPaginate from "react-paginate";
 
@@ -25,9 +24,9 @@ function PaginationTutor(props) {
 
 
         </ReactPaginate>
-  
-        
 
+
+    );
 }
 
 export default PaginationTutor;

@@ -20,13 +20,9 @@ const cx = classNames.bind(styles);
 function Class(props) {
     const [pageCount, setPageCount] = useState(0);
     const [data, setData] = useState([])
-
     let maxResult = 1;
-
     useEffect(() => {
-      
         async function fetchData() {
-
             const response = await pagination(1, maxResult);
             const {data, status} = response?.data
             const total = data.total
@@ -34,12 +30,10 @@ function Class(props) {
 
             if (data.data) {
                 setData(data.data)
-
-            
+            }
         }
-    
-        fetchData()
 
+        fetchData()
 
     }, [maxResult])
     console.log(data)
@@ -85,7 +79,7 @@ function Class(props) {
                         </div>
                         <div className={cx('information')}>
                             {
-                                currentPosts.map((item) => {
+                                data.map((item) => {
                                     return (
                                         <ClassItem key={item.id} data={item}/>
                                     )
@@ -93,10 +87,7 @@ function Class(props) {
 
                             }
                         </div>
-
                         <PaginationTutor pageCount={pageCount} handlePageClick={handlePageClick}/>
-
-
                     </Col>
 
                     <Col lg={3} md={3} sm={12}>
