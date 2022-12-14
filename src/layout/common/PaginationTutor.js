@@ -1,41 +1,33 @@
-import React, {useState} from 'react';
-import Pagination from 'react-bootstrap/Pagination';
+
+import React from 'react';
+import ReactPaginate from "react-paginate";
 
 function PaginationTutor(props) {
-    const {postsPerPage, totalPosts, paginate, currentPage} = props;
-    const pageNumbers = [];
-
-    for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
-        pageNumbers.push(i);
-    }
-    const CheckDisablePrev = (currentPage) => {
-        return currentPage === 1
-
-    }
-    const checkDisableNext = (currentPage) => {
-       return currentPage >= Math.ceil(totalPosts / postsPerPage);
-    }
-
+    const {handlePageClick,pageCount} = props
     return (
-        <Pagination>
-            <Pagination.Prev disabled={CheckDisablePrev(currentPage)}
-                             onClick={() => paginate(currentPage - 1)}/>
-            {
-                pageNumbers.map(number => (
-                    <Pagination.Item key={number} active={currentPage === (number)}
-                                     onClick={() => {
-                                         paginate(number)
+        <ReactPaginate pageCount={pageCount}
+                       previousLabel={"<"}
+                       nextLabel={">"}
+                       breakLabel={"..."}
+                       marginPagesDisplayed={2}
+                       pageRangeDisplayed={3}
+                       onPageChange={handlePageClick}
+                       containerClassName={"pagination "}
+                       pageClassName={"page-item"}
+                       pageLinkClassName={"page-link"}
+                       previousClassName={"page-item"}
+                       previousLinkClassName={"page-link"}
+                       nextClassName={"page-item"}
+                       nextLinkClassName={"page-link"}
+                       breakClassName={"page-item"}
+                       breakLinkClassName={"page-link"}
+                       activeClassName={"active"}>
 
 
-                                     }}>
-                        {number}
-                    </Pagination.Item>
-                ))
-            }
-            <Pagination.Next disabled={checkDisableNext(currentPage)} onClick={() => paginate(currentPage + 1)}/>
+        </ReactPaginate>
+  
+        
 
-        </Pagination>
-    );
 }
 
 export default PaginationTutor;
