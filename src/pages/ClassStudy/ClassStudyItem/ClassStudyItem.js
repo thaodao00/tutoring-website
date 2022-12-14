@@ -25,7 +25,22 @@ function ClassStudyItem(props) {
         currency = currency.toLocaleString('vi', { style: 'currency', currency: 'VND' });
         return currency
     }
+    function SwitchCase(props) {
 
+        switch (props.value) {
+
+            case 'ALL':
+                return <p>Nam hoăc Nữ</p>
+            case 'MALE':
+                return <p>Nam</p>
+
+            case 'FEMALE':
+                return <p>Nữ</p>
+            default:
+                return <p>""</p>
+
+        }
+    }
     return (
         <div className={cx('course-block', 'clear-fix')}>
             <Col lg={12} md={12}>
@@ -46,7 +61,7 @@ function ClassStudyItem(props) {
                         <Col lg={3} md={12} className="bg-light rounded-4 p-4" >
                             <div>
                                 <div className={cx('text-status')}>Ngày tạo : {new Date(data.createdAt).toLocaleDateString()}</div>
-                                <div className={cx('text-status')}>Trạng thái: {data?.status === "CREATE" ? <>Chưa hoạt động</> : <>Đang hoạt động</>}</div>
+                                <div className={cx('text-status')}>Trạng thái: {data?.status === "CREATE" ? <>Chưa hoạt động</> : <>Đã nhận</>}</div>
                             </div>
                         </Col>
                     </Row>
@@ -61,7 +76,8 @@ function ClassStudyItem(props) {
                     {/*</Col>*/}
                     <Col lg={4} className={cx('request-block')}>
                         <BsGenderAmbiguous className={cx('icon-request')} />
-                        <span><b>Yêu cầu gia sư:</b> {data.classRequirement.genderTutor}(degree)</span>
+                        <span><b>Yêu cầu gia sư:</b><SwitchCase value={data.classRequirement.genderTutor} /></span>
+
                     </Col>
                     <Col lg={4} className={cx('request-block')}>
                         <AiOutlineSchedule className={cx('icon-request')} />
@@ -73,7 +89,7 @@ function ClassStudyItem(props) {
                     <Col lg={12} className={cx('request-block')}>
                         <FiUser className={cx('icon-request')} />
                         <span
-                            style={{ fontSize: '1.4rem' }}><b>{data.classRequirement.amountStudent}</b> học viên (nam)</span>
+                            style={{ fontSize: '1.4rem' }}><b>{data.classRequirement.amountStudent}</b> học viên </span>
                     </Col>
                 </Row>
                 <Row>
@@ -82,7 +98,7 @@ function ClassStudyItem(props) {
                         <span style={{ fontSize: '1.4rem' }}>
                             <b>Địa điểm dạy:</b>
                             {data.classRequirement.address.fullAddress}
-                            <a href="" className={cx('map')}>(Xem bản đồ )</a>
+
                         </span>
                     </Col>
                 </Row>
