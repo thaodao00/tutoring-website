@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import classNames from 'classnames/bind';
-import { Button, Col, Container, Row } from "react-bootstrap";
+import {Button, Col, Container, Row} from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 import styles from './Class.module.scss';
 import 'animate.css';
 import ClassItem from "~/pages/Class/ClassItem";
-import { faSearch } from "@fortawesome/free-solid-svg-icons/faSearch";
-import { FaHandPointRight } from "react-icons/fa";
-import { tagLinks } from "~/utils/FakeData";
+import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
+import {FaHandPointRight} from "react-icons/fa";
+import {tagLinks} from "~/utils/FakeData";
 import PaginationTutor from "~/layout/common/PaginationTutor";
-import { getAllClass } from "~/services/workspaces.sevices";
+import {getAllClass} from "~/services/workspaces.sevices";
 
 
 const cx = classNames.bind(styles);
@@ -19,15 +19,32 @@ const cx = classNames.bind(styles);
 
 function Class(props) {
     const [data, setData] = useState([])
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(5);
+    // Get current posts
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost);
+
+    // Change page
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+
     useEffect(() => {
+        async function test (){
+            const response = await getAllClass();
+            const {data, status} = response?.data
+            console.log(data)
+        }
         async function fetchData() {
             const response = await getAllClass();
-            const { data, status } = response?.data.data
+            const {data, status} = response?.data.data
+
             if (data) {
                 setData(data)
             }
         }
-
+        test()
         fetchData()
 
     }, [])
@@ -40,7 +57,7 @@ function Class(props) {
                         <div className={cx('search-area')}>
                             <Row>
                                 <Col lg={7} md={6} sm={12}>
-                                    <Form.Control size="lg" type="text" placeholder="Môn học" />
+                                    <Form.Control size="lg" type="text" placeholder="Môn học"/>
                                 </Col>
                                 <Col lg={3} md={6} sm={12}>
                                     <Form.Select className={cx('list-area')} placeholder='Khu vực'>
@@ -52,7 +69,7 @@ function Class(props) {
                                 </Col>
                                 <Col lg={2} md={12} sm={12}>
                                     <Button className={cx('btn-search', 'text-center', 'btn-success')} size="lg">
-                                        <FontAwesomeIcon icon={faSearch} className={cx('search-icon')} />
+                                        <FontAwesomeIcon icon={faSearch} className={cx('search-icon')}/>
                                         Tìm
                                     </Button>
                                 </Col>
@@ -61,15 +78,19 @@ function Class(props) {
                         </div>
                         <div className={cx('information')}>
                             {
-                                data.map((item) => {
+                                currentPosts.map((item) => {
                                     return (
-                                        <ClassItem key={item.id} data={item} />
+                                        <ClassItem key={item.id} data={item}/>
                                     )
                                 })
 
                             }
                         </div>
-                        <PaginationTutor />
+                        <PaginationTutor postsPerPage={postsPerPage}
+                                         totalPosts={data.length}
+                                         paginate={paginate}
+                                         currentPage={currentPage}
+                        />
                     </Col>
 
                     <Col lg={3} md={3} sm={12}>
@@ -92,11 +113,11 @@ function Class(props) {
                             <div className={cx('need')}>
                                 <h5 className={cx('need-title', 'line-bottom')}>Gia sư cần biết</h5>
                                 <a className={cx('need-link')} href="">
-                                    <FaHandPointRight style={{ marginRight: '4px' }} />
+                                    <FaHandPointRight style={{marginRight: '4px'}}/>
                                     Quy trình nhận lớp
                                 </a>
                                 <a className={cx('need-link')} href="">
-                                    <FaHandPointRight style={{ marginRight: '4px' }} />
+                                    <FaHandPointRight style={{marginRight: '4px'}}/>
                                     Hợp đồng mẫu
                                 </a>
                             </div>
