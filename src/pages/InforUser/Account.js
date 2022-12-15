@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { Button, ButtonGroup, Col, Container, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import classNames from 'classnames/bind';
@@ -22,53 +22,51 @@ function Account() {
     const [gender, setGender] = useState(user.gender)
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
-    const [provenceId, setProvenceId] = useState(1)
+    const [provenceId, setProvenceId] = useState()
     const [provinces, setProvince] = useState([])
+    const [district, setDistrict] = useState([])
+    const [districtId, setDistrictId] = useState()
+    const [ward, setWard] = useState([])
+    const [wardId, setWardId] = useState(user.address?.wardId || '')
     const handleSelectProvince = (e) => {
         const getProvinceId = e.target.value
         setProvenceId(getProvinceId)
     }
     useEffect(() => {
-        fetchProvinces(provinces).then(province => setProvince(province));
-    }, [user])
-    const [district, setDistrict] = useState([])
-    const [districtId, setDistrictId] = useState(1)
-    const [ward, setWard] = useState([])
-    console.log(user)
+        fetchProvinces().then(province => setProvince(province));
+    }, [user, provenceId, districtId])
+
     const [addressData, setAddressData] = useState(user.addresses)
 
     let addD = ""
     let addF = ""
-    addressData.map(item => {
-        addD = item.address
-        addF = item.fullAddress
+    addressData.map((item) => {
+        return (
+            addD = item.address,
+            addF = item.fullAddress
+        )
     })
-    console.log(addD);
-    console.log(addF);
     const [addressDetail, setAddressDetail] = useState(addD)
     const [fullAddress, setAddressFull] = useState(addF)
     const handleSelectDistrict = (e) => {
         const getDistrictId = e.target.value
         setDistrictId(getDistrictId)
     }
-    useEffect(() => {
-        // get district
-        getDistrict(provenceId).then(res => setDistrict(res.data))
-        // get ward
-
-        getWard(districtId).then(res => setWard(res.data))
-    }, [provenceId, districtId])
-
-
-    const [wardId, setWardId] = useState(user.address?.wardId)
-
     const handleSelectWardId = (e) => {
         const getWardId = e.target.value
         setWardId(getWardId)
     }
+    useEffect(() => {
+        getDistrict(provenceId).then(res => setDistrict(res.data))
+    }, [provenceId, districtId])
+    useMemo(() => {
+        getWard(districtId).then(res => setWard(res.data))
+    }, [districtId])
+
+
     const fullA = "";
-    let districtName = districtId;
-    let provenceName = provenceId;
+    let districtName = "";
+    let provenceName = "";
     let wardName = ""
     ward.map((item, index) => {
         if (item.id === parseInt(wardId)) {
@@ -76,6 +74,19 @@ function Account() {
         }
         return wardName
     })
+    provinces.map((item, index) => {
+        if (item.id === parseInt(provenceId)) {
+            provenceName = item.name
+        }
+        return provenceName
+    })
+    district.map((item, index) => {
+        if (item.id === parseInt(districtId)) {
+            districtName = item.name
+        }
+        return districtName
+    })
+
     const handleInput = (e) => {
         setAddressDetail(e.target.value)
         setAddressFull(fullA.concat(e.target.value, ", ", wardName, ", ", districtName, ", ", provenceName))
@@ -148,7 +159,7 @@ function Account() {
                                 {
                                     provinces.map((item) => {
                                         return (
-                                            <OptionItem key={item.id} value={item.name} children={item.name} />
+                                            <OptionItem key={item.id} value={item.id} children={item.name} />
                                         )
                                     })
                                 }
@@ -164,7 +175,7 @@ function Account() {
                                 {
                                     district.map((item) => {
                                         return (
-                                            <OptionItem key={item.id} value={item.name} children={item.name} />
+                                            <OptionItem key={item.id} value={item.id} children={item.name} />
                                         )
                                     })
                                 }

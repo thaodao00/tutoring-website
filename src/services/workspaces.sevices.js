@@ -1,3 +1,4 @@
+import { async } from "@firebase/util"
 import instance from "~/interceptors/axios"
 
 export const getSubject = async () => {
@@ -34,17 +35,24 @@ export const getProvinces = async () => {
     return await instance.get('/v1/address/provinces')
 
 }
-export const fetchProvinces = async (province) => {
+
+export const pagination = async (currentPage,limit) => {
+    return await instance.get(`https://tutor-service.azurewebsites.net/tutor-service/v1/class-room/?current_page=${currentPage}&max_result=${limit}`)
+
+}
+
+export const fetchProvinces = async () => {
+
     const response = await getProvinces();
     const { data, status } = response?.data
     return data
 }
-export const getDistrict = async (provinceId) => {
-    const request = await instance.get(`/v1/address/districts/province/${provinceId}`)
+export const getDistrict = async (body) => {
+    const request = await instance.get(`/v1/address/districts/province/${body}`)
     return request.data
 }
-export const getWard = async (idDistrict) => {
-    const request = await instance.get(`/v1/address/wards/district/${idDistrict}`)
+export const getWard = async (body) => {
+    const request = await instance.get(`/v1/address/wards/district/${body}`)
     return request.data
 }
 export const getGrade = async () => {
@@ -85,4 +93,8 @@ export const getClassById = async (id) => {
 
 export const getSubjectByTutor = async () => {
     return await instance.get('/v1/tutors/subjects')
+}
+
+export const applyClass = async (body) => {
+    return await instance.post('v1/class-room/register', body)
 }
