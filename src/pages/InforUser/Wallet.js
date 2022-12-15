@@ -86,6 +86,8 @@ function Wallet() {
             else {
                 NotificationManager.error(res.data.message);
             }
+            fetchCoin()
+            fetchHistoryPayment()
             setLoading(false)
         }
         if (billingDetails.status === "COMPLETED") {
