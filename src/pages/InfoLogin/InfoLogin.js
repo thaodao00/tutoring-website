@@ -17,6 +17,7 @@ import { changePassword } from '~/services/workspaces.sevices';
 import Button from '~/components/Button';
 import LoadingOverlay from 'react-loading-overlay';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
@@ -25,6 +26,8 @@ function InfoLogin(props) {
     const [oldPass, setOldPass] = useState("")
     const [newPass, setNewPass] = useState("")
     const [loading, setLoading] = useState(false)
+    
+    const auth = useSelector((state) => state.auth);
 
     const handleChangePassword = async () => {
 
@@ -65,7 +68,7 @@ function InfoLogin(props) {
                 setData(data)
             }
         }
-        getData();
+        // getData();
     }, [])
     const maxWidth1200 = useMediaQuery({ maxWidth: 1200 })
     return (
@@ -83,14 +86,14 @@ function InfoLogin(props) {
                                     <Form.Label className={cx('description')}> Tên
 
                                     </Form.Label>
-                                    <Form.Control disabled size='sm' type="text" value={data.name}
+                                    <Form.Control disabled size='sm' type="text" value={auth.user?.name}
                                         placeholder="" />
                                 </Col>
                                 <Col lg={4} md={12}>
                                     <Form.Label className={cx('description')} >Email
                                         {/* <span className={cx('not-check')}>Chưa kiểm duyệt</span> */}
                                     </Form.Label>
-                                    <Form.Control disabled size='sm' type="text" value={data.email}
+                                    <Form.Control disabled size='sm' type="text" value={auth.user?.email}
                                         placeholder="" />
                                 </Col>
                             </Row>
