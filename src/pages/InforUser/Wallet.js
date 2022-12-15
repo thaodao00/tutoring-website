@@ -74,7 +74,7 @@ function Wallet() {
     useEffect(() => {
         fetchCoin()
         fetchHistoryPayment()
-    }, [history])
+    }, [])
     useEffect(() => {
         async function fetchData() {
             setLoading(true)
