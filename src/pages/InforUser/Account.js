@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo } from 'react'
 import { Button, ButtonGroup, Col, Container, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
@@ -7,14 +8,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { getUserInfo, updateInfoUser } from '~/redux/auth/actions';
 import OptionItem from '../ReferenceTuition/OptionItem';
-import { fetchProvinces, getDistrict, getWard } from '~/services/workspaces.sevices';
+import { fetchProvinces, getDistrict, getWard, updateUser } from '~/services/workspaces.sevices';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import LoadingOverlay from 'react-loading-overlay';
+import { useCallback } from 'react';
 
 const cx = classNames.bind(styles);
 
 function Account() {
     const { user, message } = useSelector((state) => state.auth);
+    const auth = useSelector((state) => state.auth);
     const [phone, setPhone] = useState(user.phone)
     const [username, setUsername] = useState(user.name)
     const [introduce, setIntroduce] = useState(user.introduce)
@@ -34,7 +37,7 @@ function Account() {
     }
     useEffect(() => {
         fetchProvinces().then(province => setProvince(province));
-    }, [user, provenceId, districtId])
+    }, [auth])
 
     const [addressData, setAddressData] = useState(user.addresses)
 
@@ -48,6 +51,9 @@ function Account() {
     })
     const [addressDetail, setAddressDetail] = useState(addD)
     const [fullAddress, setAddressFull] = useState(addF)
+    const arrA = addF.split(",")
+    const listA = [...arrA]
+
     const handleSelectDistrict = (e) => {
         const getDistrictId = e.target.value
         setDistrictId(getDistrictId)
@@ -58,17 +64,19 @@ function Account() {
     }
     useEffect(() => {
         getDistrict(provenceId).then(res => setDistrict(res.data))
-    }, [provenceId, districtId])
+    }, [provenceId])
     useMemo(() => {
         getWard(districtId).then(res => setWard(res.data))
     }, [districtId])
 
+    let fullA = "";
+    let districtName = listA[2];
+    let provenceName = listA[3];
+    let wardName = listA[1];
+    console.log(wardName, "222");
 
-    const fullA = "";
-    let districtName = "";
-    let provenceName = "";
-    let wardName = ""
     ward.map((item, index) => {
+
         if (item.id === parseInt(wardId)) {
             wardName = item.name
         }
@@ -90,18 +98,47 @@ function Account() {
     const handleInput = (e) => {
         setAddressDetail(e.target.value)
         setAddressFull(fullA.concat(e.target.value, ", ", wardName, ", ", districtName, ", ", provenceName))
+        console.log(fullAddress, 11);
+
+
     }
+    console.log(fullAddress, 22);
+    useEffect(() => {
+        setAddressFull(fullA.concat(addressDetail, ", ", wardName, ", ", districtName, ", ", provenceName))
+        console.log(fullAddress, 33);
+
+    }, [addressDetail, wardName, districtName, provenceName, fullAddress])
+
+
     const handleUpdateUser = async () => {
         setLoading(true)
+        setAddressFull(fullAddress)
         const address = {
             "address": addressDetail,
             "fullAddress": fullAddress,
             "wardId": wardId
         }
-        dispatch(updateInfoUser(user.id, username, gender, phone, new Date(date).getTime(), introduce, address))
+        const body = {
+            id: user.id,
+            name: username,
+            gender: gender,
+            phone: phone,
+            birthday: new Date(date).getTime(),
+            introduce: introduce,
+            address: address
+        }
+        await updateUser(body).then((res) => {
+            if (res.data.status === 1) {
+                NotificationManager.success(res.data.message);
+                dispatch(getUserInfo())
+            }
+            else {
+                NotificationManager.error(res.data.message);
+            }
+        })
+            .catch((e) => NotificationManager.error(e.response.data.message));
         setLoading(false)
-        NotificationManager.success("Cập nhật thành công");
-        dispatch(getUserInfo())
+
     }
     return (
         <>
@@ -217,7 +254,7 @@ function Account() {
                             <Form.Label className={cx('description')} >Địa chỉ</Form.Label>
                             <Form.Control
                                 disabled
-                                name="address"
+                                // name="address"
                                 value={fullAddress}
                                 size='sm'
                                 type="text"
@@ -234,7 +271,7 @@ function Account() {
                 </Row>
                 <center>
                     <Button
-                        onClick={handleUpdateUser}
+                        onClick={() => handleUpdateUser()}
                         style={{ marginTop: '20px', marginBottom: '20px' }}
                         className={cx('btn', 'btn-success')}
                         size="lg">
