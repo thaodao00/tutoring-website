@@ -74,7 +74,7 @@ function Wallet() {
     useEffect(() => {
         fetchCoin()
         fetchHistoryPayment()
-    }, [history])
+    }, [])
     useEffect(() => {
         async function fetchData() {
             setLoading(true)
@@ -86,6 +86,8 @@ function Wallet() {
             else {
                 NotificationManager.error(res.data.message);
             }
+            fetchCoin()
+            fetchHistoryPayment()
             setLoading(false)
         }
         if (billingDetails.status === "COMPLETED") {

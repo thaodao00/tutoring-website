@@ -94,7 +94,7 @@ function InfoLogin(props) {
                                 </Col>
                                 <Col lg={4} md={12}>
                                     <Form.Label className={cx('description')} >Email
-                                        {/* <span className={cx('not-check')}>Chưa kiểm duyệt</span> */}
+
                                     </Form.Label>
                                     <Form.Control disabled size='sm' type="text" value={user.email}
                                         placeholder="" />
