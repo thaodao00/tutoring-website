@@ -20,7 +20,6 @@ function ClassStudyItem(props) {
 
 
     const { data } = props;
-    console.log(data)
     const formatCurrency = (currency) => {
         currency = currency.toLocaleString('vi', { style: 'currency', currency: 'VND' });
         return currency
@@ -66,14 +65,20 @@ function ClassStudyItem(props) {
                         </Col>
                     </Row>
                 </div>
+
+                <div className={cx('description')}>
+                    <strong>Người tạo lớp: </strong>
+                    {data.createdBy.name}{" - "}
+                    <a href={`mailto:${data.createdBy.email}`}>{data.createdBy.email}</a>
+                    <br />
+                    <strong>Người nhận lớp: </strong>
+                    {data.userApply === null ? ('Chưa có người nhận') : (<>{data.userApply.name} {' - '} <a href={`mailto:${data.userApply.email}`}>{data.userApply.email}</a></>)}
+                </div>
                 <div className={cx('description')}>
                     <p>{data.description}</p>
                 </div>
                 <Row>
-                    {/*<Col lg={4} className={cx('request-block')}>*/}
-                    {/*    <AiOutlineClockCircle className={cx('icon-request')}/>*/}
-                    {/*    <span><b>Tạo lúc:</b> 12:06 29.10.2022</span>*/}
-                    {/*</Col>*/}
+
                     <Col lg={4} className={cx('request-block')}>
                         <BsGenderAmbiguous className={cx('icon-request')} />
                         <span><b>Yêu cầu gia sư:</b><SwitchCase value={data.classRequirement.genderTutor} /></span>
