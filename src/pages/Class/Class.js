@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import {Button, Col, Container, Row} from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import LoadingOverlay from 'react-loading-overlay';
 
 import styles from './Class.module.scss';
 import 'animate.css';
@@ -20,23 +21,25 @@ const cx = classNames.bind(styles);
 function Class(props) {
     const [pageCount, setPageCount] = useState(0);
     const [data, setData] = useState([])
-    let maxResult = 1;
+    const [loading, setLoading] = useState(false)
+    let maxResult = 2;
     useEffect(() => {
         async function fetchData() {
+            setLoading(true)
             const response = await pagination(1, maxResult);
             const {data, status} = response?.data
             const total = data.total
-            setPageCount(Math.ceil(total / maxResult));
+            setPageCount(Math.floor(total / maxResult));
 
             if (data.data) {
                 setData(data.data)
+                setLoading(false)
             }
         }
 
         fetchData()
 
     }, [maxResult])
-    console.log(data)
     const fetchData = async (currentPage) => {
         const response = await pagination(currentPage, maxResult);
         const {data} = await response?.data.data;
@@ -44,99 +47,103 @@ function Class(props) {
     };
     const handlePageClick = async (data) => {
         let currentPage = data.selected + 1;
-
+        setLoading(true)
         const commentsFormServer = await fetchData(currentPage);
         setData(commentsFormServer);
+        setLoading(false)
     };
 
 
     return (
-        <div className={cx('wrapper')}>
-            <Container>
-                <Row>
-                    <Col lg={9} md={9} sm={12}>
-                        <div className={cx('search-area')}>
-                            <Row>
-                                <Col lg={7} md={6} sm={12}>
-                                    <Form.Control size="lg" type="text" placeholder="Môn học"/>
-                                </Col>
-                                <Col lg={3} md={6} sm={12}>
-                                    <Form.Select className={cx('list-area')} placeholder='Khu vực'>
-                                        <option>Open this select menu</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </Form.Select>
-                                </Col>
-                                <Col lg={2} md={12} sm={12}>
-                                    <Button className={cx('btn-search', 'text-center', 'btn-success')} size="lg">
-                                        <FontAwesomeIcon icon={faSearch} className={cx('search-icon')}/>
-                                        Tìm
-                                    </Button>
-                                </Col>
+        <LoadingOverlay active={loading} spinner text="Đang xử lý...">
 
-                            </Row>
-                        </div>
-                        <div className={cx('information')}>
-                            {
-                                data.map((item) => {
-                                    return (
-                                        <ClassItem key={item.id} data={item}/>
-                                    )
-                                })
+            <div className={cx('wrapper')}>
+                <Container>
+                    <Row>
+                        <Col lg={9} md={9} sm={12}>
+                            <div className={cx('search-area')}>
+                                <Row>
+                                    <Col lg={7} md={6} sm={12}>
+                                        <Form.Control size="lg" type="text" placeholder="Môn học"/>
+                                    </Col>
+                                    <Col lg={3} md={6} sm={12}>
+                                        <Form.Select className={cx('list-area')} placeholder='Khu vực'>
+                                            <option>Open this select menu</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </Form.Select>
+                                    </Col>
+                                    <Col lg={2} md={12} sm={12}>
+                                        <Button className={cx('btn-search', 'text-center', 'btn-success')} size="lg">
+                                            <FontAwesomeIcon icon={faSearch} className={cx('search-icon')}/>
+                                            Tìm
+                                        </Button>
+                                    </Col>
 
-                            }
-                        </div>
-                        <PaginationTutor pageCount={pageCount} handlePageClick={handlePageClick}/>
-                    </Col>
-
-                    <Col lg={3} md={3} sm={12}>
-                        <div className={cx('sidebar-right')}>
-                            <div className={cx('widget')}>
-                                <center>
-                                    <p>"Bạn đã tham gia đội ngũ Gia Sư của chúng tôi chưa??"</p>
-                                    <a href="" className={cx('btn-register')}>Đăng kỳ làm gia sư</a>
-                                </center>
+                                </Row>
                             </div>
-                            <div className={cx('widget-hotline')}>
-                                <center>
-                                    <h4 className={cx('text')}>Hãy gọi ngay:</h4>
-                                    <a className={cx('hotline-link')} href=''>093 143 9203</a>
-                                    <h4 className={cx('text')}>Hoặc</h4>
-                                    <a className={cx('hotline-link')} href=''>093 143 9203</a>
-                                    <h4 className={cx('text')}>Để được hỗ trợ</h4>
-                                </center>
-                            </div>
-                            <div className={cx('need')}>
-                                <h5 className={cx('need-title', 'line-bottom')}>Gia sư cần biết</h5>
-                                <a className={cx('need-link')} href="">
-                                    <FaHandPointRight style={{marginRight: '4px'}}/>
-                                    Quy trình nhận lớp
-                                </a>
-                                <a className={cx('need-link')} href="">
-                                    <FaHandPointRight style={{marginRight: '4px'}}/>
-                                    Hợp đồng mẫu
-                                </a>
-                            </div>
-                            <div className={cx('tag')}>
-                                <h5 className={cx('need-title', 'line-bottom')}>Gia sư cần biết</h5>
+                            <div className={cx('information')}>
                                 {
-                                    tagLinks.map((item) => {
+                                    data.map((item) => {
                                         return (
-                                            <a key={item.id} href='' className={cx('tag-link')}>{item.tagName}</a>
+                                            <ClassItem key={item.id} data={item}/>
                                         )
                                     })
+
                                 }
                             </div>
+                            <PaginationTutor pageCount={pageCount} handlePageClick={handlePageClick}/>
+                        </Col>
 
-                        </div>
-                    </Col>
+                        <Col lg={3} md={3} sm={12}>
+                            <div className={cx('sidebar-right')}>
+                                <div className={cx('widget')}>
+                                    <center>
+                                        <p>"Bạn đã tham gia đội ngũ Gia Sư của chúng tôi chưa??"</p>
+                                        <a href="" className={cx('btn-register')}>Đăng kỳ làm gia sư</a>
+                                    </center>
+                                </div>
+                                <div className={cx('widget-hotline')}>
+                                    <center>
+                                        <h4 className={cx('text')}>Hãy gọi ngay:</h4>
+                                        <a className={cx('hotline-link')} href=''>093 143 9203</a>
+                                        <h4 className={cx('text')}>Hoặc</h4>
+                                        <a className={cx('hotline-link')} href=''>093 143 9203</a>
+                                        <h4 className={cx('text')}>Để được hỗ trợ</h4>
+                                    </center>
+                                </div>
+                                <div className={cx('need')}>
+                                    <h5 className={cx('need-title', 'line-bottom')}>Gia sư cần biết</h5>
+                                    <a className={cx('need-link')} href="">
+                                        <FaHandPointRight style={{marginRight: '4px'}}/>
+                                        Quy trình nhận lớp
+                                    </a>
+                                    <a className={cx('need-link')} href="">
+                                        <FaHandPointRight style={{marginRight: '4px'}}/>
+                                        Hợp đồng mẫu
+                                    </a>
+                                </div>
+                                <div className={cx('tag')}>
+                                    <h5 className={cx('need-title', 'line-bottom')}>Gia sư cần biết</h5>
+                                    {
+                                        tagLinks.map((item) => {
+                                            return (
+                                                <a key={item.id} href='' className={cx('tag-link')}>{item.tagName}</a>
+                                            )
+                                        })
+                                    }
+                                </div>
 
-                </Row>
+                            </div>
+                        </Col>
 
-            </Container>
+                    </Row>
 
-        </div>
+                </Container>
+
+            </div>
+        </LoadingOverlay>
     );
 }
 
