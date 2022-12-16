@@ -17,17 +17,19 @@ import { changePassword } from '~/services/workspaces.sevices';
 import Button from '~/components/Button';
 import LoadingOverlay from 'react-loading-overlay';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserInfo } from '~/redux/auth/actions';
 
 const cx = classNames.bind(styles);
 
 function InfoLogin(props) {
+    const { user } = useSelector((state) => state.auth)
+    const dispatch = useDispatch()
+
     const [data, setData] = useState({})
     const [oldPass, setOldPass] = useState("")
     const [newPass, setNewPass] = useState("")
     const [loading, setLoading] = useState(false)
-    
-    const auth = useSelector((state) => state.auth);
 
     const handleChangePassword = async () => {
 
@@ -49,6 +51,7 @@ function InfoLogin(props) {
             const res = await changePassword(body)
             if (res.data.status === 1) {
                 NotificationManager.success(res.data.message);
+                dispatch(getUserInfo())
             }
             else {
                 NotificationManager.error(res.data.message);
@@ -60,16 +63,16 @@ function InfoLogin(props) {
 
     }
 
-    useEffect(() => {
-        async function getData() {
-            const response = await getUserService();
-            const { data } = response
-            if (data) {
-                setData(data)
-            }
-        }
-        // getData();
-    }, [])
+    // useEffect(() => {
+    //     async function getData() {
+    //         const response = await getUserService();
+    //         const { data } = response
+    //         if (data) {
+    //             setData(data)
+    //         }
+    //     }
+    //     getData();
+    // }, [])
     const maxWidth1200 = useMediaQuery({ maxWidth: 1200 })
     return (
         <LoadingOverlay active={loading} spinner text="Đang xử lý...">
@@ -77,7 +80,7 @@ function InfoLogin(props) {
                 <Container>
                     <Row>
                         <Col lg={4} md={4} >
-                            <SidebarLeftInfo data={data} />
+                            <SidebarLeftInfo data={user.urlAvt} />
                         </Col>
                         <Col lg={8} md={8} className={cx('information')}>
                             <h4 className={cx('title', 'line-bottom')}>Thông tin đăng nhập</h4>
@@ -86,14 +89,14 @@ function InfoLogin(props) {
                                     <Form.Label className={cx('description')}> Tên
 
                                     </Form.Label>
-                                    <Form.Control disabled size='sm' type="text" value={auth.user?.name}
+                                    <Form.Control disabled size='sm' type="text" value={user.name}
                                         placeholder="" />
                                 </Col>
                                 <Col lg={4} md={12}>
                                     <Form.Label className={cx('description')} >Email
-                                        {/* <span className={cx('not-check')}>Chưa kiểm duyệt</span> */}
+
                                     </Form.Label>
-                                    <Form.Control disabled size='sm' type="text" value={auth.user?.email}
+                                    <Form.Control disabled size='sm' type="text" value={user.email}
                                         placeholder="" />
                                 </Col>
                             </Row>
