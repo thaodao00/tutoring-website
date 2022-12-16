@@ -37,7 +37,7 @@ export const getProvinces = async () => {
 }
 
 export const pagination = async (currentPage,limit) => {
-    return await instance.get(`https://tutor-service.azurewebsites.net/tutor-service/v1/class-room/?current_page=${currentPage}&max_result=${limit}`)
+    return await instance.get(`https://tutor-service.azurewebsites.net/tutor-service/v1/class-room/?status=CREATE&current_page=${currentPage}&max_result=${limit}`)
 
 }
 
