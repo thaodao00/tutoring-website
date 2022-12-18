@@ -40,7 +40,10 @@ export const pagination = async (currentPage,limit) => {
     return await instance.get(`https://tutor-service.azurewebsites.net/tutor-service/v1/class-room/?status=CREATE&current_page=${currentPage}&max_result=${limit}`)
 
 }
+export const paginationSearch = async (currentPage,limit,subjectId,gradeId) => {
+    return await instance.get(`https://tutor-service.azurewebsites.net/tutor-service/v1/class-room/?subject_id=${subjectId}&grade_id=${gradeId}&current_page=${currentPage}&max_result=${limit}`)
 
+}
 export const fetchProvinces = async () => {
 
     const response = await getProvinces();
