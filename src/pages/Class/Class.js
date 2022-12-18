@@ -12,7 +12,12 @@ import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
 import {FaHandPointRight} from "react-icons/fa";
 import {tagLinks} from "~/utils/FakeData";
 import PaginationTutor from "~/layout/common/PaginationTutor";
-import {pagination} from "~/services/workspaces.sevices";
+import {
+    getGrade,
+    getSubject,
+    pagination,
+    paginationSearch,
+} from "~/services/workspaces.sevices";
 
 
 const cx = classNames.bind(styles);
@@ -22,6 +27,21 @@ function Class(props) {
     const [pageCount, setPageCount] = useState(0);
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
+    const [subject, setSubject] = useState([])
+    const [subjectId, setSubjectId] = useState(1)
+    const [grade, setGrade] = useState([])
+    const [gradeId, setGradeId] = useState(1)
+    const [isSearch, SetIsSearch] = useState(false)
+    const [isResult, setIsResult] = useState(true)
+    const handleSelectSubjectId = (e) => {
+        const getSubjectId = e.target.value
+        setSubjectId(getSubjectId)
+    }
+    const handleSelectGradeId = (e) => {
+        const getGradeId = e.target.value
+        setGradeId(getGradeId)
+    }
+
     let maxResult = 2;
     useEffect(() => {
         async function fetchData() {
@@ -37,9 +57,37 @@ function Class(props) {
             }
         }
 
+        getSubject(subject).then(subject => setSubject(subject.data.data))
+        getGrade(grade).then(grade => setGrade(grade.data.data))
+
         fetchData()
 
     }, [maxResult])
+    const fetchSearchValue = async (currentPage, subjectId, gradeId) => {
+        const response = await paginationSearch(currentPage, maxResult, subjectId, gradeId)
+        const {data, status} = response?.data
+        const total = data.total
+        setPageCount(Math.floor(total / maxResult));
+        const result = data.data
+        return result
+
+    }
+    const handleSearch = async (e) => {
+        e.preventDefault()
+        setLoading(true)
+        const dataFromSever = await fetchSearchValue(1, subjectId, gradeId)
+        if (dataFromSever.length > 0) {
+            setData(dataFromSever)
+            setIsResult(true)
+        } else {
+            setIsResult(false)
+
+        }
+
+        SetIsSearch(true)
+        setLoading(false)
+
+    }
     const fetchData = async (currentPage) => {
         const response = await pagination(currentPage, maxResult);
         const {data} = await response?.data.data;
@@ -48,11 +96,15 @@ function Class(props) {
     const handlePageClick = async (data) => {
         let currentPage = data.selected + 1;
         setLoading(true)
-        const commentsFormServer = await fetchData(currentPage);
-        setData(commentsFormServer);
+        if (isSearch === true) {
+            const dataFromSever = await fetchSearchValue(currentPage, subjectId, gradeId)
+            setData(dataFromSever)
+        } else {
+            const commentsFormServer = await fetchData(currentPage);
+            setData(commentsFormServer);
+        }
         setLoading(false)
     };
-
 
     return (
         <LoadingOverlay active={loading} spinner text="Đang xử lý...">
@@ -64,18 +116,36 @@ function Class(props) {
                             <div className={cx('search-area')}>
                                 <Row>
                                     <Col lg={7} md={6} sm={12}>
-                                        <Form.Control size="lg" type="text" placeholder="Môn học"/>
+                                        <Form.Select className={cx('list-area')}
+                                                     placeholder='Khu vực'
+                                                     onChange={handleSelectSubjectId}
+                                        >
+                                            {subject.map((subject) => {
+                                                return (
+                                                    <option value={subject.id}>{subject.name}</option>
+                                                )
+                                            })}
+
+                                        </Form.Select>
                                     </Col>
                                     <Col lg={3} md={6} sm={12}>
-                                        <Form.Select className={cx('list-area')} placeholder='Khu vực'>
-                                            <option>Open this select menu</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                        <Form.Select className={cx('list-area')}
+                                                     placeholder='Khu vực'
+                                                     onChange={handleSelectGradeId}
+                                        >
+                                            {grade.map((grade) => {
+                                                return (
+                                                    <option value={grade.id}>{grade.name}</option>
+                                                )
+                                            })}
+
                                         </Form.Select>
                                     </Col>
                                     <Col lg={2} md={12} sm={12}>
-                                        <Button className={cx('btn-search', 'text-center', 'btn-success')} size="lg">
+                                        <Button className={cx('btn-search', 'text-center', 'btn-success')}
+                                                size="lg"
+                                                onClick={handleSearch}
+                                        >
                                             <FontAwesomeIcon icon={faSearch} className={cx('search-icon')}/>
                                             Tìm
                                         </Button>
@@ -83,17 +153,22 @@ function Class(props) {
 
                                 </Row>
                             </div>
-                            <div className={cx('information')}>
-                                {
-                                    data.map((item) => {
-                                        return (
-                                            <ClassItem key={item.id} data={item}/>
-                                        )
-                                    })
+                            {!isResult && (<h3 className={cx('not-result')}>Không có kết quả tìm kiếm</h3>)}
+                            {
+                                isResult && (
+                                    <div className={cx('information')}>
+                                        {
+                                            data.map((item) => {
+                                                return (
+                                                    <ClassItem key={item.id} data={item}/>
+                                                )
+                                            })
 
-                                }
-                            </div>
-                            <PaginationTutor pageCount={pageCount} handlePageClick={handlePageClick}/>
+                                        }
+                                        <PaginationTutor pageCount={pageCount} handlePageClick={handlePageClick}/>
+                                    </div>
+                                )
+                            }
                         </Col>
 
                         <Col lg={3} md={3} sm={12}>
