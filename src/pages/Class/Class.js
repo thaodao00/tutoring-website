@@ -12,6 +12,7 @@ import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
 import {FaHandPointRight} from "react-icons/fa";
 import {tagLinks} from "~/utils/FakeData";
 import PaginationTutor from "~/layout/common/PaginationTutor";
+import {BsBorderAll} from 'react-icons/bs';
 import {
     getGrade,
     getSubject,
@@ -73,6 +74,7 @@ function Class(props) {
         return result
 
     }
+
     const handleSearch = async (e) => {
         e.preventDefault()
         setLoading(true)
@@ -94,13 +96,19 @@ function Class(props) {
         const {data} = await response?.data.data;
         return data;
     };
+    const handleGetAll = async (e) => {
+        e.preventDefault()
+        window.location.reload();
+    }
     const handlePageClick = async (data) => {
         let currentPage = data.selected + 1;
         setLoading(true)
         if (isSearch === true) {
             const dataFromSever = await fetchSearchValue(currentPage, subjectId, gradeId)
             setData(dataFromSever)
-        } else {
+        }
+
+        else {
             const commentsFormServer = await fetchData(currentPage);
             setData(commentsFormServer);
         }
@@ -153,6 +161,17 @@ function Class(props) {
                                     </Col>
 
                                 </Row>
+                                <Row>
+                                    <Col lg={4} md={12} sm={12}>
+                                        <Button className={cx('btn-search', 'text-center', 'btn-success')}
+                                                style={{marginTop: '20px'}}
+                                                size="lg"
+                                                onClick={handleGetAll}
+                                        >
+                                            Tất cả
+                                        </Button>
+                                    </Col>
+                                </Row>
                             </div>
                             {!isResult && (<h3 className={cx('not-result')}>Không có kết quả tìm kiếm</h3>)}
                             {
@@ -177,7 +196,8 @@ function Class(props) {
                                 <div className={cx('widget')}>
                                     <center>
                                         <p>"Bạn đã tham gia đội ngũ Gia Sư của chúng tôi chưa??"</p>
-                                        <a href={config.routes.registerAsTutor} className={cx('btn-register')}>Đăng kỳ làm gia sư</a>
+                                        <a href={config.routes.registerAsTutor} className={cx('btn-register')}>Đăng kỳ
+                                            làm gia sư</a>
                                     </center>
                                 </div>
                                 <div className={cx('widget-hotline')}>
