@@ -18,6 +18,7 @@ import {
     pagination,
     paginationSearch,
 } from "~/services/workspaces.sevices";
+import config from "~/config";
 
 
 const cx = classNames.bind(styles);
@@ -176,7 +177,7 @@ function Class(props) {
                                 <div className={cx('widget')}>
                                     <center>
                                         <p>"Bạn đã tham gia đội ngũ Gia Sư của chúng tôi chưa??"</p>
-                                        <a href="" className={cx('btn-register')}>Đăng kỳ làm gia sư</a>
+                                        <a href={config.routes.registerAsTutor} className={cx('btn-register')}>Đăng kỳ làm gia sư</a>
                                     </center>
                                 </div>
                                 <div className={cx('widget-hotline')}>
