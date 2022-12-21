@@ -33,15 +33,7 @@ function ClassItem(props) {
 
 
     const { data } = props;
-    console.log('====================================');
-    console.log(data);
-    console.log('====================================');
-    useEffect(() => {
-        data.requireRelationshipTimeWeeks.map((item, index) => {
 
-        })
-
-    })
 
     const formatCurrency = (currency) => {
         currency = currency.toLocaleString('vi', { style: 'currency', currency: 'VND' });
@@ -73,7 +65,7 @@ function ClassItem(props) {
 
         await applyClass(body).then((res) => {
             if (res.data.status === 1) {
-                NotificationManager.success(res.status.message)
+                NotificationManager.success(res.status)
             }
             else {
                 NotificationManager.error(res.data.message)
