@@ -38,21 +38,21 @@ export const TutorItem = () => {
                         <p>
                             <Skeleton height={400} />
                         </p>
-                    </SkeletonTheme>;
+                    </SkeletonTheme>
                 </div>
                 <div className='col-md-4'>
                     <SkeletonTheme color="#666" highlightColor="#999">
                         <p>
                             <Skeleton height={400} />
                         </p>
-                    </SkeletonTheme>;
+                    </SkeletonTheme>
                 </div>
                 <div className='col-md-4'>
                     <SkeletonTheme color="#666" highlightColor="#999">
                         <p>
                             <Skeleton height={400} />
                         </p>
-                    </SkeletonTheme>;
+                    </SkeletonTheme>
                 </div>
             </div>
         )
