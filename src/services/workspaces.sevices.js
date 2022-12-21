@@ -35,17 +35,21 @@ export const getProvinces = async () => {
     return await instance.get('/v1/address/provinces')
 
 }
+export const getDataBySubjectIdGradeId = async (subjectId,gradeId) => {
+    return await instance.get(`https://tutor-service.azurewebsites.net/tutor-service/v1/class-room/?subject_id=${subjectId}&grade_id=${gradeId}&status=CREATE`)
+
+}
 
 export const pagination = async (currentPage,limit) => {
     return await instance.get(`https://tutor-service.azurewebsites.net/tutor-service/v1/class-room/?status=CREATE&current_page=${currentPage}&max_result=${limit}`)
 
 }
-export const paginationBySubjectId = async (currentPage,limit,subjectId) => {
-    return await instance.get(`https://tutor-service.azurewebsites.net/tutor-service/v1/class-room/?subject_id=${subjectId}&status=CREATE&current_page=${currentPage}&max_result=${limit}`)
+export const paginationBySubjectId = async (subjectId) => {
+    return await instance.get(`https://tutor-service.azurewebsites.net/tutor-service/v1/class-room/?subject_id=${subjectId}&status=CREATE`)
 
 }
-export const paginationByGradeId = async (currentPage,limit,gradeId) => {
-    return await instance.get(`https://tutor-service.azurewebsites.net/tutor-service/v1/class-room/?&grade_id=${gradeId}&status=CREATE&current_page=${currentPage}&max_result=${limit}`)
+export const paginationByGradeId = async (gradeId) => {
+    return await instance.get(`https://tutor-service.azurewebsites.net/tutor-service/v1/class-room/?grade_id=${gradeId}&status=CREATE`)
 
 }
 export const paginationSearch = async (currentPage,limit,subjectId,gradeId) => {
