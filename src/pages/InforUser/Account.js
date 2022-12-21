@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { getUserInfo, updateInfoUser } from '~/redux/auth/actions';
 import OptionItem from '../ReferenceTuition/OptionItem';
-import { fetchProvinces, getDistrict, getWard, updateUser } from '~/services/workspaces.sevices';
+import { fetchProvinces, getDistrict, getSubjectByTutor, getWard, updateUser } from '~/services/workspaces.sevices';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import LoadingOverlay from 'react-loading-overlay';
 import { useCallback } from 'react';
@@ -30,6 +30,8 @@ function Account() {
     const [district, setDistrict] = useState([])
     const [districtId, setDistrictId] = useState()
     const [ward, setWard] = useState([])
+    const [subject, setSubject] = useState([]);
+
     const [wardId, setWardId] = useState(user.address?.wardId || '')
     const handleSelectProvince = (e) => {
         const getProvinceId = e.target.value
@@ -140,10 +142,21 @@ function Account() {
         setLoading(false)
 
     }
+
+    useEffect(() => {
+        async function fetchSubject() {
+            const res = await getSubjectByTutor()
+            const { data: { data }, } = res
+            console.log(data, "daa");
+            if (data) {
+                setSubject(data)
+            }
+        }
+        fetchSubject()
+    }, [])
     return (
         <>
             <LoadingOverlay active={loading} spinner text="Đang xử lý...">
-
                 <Row className='mt-5'>
                     <Col lg={6} md={12}>
                         <Form.Label className={cx('description')}>Tên</Form.Label>
@@ -263,6 +276,19 @@ function Account() {
                         </Col>
                     </Row>
                 </Row>
+                {user.roles[0].roleName === "GIÁO VIÊN" ? (
+                    <Row>
+                        <Col lg={12}>
+                            <Form.Label className={cx('description')} >Môn dạy</Form.Label>
+                            <p>
+                                {subject.map((item, index) => {
+                                    return (<p>{item.name}</p>)
+                                })}
+                            </p>
+                        </Col>
+                    </Row>) : (<></>)}
+
+
                 <Row>
                     <Col lg={12} md={12}>
                         <Form.Label className={cx('description')}>Giới thiệu bản thân(1500 ky tự)</Form.Label>
