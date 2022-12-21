@@ -245,7 +245,7 @@ function Home() {
                         <h1 className={cx('text-main')}>
                             HAY <span>TÌM GIA SƯ GIỎI</span> NGAY
                         </h1>
-                        <div className={cx('input-group mb-4 mt-4')}>
+                        {/* <div className={cx('input-group mb-4 mt-4')}>
                             <input
                                 type="text"
                                 style={{ borderTopLeftRadius: '30px', borderBottomLeftRadius: '30px' }}
@@ -259,18 +259,18 @@ function Home() {
                                     Tìm gia sư ngay!
                                 </button>
                             </div>
-                        </div>
+                        </div> */}
                         <div className={cx('text-phone')}>
-                            Hoặc gọi ngay:{' '}
+                            {/* Hoặc gọi ngay:{' '} */}
                             <span>
-                                <Button href="tel: 09222222">092.222.222</Button>
+                                <Button href="tel: 09222222">0363275624</Button>
                                 {' - '}
-                                <Button href="tel: 09222222">092.222.222</Button>
+                                <Button href="tel: 09222222">0893156752</Button>
                             </span>
                         </div>
                         <Button className={cx('btn-tutor')}>Tham gia vào đội ngũ Gia Sư!!!</Button>
                         <h2 className={cx('name-app')}>
-                            Ứng dụng <b>Gia sư dạy kèm</b>
+                            Ứng dụng <b>Trung tâm gia sư</b>
                         </h2>
                         <div>
                             <img
@@ -458,23 +458,20 @@ function Home() {
                                 </h2>
                                 <div className={cx('procedure')}>
                                     <p>
-                                        Hướng dẫn nhận lớp tại web hoặc ứng dụng: <br /> Daykemtainha.vn
+                                        Hướng dẫn nhận lớp tại web hoặc ứng dụng: <br /> Trungtamgiasu.vn
                                     </p>
                                     <ul className={cx('procedure-list')}>
                                         <li className={cx('procedure-item')}>
                                             Bước 1: Đăng ký tài khoản gia sư và cập nhật thông tin gia sư đầy đủ tại:
-                                            Daykemtainha.vn
+                                            Trungtamgiasu.vn
                                         </li>
                                         <li className={cx('procedure-item')}>
                                             Bước 2: Kích “ Nhận lớp ngay” tại lớp bạn muốn nhận, bộ phận giao lớp kiểm
                                             tra thông tin của bạn phù hợp sẽ alo sắp xếp, nếu chưa phù hợp sẽ phản hồi
-                                            trong tài khoản của bạn mục “ Danh sách lớp dạy”.
+                                            trong tài khoản của bạn mục “ Danh sách lớp ".
                                         </li>
-                                        <li className={cx('procedure-item')}>
-                                            Bước 3: Khi bộ phận giao lớp xác nhận bạn được nhận lớp, bạn chuyển khoản
-                                            hoặc đến trung tâm nhận lớp.
-                                        </li>
-                                        <li className={cx('procedure-item')}>
+
+                                        {/* <li className={cx('procedure-item')}>
                                             {'=> '}Link tải ứng dụng:{' '}
                                             <a
                                                 className={cx('procedure-item-link')}
@@ -482,7 +479,7 @@ function Home() {
                                             >
                                                 https://www.daykemtainha.vn/ung-dung-gia-su-day-kem
                                             </a>
-                                        </li>
+                                        </li> */}
                                     </ul>
                                 </div>
                             </div>
@@ -521,20 +518,19 @@ function Home() {
                                     <div className={cx('col-lg-4 col-md-12 col-sm-12')}>
                                         <b>Bước 1: </b>
                                         <br />
-                                        - Vào website Daykemtainha.vn
-                                        <br />- Chọn mục:Đăng ký làm gia sư
+                                        - Vào website Trungtamgiasu.vn
+                                        <br />- Chọn mục: Đăng ký làm gia sư
                                         <br />- Điền và chọn đầy đủ thông tin (chú ý các vị trí có dấu * phải có đầy đủ,
                                         trung tâm ưu tiên các bạn có thông tin tốt và có cmnd bằng cấp đầy đủ)
                                         <br />- Chọn nút “Đăng ký làm gia sư”
-                                        <br />- Sau khi đăng ký gia sư thành công bạn chọn đăng nhập bằng mật khẩu hoặc
-                                        facebook hoặc google
+                                        <br />- Sau khi đăng ký gia sư thành công bạn sẽ trở thành gia sư của trung tâm
                                     </div>
                                     <div className={cx('col-lg-4 col-md-12 col-sm-12')}>
                                         <b>Bước 2: </b>
                                         <br />
-                                        - Vào website: Daykemtainha.vn
+                                        - Vào website: Trungtamgiasu.vn
                                         <br />
-                                        - Chọn mục:Lớp mới
+                                        - Chọn mục: Lớp mới
                                         <br />
                                         - Hãy tìm đến lớp mà bạn muốn nhận (có thể tìm kiếm theo môn học để tìm nhanh
                                         hơn)
@@ -545,13 +541,12 @@ function Home() {
                                         <br />
                                         Sau khi bạn nhận lớp thành công
                                         <br />
-                                        - Vào website: Daykemtainha.vn (chú ý là bạn đã đăng nhập rồi nhé)
+                                        - Vào website: Trungtamgiasu.vn (chú ý là bạn đã đăng nhập rồi nhé)
                                         <br />
                                         - Bạn vào profile của bạn chọn mục: danh sách lớp dạy
                                         <br />
                                         - Tìm đến lớp mà bạn muốn xem
-                                        <br />- Nhấn vào nút: Chi tiết
-                                        <br />- Hãy liên hệ với phụ huynh học sinh liền nhé (nếu bạn nhận được lớp
+                                        <br />- Hãy liên hệ với phụ huynh học sinh liền nhé (nếu bạn nhận được lớp)
                                     </div>
                                 </div>
                             </div>
@@ -735,11 +730,11 @@ function Home() {
                                             Hãy gọi ngay{' '}
                                             <span>
                                                 <Button className={cx('procedure-phone')} href="tel: 09222222">
-                                                    092.222.222
+                                                    0363275624
                                                 </Button>
                                                 {' hoặc '}
                                                 <Button className={cx('procedure-phone')} href="tel: 09222222">
-                                                    092.222.222{' '}
+                                                    0893156752{' '}
                                                 </Button>
                                             </span>
                                             để được hỗ trợ?{' '}

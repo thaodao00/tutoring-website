@@ -153,11 +153,19 @@ body .btn-take {
         color: #f8cd0a;
     }
 }
-.text-status {
-    font-size: 18px;
-    font-weight: bold;
-    -webkit-animation: my 700ms infinite;
-    -moz-animation: my 700ms infinite;
-    -o-animation: my 700ms infinite;
-    animation: my 700ms infinite;
+.text-status-none {
+    display: block;
+    padding: 12px 12px;
+    background-color: var(--text-danger);
+    border-color: var(--primary);
+    border-radius: 4px;
+    color: var(--white);
+}
+.text-status-apply {
+    display: block;
+    padding: 12px 12px;
+    background-color: var(--primary);
+    border-color: var(--primary);
+    border-radius: 4px;
+    color: var(--white);
 }

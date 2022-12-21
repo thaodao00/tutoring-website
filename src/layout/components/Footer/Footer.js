@@ -4,13 +4,15 @@ import styles from './Footer.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLocationDot, faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 import Button from '~/components/Button';
+import { Link } from 'react-router-dom';
+import config from '~/config';
 const cx = classNames.bind(styles);
 function Footer() {
     return (
         <div className={cx('row', 'wrapper')}>
             <div className={cx('col-12 col-md-12 col-sm-12 d-flex col-lg-6', 'footer-left')}>
                 <div className={cx('col-md-8')}>
-                    <h4 className={cx('footer-title')}>CTY TNHH DỊCH VỤ TÀI NĂNG TRẺ</h4>
+                    <h4 className={cx('footer-title')}>CTY TNHH TRUNG TÂM GIA SƯ</h4>
                     <div className={cx('footer-sub')}>Văn phòng tư vấn phát triển giáo dục</div>
                     <div>
                         <span className={cx('footer-contact')}>
@@ -28,11 +30,11 @@ function Footer() {
                         <span className={cx('footer-contact')}>
                             <FontAwesomeIcon className={cx('icon')} icon={faPhoneAlt} />{' '}
                             <Button href="tel: 09222222" className={cx('text-phone')}>
-                                092.222.222
+                                0363275624
                             </Button>
                             {' - '}
                             <Button href="tel: 09222222" className={cx('text-phone')}>
-                                092.222.222
+                                0893156752
                             </Button>
                         </span>
                     </div>
@@ -40,23 +42,32 @@ function Footer() {
                         <span className={cx('footer-contact')}>
                             <FontAwesomeIcon className={cx('icon')} icon={faEnvelope} />{' '}
                             <Button href="mailto:daykem@gmail.com" className={cx('text-mail')}>
-                                daykem@gmail.com
+                                trungtamgisu@gmail.com
                             </Button>
                         </span>
                     </div>
 
                 </div>
                 <ul className={cx('col-lg-4 col-md-4 col-sm-12', 'list')}>
-                    <li className={cx('item')}>Về chúng tôi</li>
-                    <li className={cx('item')}>Câu hỏi thường gặp</li>
-                    <li className={cx('item')}>Tuyển dụng</li>
-                    <li className={cx('item')}>Hợp đồng mẫu</li>
-                    <li className={cx('item')}>Cs bảo mật thông tin</li>
+                    <li>
+
+                        <Link to={config.routes.contacts} li className={cx('item')} > Về chúng tôi</Link>
+                    </li>
+                    <li>
+                        <Link to={config.routes.home} className={cx('item')}>Các câu hỏi thường gặp</Link></li>
+                    <li>
+
+                        <Link to={config.routes.registerAsTutor} className={cx('item')}>Tuyển dụng</Link>
+                    </li>
+                    <li>
+                        <Link to={config.routes.contract} className={cx('item')}>Hợp đồng mẫu</Link></li>
+                    <li>
+                        <Link to={config.routes.contract} className={cx('item')}>Tại sao bạn phải chọn chúng tôi!</Link></li>
                 </ul>
             </div>
             <div className={cx('col-12 col-md-12 col-sm-12 d-flex col-lg-6', 'footer-right')}>
                 <div>
-                    <h4 className={cx('footer-title')}> Ứng dụng Daykemtainha.vn</h4>
+                    <h4 className={cx('footer-title')}> Ứng dụng Trung tâm gia sư</h4>
                     <p className={cx('text')}>
                         Hãy cài đặt ngay Ứng dụng Daykemtainha.vn để nhận lớp nhanh hơn (đối với Gia Sư) hoặc tìm Gia sư
                         dễ dàng hơn (đối với Phụ huynh hoặc Học viên){' '}
