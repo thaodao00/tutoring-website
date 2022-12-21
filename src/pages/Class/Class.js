@@ -12,11 +12,14 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons/faSearch";
 import { FaHandPointRight } from "react-icons/fa";
 import { tagLinks } from "~/utils/FakeData";
 import PaginationTutor from "~/layout/common/PaginationTutor";
+
 import { BsBorderAll } from 'react-icons/bs';
+
 import {
     getGrade,
     getSubject,
-    pagination,
+    pagination, paginationByGradeId,
+    paginationBySubjectId,
     paginationSearch,
 } from "~/services/workspaces.sevices";
 import config from "~/config";
@@ -30,9 +33,9 @@ function Class(props) {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
     const [subject, setSubject] = useState([])
-    const [subjectId, setSubjectId] = useState(1)
+    const [subjectId, setSubjectId] = useState('ALL')
     const [grade, setGrade] = useState([])
-    const [gradeId, setGradeId] = useState(1)
+    const [gradeId, setGradeId] = useState('ALL')
     const [isSearch, SetIsSearch] = useState(false)
     const [isResult, setIsResult] = useState(true)
     const handleSelectSubjectId = (e) => {
@@ -44,7 +47,7 @@ function Class(props) {
         setGradeId(getGradeId)
     }
 
-    let maxResult = 2;
+    let maxResult = 10;
     useEffect(() => {
         async function fetchData() {
             setLoading(true)
@@ -69,28 +72,114 @@ function Class(props) {
         const response = await paginationSearch(currentPage, maxResult, subjectId, gradeId)
         const { data, status } = response?.data
         const total = data.total
-        setPageCount(Math.floor(total / maxResult));
-        const result = data.data
-        return result
+        if (total < maxResult) {
+            const response = await paginationSearch(currentPage, total, subjectId, gradeId)
+            const {data} = response?.data
+            if (data === undefined) {
+                return []
+            }
+            const newTotal = data.total
+            setPageCount(Math.floor(newTotal / total));
+            const result = data.data
+            return result
+
+        }
+
 
     }
+    const fetchData = async (currentPage) => {
+        const response = await pagination(currentPage, maxResult);
+        const {data} = await response?.data;
+        const total = data.total
+        setPageCount(Math.floor(total / maxResult))
+        return data.data;
+    };
+    const fetchDataBySubjectId = async (currentPage, subjectId) => {
+        const response = await paginationBySubjectId(currentPage, maxResult, subjectId);
+        const {data} = await response?.data;
+        const total = data.total
+        if (total < maxResult) {
+            const response = await paginationBySubjectId(currentPage, total, subjectId)
+            const {data} = response?.data
+            if (data === undefined) {
+                return []
+            }
+            const newTotal = data.total
+            setPageCount(Math.floor(newTotal / total));
+            const result = data.data
+            return result
+
+        }
+
+    };
+    const fetchDataByGradeId = async (currentPage, gradeId) => {
+        const response = await paginationByGradeId(currentPage, maxResult, gradeId);
+        const {data} = await response?.data;
+        const total = data.total
+        if (total < maxResult) {
+            const response = await paginationByGradeId(currentPage, total, gradeId)
+            const {data} = response?.data
+            if (data === undefined) {
+                return []
+            }
+            const newTotal = data.total
+            setPageCount(Math.floor(newTotal / total));
+            const result = data.data
+            return result
+
+        }
+
+    };
 
     const handleSearch = async (e) => {
         e.preventDefault()
         setLoading(true)
-        const dataFromSever = await fetchSearchValue(1, subjectId, gradeId)
-        if (dataFromSever.length > 0) {
-            setData(dataFromSever)
-            setIsResult(true)
-        } else {
-            setIsResult(false)
+        if (subjectId === 'ALL' && gradeId === 'ALL') {
+            e.preventDefault()
+            window.location.reload();
+            // const response = await pagination(1, maxResult)
+            // const {data} = response?.data.data
+            // if (data.length > 0) {
+            //     setData(data)
+            //     setIsResult(true)
+            // }
+
+        } else if (gradeId === 'ALL' && subjectId !== 'ALL') {
+            const data = await fetchDataBySubjectId(1, subjectId)
+            if (data.length > 0) {
+                setData(data)
+                setIsResult(true)
+            } else {
+                setIsResult(false)
+            }
 
         }
+        else if (gradeId !== 'ALL' && subjectId === 'ALL') {
+            const data = await fetchDataByGradeId(1, gradeId)
+            if (data.length > 0) {
+                setData(data)
+                setIsResult(true)
+            } else {
+                setIsResult(false)
+            }
 
-        SetIsSearch(true)
+        } else {
+            const dataFromSever = await fetchSearchValue(1, subjectId, gradeId)
+            if (dataFromSever.length > 0) {
+                setData(dataFromSever)
+                setIsResult(true)
+                SetIsSearch(true)
+            } else {
+                setIsResult(false)
+
+            }
+        }
+
+
         setLoading(false)
 
     }
+
     const fetchData = async (currentPage) => {
         const response = await pagination(currentPage, maxResult);
         const { data } = await response?.data.data;
@@ -100,6 +189,7 @@ function Class(props) {
         e.preventDefault()
         window.location.reload();
     }
+
     const handlePageClick = async (data) => {
         let currentPage = data.selected + 1;
         setLoading(true)
@@ -107,8 +197,17 @@ function Class(props) {
             const dataFromSever = await fetchSearchValue(currentPage, subjectId, gradeId)
             setData(dataFromSever)
         }
-
-        else {
+        // else if (subjectId === 'ALL' && gradeId === 'ALL') {
+        //     const commentsFormServer = await fetchData(currentPage);
+        //     setData(commentsFormServer);
+        // }
+        else if (gradeId === 'ALL' && subjectId !== 'ALL') {
+            const commentsFormServer = await fetchDataBySubjectId(currentPage, subjectId);
+            setData(commentsFormServer);
+        } else if (gradeId !== 'ALL' && subjectId === 'ALL') {
+            const commentsFormServer = await fetchDataByGradeId(currentPage, gradeId);
+            setData(commentsFormServer);
+        } else {
             const commentsFormServer = await fetchData(currentPage);
             setData(commentsFormServer);
         }
@@ -129,11 +228,15 @@ function Class(props) {
                                             placeholder='Khu vực'
                                             onChange={handleSelectSubjectId}
                                         >
+
+
                                             {subject.map((subject) => {
                                                 return (
                                                     <option value={subject.id}>{subject.name}</option>
+
                                                 )
                                             })}
+                                            <option value={'ALL'}>Tất cả</option>
 
                                         </Form.Select>
                                     </Col>
@@ -142,11 +245,13 @@ function Class(props) {
                                             placeholder='Khu vực'
                                             onChange={handleSelectGradeId}
                                         >
+
                                             {grade.map((grade) => {
                                                 return (
                                                     <option value={grade.id}>{grade.name}</option>
                                                 )
                                             })}
+                                            <option value={'ALL'}>Tất cả</option>
 
                                         </Form.Select>
                                     </Col>
@@ -161,6 +266,7 @@ function Class(props) {
                                     </Col>
 
                                 </Row>
+
                                 <Row>
                                     <Col lg={4} md={12} sm={12}>
                                         <Button className={cx('btn-search', 'text-center', 'btn-success')}
@@ -172,6 +278,7 @@ function Class(props) {
                                         </Button>
                                     </Col>
                                 </Row>
+
                             </div>
                             {!isResult && (<h3 className={cx('not-result')}>Không có kết quả tìm kiếm</h3>)}
                             {
