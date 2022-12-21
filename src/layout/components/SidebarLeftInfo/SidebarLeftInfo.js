@@ -19,6 +19,7 @@ import { useEffect } from 'react';
 import { getInfoTutor } from '~/services/workspaces.sevices';
 import api from '../../../interceptors/axios';
 import { getUserInfo } from '~/redux/auth/actions';
+import LoadingOverlay from 'react-loading-overlay';
 const cx = classNames.bind(styles);
 
 const firebaseConfig = {
@@ -58,8 +59,11 @@ function SidebarLeftInfo() {
     const [isEdit, setIsEdit] = useState(false);
     const [data, setData] = useState(false);
     const editRef = useRef(null);
+    const [loading, setLoading] = useState(false);
+
     const handleEditAvatar = () => {
         setIsEdit(!isEdit);
+        setLoading(false);
         const check = editRef.current.classList.contains(cx('hide'));
         if (check) {
             editRef.current.classList.remove(cx('hide'));
@@ -73,7 +77,7 @@ function SidebarLeftInfo() {
 
         const storageRef = ref(storage, `files/${auth.user.id}`);
         const uploadTask = uploadBytesResumable(storageRef, selectedImage);
-
+        setLoading(true);
         uploadTask.on(
             'state_changed',
             (snapshot) => {
@@ -107,6 +111,7 @@ function SidebarLeftInfo() {
             if (data) {
                 setData(data);
             }
+            // setLoading(false)
         }
         fetchData();
     }, []);
@@ -114,10 +119,13 @@ function SidebarLeftInfo() {
     return (
         <div className={cx('sidebar-left')}>
             <div className={cx('avatar')}>
-                <img
-                    alt="not fount"
-                    src={selectedImage == null ? `${auth.user.urlAvt}` : URL.createObjectURL(selectedImage)}
-                />
+                <LoadingOverlay active={loading} spinner text="Đang tải...">
+                    <img
+                        alt="not fount"
+                        src={selectedImage == null ? `${auth.user.urlAvt}` : URL.createObjectURL(selectedImage)}
+                    />
+                </LoadingOverlay>
+
                 <span ref={editRef} onClick={handleEditAvatar} className={cx('edit')}>
                     Chỉnh sửa avatar
                 </span>
@@ -138,6 +146,7 @@ function SidebarLeftInfo() {
                     </div>
                 )}
             </div>
+
             <div className={cx('info')}>
                 <h4 className={cx('account')}>{auth.user.name}</h4>
                 <p className={cx('info-item')}>
