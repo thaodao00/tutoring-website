@@ -133,16 +133,7 @@ function ClassStudyItem(props) {
                         </span>
                     </Col>
                 </Row>
-                <Row>
-                    <Col lg={12} sm={12}>
-                        <AiOutlineClockCircle className={cx('icon-request')} />
-                        <span style={{ fontSize: '1.4rem' }}>
-                            <b>Thời gian rãnh:</b>
-                            {data.requireRelationshipTimeWeeks.map((item) => item.date)}
 
-                        </span>
-                    </Col>
-                </Row>
                 <Row>
                     <Col lg={12} sm={12}>
                         <FaBook className={cx('icon-request')} />

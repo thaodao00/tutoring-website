@@ -1,16 +1,16 @@
 import classNames from 'classnames/bind';
-import React, {useEffect, useState} from 'react';
-import {Button, Col, Container, FloatingLabel, Row} from "react-bootstrap";
+import React, { useEffect, useState } from 'react';
+import { Button, Col, Container, FloatingLabel, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {Formik} from "formik";
+import { Formik } from "formik";
 import * as yup from 'yup';
 
 import styles from '../ReferenceTuition/ReferenceTuition.module.scss';
-import {genders, ours} from "~/utils/FakeData";
+import { genders, ours } from "~/utils/FakeData";
 import OptionItem from "~/pages/ReferenceTuition/OptionItem";
-import {useMediaQuery} from "react-responsive";
+import { useMediaQuery } from "react-responsive";
 import ReasonTutor from "~/layout/common/ReasonTutor";
 import {
     createClass,
@@ -22,22 +22,22 @@ import {
     getGrade,
     getCoin
 } from "~/services/workspaces.sevices";
-import {useDispatch, useSelector} from 'react-redux';
-import {FaCoins} from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { FaCoins } from 'react-icons/fa';
 import LoadingOverlay from 'react-loading-overlay';
 
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 const cx = classNames.bind(styles);
 
 
 function SearchTutor(props) {
-    const {user} = useSelector((state) => state.auth)
+    const { user } = useSelector((state) => state.auth)
     const [coin, setCoins] = useState()
 
-    const isTablet = useMediaQuery({maxWidth: 768})
-    const maxWidth1024 = useMediaQuery({maxWidth: 1024})
-    const maxWidth1200 = useMediaQuery({maxWidth: 1200})
+    const isTablet = useMediaQuery({ maxWidth: 768 })
+    const maxWidth1024 = useMediaQuery({ maxWidth: 1024 })
+    const maxWidth1200 = useMediaQuery({ maxWidth: 1200 })
     const dispatch = useDispatch()
     const convertTablet = () => {
         return `${isTablet ? 'row' : ''}`
@@ -81,8 +81,8 @@ function SearchTutor(props) {
     }
     const [formValue, setFormValue] = useState(classTutor)
     const handleInput = (e) => {
-        const {name, value} = e.target
-        setFormValue({...formValue, [name]: value})
+        const { name, value } = e.target
+        setFormValue({ ...formValue, [name]: value })
     }
     const [subjectId, setSubjectId] = useState(1)
     const handleSelectSubject = (e) => {
@@ -264,13 +264,13 @@ function SearchTutor(props) {
         },
     ]
     const hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-    const minutes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]
-    const [selectList, setSelectList] = useState([{day: 2, hours: 1, minutes: 1},]);
+    const minutes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59,]
+    const [selectList, setSelectList] = useState([{ day: 2, hours: 1, minutes: 1 },]);
     const [grade, setGrade] = useState(1)
     const [gradeData, setGradeData] = useState([])
     const fetchGrade = async () => {
         const res = await getGrade()
-        const {data} = res?.data
+        const { data } = res?.data
         setGradeData(data)
     }
     const handleSelectChange = (index, e) => {
@@ -280,7 +280,7 @@ function SearchTutor(props) {
 
     }
     const handleSelectClick = () => {
-        setSelectList([...selectList, {day: 2, hours: 1, minutes: 1}])
+        setSelectList([...selectList, { day: 2, hours: 1, minutes: 1 }])
     }
     const handleSelectRemove = index => {
         const list = [...selectList]
@@ -299,9 +299,9 @@ function SearchTutor(props) {
                         className={cx("overlay", "card-img-overlay d-flex flex-column align-items-center justify-content-center")}>
                         <h5 className={cx("text-title", "card-title fw-bold fs-1")}>TÌM GIA SƯ</h5>
                         <p className="card-text text-center fs-2">
-                            Dễ dàng tiếp cận với các gia sư theo yêu cầu của bản thân, <br/> bạn chỉ cần đăng bài tìm
-                            gia sư <br/> với chi phí là<span
-                            className={cx('text-coin', ' fs-1 fw-bold')}> 5 coin <FaCoins/></span> cho một bài đăng.
+                            Dễ dàng tiếp cận với các gia sư theo yêu cầu của bản thân, <br /> bạn chỉ cần đăng bài tìm
+                            gia sư <br /> với chi phí là<span
+                                className={cx('text-coin', ' fs-1 fw-bold')}> 5 coin <FaCoins /></span> cho một bài đăng.
                         </p>
                         {/* <p className="card-text"></p> */}
                     </div>
@@ -320,14 +320,14 @@ function SearchTutor(props) {
                             }}
                         >
                             {({
-                                  handleSubmit,
-                                  handleChange,
-                                  handleBlur,
-                                  values,
-                                  touched,
-                                  isValid,
-                                  errors,
-                              }) => (
+                                handleSubmit,
+                                handleChange,
+                                handleBlur,
+                                values,
+                                touched,
+                                isValid,
+                                errors,
+                            }) => (
                                 <Form noValidate onSubmit={handleSubmit}>
                                     <Row>
                                         <Col sm={12} md={8} lg={8}>
@@ -358,9 +358,9 @@ function SearchTutor(props) {
                                                 </Row>
                                                 <Row>
                                                     <Col lg={maxWidth1200 ? 6 : 2} bsPrefix={convertTablet()}
-                                                         md={maxWidth1024 ? 6 : 2}
-                                                         sm={12}>
-                                                        <Form.Label style={{marginTop:'20px'}} className={cx('description')}>Số học viên
+                                                        md={maxWidth1024 ? 6 : 2}
+                                                        sm={12}>
+                                                        <Form.Label style={{ marginTop: '20px' }} className={cx('description')}>Số học viên
                                                             *</Form.Label>
                                                         <Form.Control
                                                             name='amountStudent'
@@ -372,9 +372,9 @@ function SearchTutor(props) {
                                                         />
                                                     </Col>
                                                     <Col lg={maxWidth1200 ? 6 : 2} bsPrefix={convertTablet()}
-                                                         md={maxWidth1024 ? 6 : 2}
-                                                         sm={12}>
-                                                        <Form.Label style={{marginTop:'20px'}} className={cx('description')}>Ngày bắt đầu
+                                                        md={maxWidth1024 ? 6 : 2}
+                                                        sm={12}>
+                                                        <Form.Label style={{ marginTop: '20px' }} className={cx('description')}>Ngày bắt đầu
                                                             *</Form.Label>
                                                         <DatePicker
                                                             selected={startDate}
@@ -386,9 +386,9 @@ function SearchTutor(props) {
 
                                                     </Col>
                                                     <Col lg={maxWidth1200 ? 6 : 2} bsPrefix={convertTablet()}
-                                                         md={maxWidth1024 ? 6 : 2}
-                                                         sm={12}>
-                                                        <Form.Label style={{marginTop:'20px'}} className={cx('description')}>Ngày kết thúc
+                                                        md={maxWidth1024 ? 6 : 2}
+                                                        sm={12}>
+                                                        <Form.Label style={{ marginTop: '20px' }} className={cx('description')}>Ngày kết thúc
                                                             *</Form.Label>
                                                         <DatePicker
                                                             selected={endDate}
@@ -409,15 +409,15 @@ function SearchTutor(props) {
                                                         <Form.Select
 
                                                             onChange={handleSelectProvince}
-                                                            style={{padding: '14px 18px'}}
+                                                            style={{ padding: '14px 18px' }}
                                                             size='lg'>
-                                                            <OptionItem children="Chọn Tỉnh"/>
+                                                            <OptionItem children="Chọn Tỉnh" />
 
                                                             {
                                                                 provinces.map((item) => {
                                                                     return (
                                                                         <OptionItem key={item.id} value={item.id}
-                                                                                    children={item.name}/>
+                                                                            children={item.name} />
                                                                     )
                                                                 })
                                                             }
@@ -425,16 +425,16 @@ function SearchTutor(props) {
                                                     </Col>
                                                     <Col lg={3}>
                                                         <Form.Label className={cx('description')}>Huyện*</Form.Label>
-                                                        <Form.Select style={{padding: '14px 18px'}}
-                                                                     onChange={handleSelectDistrict}
-                                                                     size='lg'>
-                                                            <OptionItem children="Chọn Huyện"/>
+                                                        <Form.Select style={{ padding: '14px 18px' }}
+                                                            onChange={handleSelectDistrict}
+                                                            size='lg'>
+                                                            <OptionItem children="Chọn Huyện" />
 
                                                             {
                                                                 district.map((item) => {
                                                                     return (
                                                                         <OptionItem key={item.id} value={item.id}
-                                                                                    children={item.name}/>
+                                                                            children={item.name} />
                                                                     )
                                                                 })
                                                             }
@@ -442,15 +442,15 @@ function SearchTutor(props) {
                                                     </Col>
                                                     <Col lg={6}>
                                                         <Form.Label className={cx('description')}>Phường *</Form.Label>
-                                                        <Form.Select style={{padding: '14px 18px'}}
-                                                                     onChange={handleSelectWardId}
-                                                                     size='lg'>
-                                                            <OptionItem children="Chọn Phường"/>
+                                                        <Form.Select style={{ padding: '14px 18px' }}
+                                                            onChange={handleSelectWardId}
+                                                            size='lg'>
+                                                            <OptionItem children="Chọn Phường" />
                                                             {
                                                                 ward.map((item) => {
                                                                     return (
                                                                         <OptionItem key={item.id} value={item.id}
-                                                                                    children={item.name}/>
+                                                                            children={item.name} />
                                                                     )
                                                                 })
                                                             }
@@ -478,17 +478,17 @@ function SearchTutor(props) {
                                                     </Form.Group>
                                                 </Row>
                                                 <Row>
-                                                    <Col lg={maxWidth1200 ? 4 : 2} style={{padding: '12px 12px'}}>
+                                                    <Col lg={maxWidth1200 ? 4 : 2} style={{ padding: '12px 12px' }}>
                                                         <Form.Label className={cx('description')}>Giờ mỗi
                                                             buổi</Form.Label>
-                                                        <Form.Select style={{padding: '14px 18px'}}
-                                                                     onChange={handleSelectOur}
-                                                                     size='lg'>
+                                                        <Form.Select style={{ padding: '14px 18px' }}
+                                                            onChange={handleSelectOur}
+                                                            size='lg'>
                                                             {
                                                                 ours.map((item) => {
                                                                     return (
                                                                         <OptionItem value={item.value} key={item.id}
-                                                                                    children={item.our}/>
+                                                                            children={item.our} />
                                                                     )
                                                                 })
                                                             }
@@ -502,13 +502,13 @@ function SearchTutor(props) {
                                                             className={cx('note')}>*
                                                         </Form.Label>
                                                         <Form.Select onChange={handleSelectSubject}
-                                                                     style={{padding: '14px 18px'}}
-                                                                     size='lg'>
+                                                            style={{ padding: '14px 18px' }}
+                                                            size='lg'>
                                                             {
                                                                 subjects.map((item) => {
                                                                     return (
                                                                         <OptionItem key={item.id} value={item.id}
-                                                                                    children={item.name}/>
+                                                                            children={item.name} />
                                                                     )
                                                                 })
                                                             }
@@ -522,14 +522,14 @@ function SearchTutor(props) {
                                                             className={cx('note')}>*
                                                         </Form.Label>
                                                         <Form.Select value={grade}
-                                                                     onChange={e => setGrade(e.target.value)}
-                                                                     style={{padding: '14px 18px'}}
-                                                                     size='lg'>
+                                                            onChange={e => setGrade(e.target.value)}
+                                                            style={{ padding: '14px 18px' }}
+                                                            size='lg'>
                                                             {
                                                                 gradeData.map((item) => {
                                                                     return (
                                                                         <OptionItem key={item.id} value={item.id}
-                                                                                    children={item.name}/>
+                                                                            children={item.name} />
                                                                     )
                                                                 })
                                                             }
@@ -551,14 +551,14 @@ function SearchTutor(props) {
                                                                         <Form.Label
                                                                             className={cx('description', "ms-3")}> Thứ
                                                                         </Form.Label>
-                                                                        <select style={{padding: '12px 12px'}}
-                                                                                className="mx-3" name='day'
-                                                                                value={parseInt(item.day)}
-                                                                                onChange={(e) => handleSelectChange(i, e)}>
+                                                                        <select style={{ padding: '12px 12px' }}
+                                                                            className="mx-3" name='day'
+                                                                            value={parseInt(item.day)}
+                                                                            onChange={(e) => handleSelectChange(i, e)}>
                                                                             {day.map((item, index) => {
                                                                                 return (
                                                                                     <option key={index}
-                                                                                            value={item.value}>{item.name}</option>
+                                                                                        value={item.value}>{item.name}</option>
                                                                                 )
                                                                             })}
                                                                         </select>
@@ -567,14 +567,14 @@ function SearchTutor(props) {
                                                                         <Form.Label
                                                                             className={cx('description', "ms-3")}> Giờ
                                                                         </Form.Label>
-                                                                        <select style={{padding: '12px 12px'}}
-                                                                                className="mx-3" name='hours'
-                                                                                value={parseInt(item.hours)}
-                                                                                onChange={(e) => handleSelectChange(i, e)}>
+                                                                        <select style={{ padding: '12px 12px' }}
+                                                                            className="mx-3" name='hours'
+                                                                            value={parseInt(item.hours)}
+                                                                            onChange={(e) => handleSelectChange(i, e)}>
                                                                             {hours.map((item, index) => {
                                                                                 return (
                                                                                     <option key={index}
-                                                                                            value={item}>{item}</option>
+                                                                                        value={item}>{item}</option>
                                                                                 )
                                                                             })}
                                                                         </select>
@@ -583,14 +583,14 @@ function SearchTutor(props) {
                                                                         <Form.Label
                                                                             className={cx('description', "ms-3")}> Phút
                                                                         </Form.Label>
-                                                                        <select style={{padding: '12px 12px'}}
-                                                                                className="mx-3 " name='minutes'
-                                                                                value={parseInt(item.minutes)}
-                                                                                onChange={(e) => handleSelectChange(i, e)}>
+                                                                        <select style={{ padding: '12px 12px' }}
+                                                                            className="mx-3 " name='minutes'
+                                                                            value={parseInt(item.minutes)}
+                                                                            onChange={(e) => handleSelectChange(i, e)}>
                                                                             {minutes.map((item, index) => {
                                                                                 return (
                                                                                     <option key={index}
-                                                                                            value={item}>{item}</option>
+                                                                                        value={item}>{item}</option>
                                                                                 )
                                                                             })}
                                                                         </select>
@@ -625,12 +625,12 @@ function SearchTutor(props) {
                                                     <Col lg={4}>
                                                         <Form.Label className={cx('description')}>Giới tính</Form.Label>
                                                         <Form.Select onChange={handleSelectGender}
-                                                                     style={{padding: '14px 18px'}} size='lg'>
+                                                            style={{ padding: '14px 18px' }} size='lg'>
                                                             {
                                                                 genders.map((item) => {
                                                                     return (
                                                                         <OptionItem value={item.value} key={item.id}
-                                                                                    children={item.gender}/>
+                                                                            children={item.gender} />
                                                                     )
                                                                 })
                                                             }
@@ -638,13 +638,13 @@ function SearchTutor(props) {
                                                     </Col>
                                                     <Col lg={2}>
                                                         <Form.Label className={cx('description')}>Trình độ</Form.Label>
-                                                        <Form.Select style={{padding: '14px 18px'}} size='lg'
-                                                                     onChange={handleSelectLevel}>
+                                                        <Form.Select style={{ padding: '14px 18px' }} size='lg'
+                                                            onChange={handleSelectLevel}>
                                                             {
                                                                 level.map((item) => {
                                                                     return (
                                                                         <OptionItem value={item.id} key={item.id}
-                                                                                    children={item.name}/>
+                                                                            children={item.name === "Học sinh" ? ("Sinh Viên") : ("Giáo Viên")} />
                                                                     )
                                                                 })
                                                             }
@@ -660,7 +660,7 @@ function SearchTutor(props) {
                                                             value={formValue.tuition}
                                                             size="sm"
                                                             type="text"
-                                                            placeholder="ví dụ: 300000"/>
+                                                            placeholder="ví dụ: 300000" />
                                                     </Col>
 
 
@@ -675,7 +675,7 @@ function SearchTutor(props) {
                                                             isInvalid={!!errors.description}
                                                             as="textarea"
                                                             placeholder="Leave a comment here"
-                                                            style={{height: '115px'}}
+                                                            style={{ height: '115px' }}
                                                         />
                                                         <Form.Control.Feedback type="invalid" tooltip>
                                                             {errors.description}
@@ -687,7 +687,7 @@ function SearchTutor(props) {
                                                         <center>
                                                             <Button
                                                                 onClick={() => handleSubmit()}
-                                                                style={{marginTop: '20px'}}
+                                                                style={{ marginTop: '20px' }}
                                                                 className={cx('btn', 'btn-success px-4 py-3')}
                                                                 size="lg">
                                                                 Đăng yêu cầu
@@ -700,7 +700,7 @@ function SearchTutor(props) {
                                             </div>
                                         </Col>
                                         <Col sm={12} md={4} lg={4}>
-                                            <ReasonTutor/>
+                                            <ReasonTutor />
                                         </Col>
                                     </Row>
 
@@ -711,7 +711,7 @@ function SearchTutor(props) {
 
                     </Container>
                 </div>
-                <NotificationContainer/>
+                <NotificationContainer />
             </LoadingOverlay>
 
         </>

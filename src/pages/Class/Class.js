@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
-import {Button, Col, Container, Row} from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LoadingOverlay from 'react-loading-overlay';
 
 import styles from './Class.module.scss';
 import 'animate.css';
 import ClassItem from "~/pages/Class/ClassItem";
-import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
-import {FaHandPointRight} from "react-icons/fa";
-import {tagLinks} from "~/utils/FakeData";
+import { faSearch } from "@fortawesome/free-solid-svg-icons/faSearch";
+import { FaHandPointRight } from "react-icons/fa";
+import { tagLinks } from "~/utils/FakeData";
 import PaginationTutor from "~/layout/common/PaginationTutor";
 import {
     getDataBySubjectIdGradeId,
@@ -50,7 +50,7 @@ function Class(props) {
         async function fetchData() {
             setLoading(true)
             const response = await pagination(1, maxResult);
-            const {data, status} = response?.data
+            const { data, status } = response?.data
             const total = data.total
             setPageCount(Math.floor(total / maxResult));
 
@@ -67,8 +67,8 @@ function Class(props) {
 
     }, [maxResult])
     const fetchSearchValue = async (subjectId, gradeId) => {
-        const response = await getDataBySubjectIdGradeId( subjectId, gradeId)
-        const {data, status} = response?.data
+        const response = await getDataBySubjectIdGradeId(subjectId, gradeId)
+        const { data, status } = response?.data
         const total = data.total
         const currentPage = (Math.ceil(total / maxResult))
         setPageCount(currentPage)
@@ -79,14 +79,14 @@ function Class(props) {
     }
     const fetchData = async (currentPage) => {
         const response = await pagination(currentPage, maxResult);
-        const {data} = await response?.data;
+        const { data } = await response?.data;
         const total = data.total
         setPageCount(Math.floor(total / maxResult))
         return data.data;
     };
-    const fetchDataBySubjectId = async (currentPage,subjectId) => {
+    const fetchDataBySubjectId = async (currentPage, subjectId) => {
         const response = await paginationBySubjectId(subjectId);
-        const {data} = await response?.data;
+        const { data } = await response?.data;
         const total = data.total
         setPageCount(Math.ceil(total / maxResult))
         return data.data
@@ -95,7 +95,7 @@ function Class(props) {
     };
     const fetchDataByGradeId = async (currentPage, gradeId) => {
         const response = await paginationByGradeId(gradeId);
-        const {data} = await response?.data;
+        const { data } = await response?.data;
         const total = data.total
         setPageCount(Math.ceil(total / maxResult))
         return data.data
@@ -111,7 +111,7 @@ function Class(props) {
 
 
         } else if (gradeId === 'ALL' && subjectId !== 'ALL') {
-            const data = await fetchDataBySubjectId( 1,subjectId)
+            const data = await fetchDataBySubjectId(1, subjectId)
             if (data.length > 0) {
                 setData(data)
                 setIsResult(true)
@@ -130,7 +130,7 @@ function Class(props) {
             }
 
         } else {
-            const dataFromSever = await fetchSearchValue( subjectId, gradeId)
+            const dataFromSever = await fetchSearchValue(subjectId, gradeId)
             if (dataFromSever.length > 0) {
                 setData(dataFromSever)
                 setIsResult(true)
@@ -178,9 +178,9 @@ function Class(props) {
                             <div className={cx('search-area')}>
                                 <Row>
                                     <Col lg={7} md={6} sm={12}>
-                                        <Form.Select className={cx('list-area')}
-                                                     placeholder='Khu vực'
-                                                     onChange={handleSelectSubjectId}
+                                        <Form.Select className={cx('list-area', 'fs-4')}
+                                            placeholder='Khu vực'
+                                            onChange={handleSelectSubjectId}
                                         >
 
 
@@ -195,9 +195,9 @@ function Class(props) {
                                         </Form.Select>
                                     </Col>
                                     <Col lg={3} md={6} sm={12}>
-                                        <Form.Select className={cx('list-area')}
-                                                     placeholder='Khu vực'
-                                                     onChange={handleSelectGradeId}
+                                        <Form.Select className={cx('list-area', 'fs-4')}
+                                            placeholder='Khu vực'
+                                            onChange={handleSelectGradeId}
                                         >
 
                                             {grade.map((grade) => {
@@ -211,10 +211,10 @@ function Class(props) {
                                     </Col>
                                     <Col lg={2} md={12} sm={12}>
                                         <Button className={cx('btn-search', 'text-center', 'btn-success')}
-                                                size="lg"
-                                                onClick={handleSearch}
+                                            size="lg"
+                                            onClick={handleSearch}
                                         >
-                                            <FontAwesomeIcon icon={faSearch} className={cx('search-icon')}/>
+                                            <FontAwesomeIcon icon={faSearch} className={cx('search-icon')} />
                                             Tìm
                                         </Button>
                                     </Col>
@@ -228,12 +228,12 @@ function Class(props) {
                                         {
                                             data.map((item) => {
                                                 return (
-                                                    <ClassItem key={item.id} data={item}/>
+                                                    <ClassItem key={item.id} data={item} />
                                                 )
                                             })
 
                                         }
-                                        <PaginationTutor pageCount={pageCount} handlePageClick={handlePageClick}/>
+                                        <PaginationTutor pageCount={pageCount} handlePageClick={handlePageClick} />
                                     </div>
                                 )
                             }
@@ -260,11 +260,11 @@ function Class(props) {
                                 <div className={cx('need')}>
                                     <h5 className={cx('need-title', 'line-bottom')}>Gia sư cần biết</h5>
                                     <a className={cx('need-link')} href="">
-                                        <FaHandPointRight style={{marginRight: '4px'}}/>
+                                        <FaHandPointRight style={{ marginRight: '4px' }} />
                                         Quy trình nhận lớp
                                     </a>
                                     <a className={cx('need-link')} href="">
-                                        <FaHandPointRight style={{marginRight: '4px'}}/>
+                                        <FaHandPointRight style={{ marginRight: '4px' }} />
                                         Hợp đồng mẫu
                                     </a>
                                 </div>
