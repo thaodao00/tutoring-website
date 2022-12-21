@@ -147,8 +147,8 @@
             display: flex;
         }
         .logo {
-            margin: 10px 15px;
-            height: 50px;
+            height: 80px;
+            width: 150px;
         }
         .nav-link {
             display: flex;
@@ -189,6 +189,7 @@
     .wrapper {
         .header-bottom {
             flex-direction: column;
+            justify-content: space-between;
             .nav-link {
                 margin-top: 0px;
                 margin-left: 60px;
@@ -225,7 +226,8 @@
     .wrapper {
         .header-bottom {
             .logo {
-                height: 30px;
+                height: 80px;
+                width: 150px;
             }
             .nav-icon {
                 margin-top: -80px;

@@ -57,22 +57,38 @@ function ClassStudyItem(props) {
                         <Col lg={6} md={12}>
                             <h4 className={cx('fee')}><span>Học phí :</span> {formatCurrency(data.tuition)}/Tháng</h4>
                         </Col>
-                        <Col lg={3} md={12} className="bg-light rounded-4 p-4" >
-                            <div>
+                        <Col lg={3} md={12} className="rounded-5 text-center" >
+                            <div className={data.status === "CREATE" ? (cx('text-status-none')) : (cx('text-status-apply'))}>
                                 <div className={cx('text-status')}>Ngày tạo : {new Date(data.createdAt).toLocaleDateString()}</div>
-                                <div className={cx('text-status')}>Trạng thái: {data?.status === "CREATE" ? <>Chưa hoạt động</> : <>Đã nhận</>}</div>
+                                <div className={cx('text-status')}>Trạng thái: {data?.status === "CREATE" ? <>Mới tạo</> : <>Đã nhận</>}</div>
                             </div>
                         </Col>
                     </Row>
                 </div>
 
                 <div className={cx('description')}>
-                    <strong>Người tạo lớp: </strong>
-                    {data.createdBy.name}{" - "}
-                    <a href={`mailto:${data.createdBy.email}`}>{data.createdBy.email}</a>
-                    <br />
-                    <strong>Người nhận lớp: </strong>
-                    {data.userApply === null ? ('Chưa có người nhận') : (<>{data.userApply.name} {' - '} <a href={`mailto:${data.userApply.email}`}>{data.userApply.email}</a></>)}
+                    <Row>
+                        <Col lg={6}>
+                            <strong>Người tạo lớp </strong> <br />
+                            <p>Tên: {data.createdBy.name}</p>
+                            <p>Số điện thoại: {data.createdBy.phone}</p>
+                            <p>
+                                <a href={`mailto:${data.createdBy.email}`}>Email: {data.createdBy.email}</a>
+                            </p>
+                            <p>Địa chỉ: {data.createdBy.addresses[0].fullAddress}</p>
+                        </Col>
+                        <Col lg={6}>  <strong>Người nhận lớp: </strong> <br />
+                            {data.userApply === null ? ('Chưa có người nhận') :
+                                (<>
+                                    <p>Tên: {data.userApply.name}</p>
+                                    <p>Số điện thoại: {data.userApply.phone}</p>
+                                    <p>
+                                        <a href={`mailto:${data.userApply.email}`}>Email: {data.userApply.email}</a>
+                                    </p>
+                                    <p>Địa chỉ: {data.userApply.addresses[0].fullAddress}</p></>)}</Col>
+                    </Row>
+
+
                 </div>
                 <div className={cx('description')}>
                     <p>{data.description}</p>
@@ -88,6 +104,14 @@ function ClassStudyItem(props) {
                         <AiOutlineSchedule className={cx('icon-request')} />
                         <span>Tuần học <b>{data.requireRelationshipTimeWeeks.length}</b> buổi
                             ({convertToMinute(data.classRequirement.timeLesson)} phút/buổi)</span>
+                    </Col>
+                    <Col lg={4} className={cx('request-block')}>
+                        <span><AiOutlineClockCircle className={cx('icon-request')} /><b>Thời gian dạy: </b>{data.requireRelationshipTimeWeeks.map((item, index) => {
+                            return (
+                                <p key={index} className="p-0 m-0"> {item.day == 1 ? ("Chủ Nhật") : ('Thứ ' + item.day)} lúc {item.hours} giờ: {item.minutes} phút </p>
+                            )
+
+                        })}</span>
                     </Col>
                 </Row>
                 <Row>
