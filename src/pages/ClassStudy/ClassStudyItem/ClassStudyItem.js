@@ -41,7 +41,7 @@ function ClassStudyItem(props) {
         }
     }
     return (
-        <div className={cx('course-block', 'clear-fix')}>
+        <div className={cx('course-block', 'clear-fix', "mb-5")}>
             <Col lg={12} md={12}>
                 <div className={cx('line-bottom')}>
                     <h3 className={cx('title')}>{data.title}</h3>
@@ -56,6 +56,8 @@ function ClassStudyItem(props) {
                     <Row>
                         <Col lg={6} md={12}>
                             <h4 className={cx('fee')}><span>Học phí :</span> {formatCurrency(data.tuition)}/Tháng</h4>
+                            <h4 ><strong>Thời gian khóa học:</strong> {new Date(data.classRequirement.dateStart).toLocaleDateString()} - {new Date(data.classRequirement.dateEnd).toLocaleDateString()}</h4>
+
                         </Col>
                         <Col lg={3} md={12} className="rounded-5 text-center" >
                             <div className={data.status === "CREATE" ? (cx('text-status-none')) : (cx('text-status-apply'))}>
