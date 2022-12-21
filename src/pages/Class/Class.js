@@ -1,17 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
-import {Button, Col, Container, Row} from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LoadingOverlay from 'react-loading-overlay';
 
 import styles from './Class.module.scss';
 import 'animate.css';
 import ClassItem from "~/pages/Class/ClassItem";
-import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
-import {FaHandPointRight} from "react-icons/fa";
-import {tagLinks} from "~/utils/FakeData";
+import { faSearch } from "@fortawesome/free-solid-svg-icons/faSearch";
+import { FaHandPointRight } from "react-icons/fa";
+import { tagLinks } from "~/utils/FakeData";
 import PaginationTutor from "~/layout/common/PaginationTutor";
+
+import { BsBorderAll } from 'react-icons/bs';
+
 import {
     getGrade,
     getSubject,
@@ -49,7 +52,7 @@ function Class(props) {
         async function fetchData() {
             setLoading(true)
             const response = await pagination(1, maxResult);
-            const {data, status} = response?.data
+            const { data, status } = response?.data
             const total = data.total
             setPageCount(Math.floor(total / maxResult));
 
@@ -67,7 +70,7 @@ function Class(props) {
     }, [maxResult])
     const fetchSearchValue = async (currentPage, subjectId, gradeId) => {
         const response = await paginationSearch(currentPage, maxResult, subjectId, gradeId)
-        const {data, status} = response?.data
+        const { data, status } = response?.data
         const total = data.total
         if (total < maxResult) {
             const response = await paginationSearch(currentPage, total, subjectId, gradeId)
@@ -177,6 +180,15 @@ function Class(props) {
 
     }
 
+    const fetchData = async (currentPage) => {
+        const response = await pagination(currentPage, maxResult);
+        const { data } = await response?.data.data;
+        return data;
+    };
+    const handleGetAll = async (e) => {
+        e.preventDefault()
+        window.location.reload();
+    }
 
     const handlePageClick = async (data) => {
         let currentPage = data.selected + 1;
@@ -212,9 +224,9 @@ function Class(props) {
                             <div className={cx('search-area')}>
                                 <Row>
                                     <Col lg={7} md={6} sm={12}>
-                                        <Form.Select className={cx('list-area')}
-                                                     placeholder='Khu vực'
-                                                     onChange={handleSelectSubjectId}
+                                        <Form.Select className={cx('list-area', 'fs-4')}
+                                            placeholder='Khu vực'
+                                            onChange={handleSelectSubjectId}
                                         >
 
 
@@ -229,9 +241,9 @@ function Class(props) {
                                         </Form.Select>
                                     </Col>
                                     <Col lg={3} md={6} sm={12}>
-                                        <Form.Select className={cx('list-area')}
-                                                     placeholder='Khu vực'
-                                                     onChange={handleSelectGradeId}
+                                        <Form.Select className={cx('list-area', 'fs-4')}
+                                            placeholder='Khu vực'
+                                            onChange={handleSelectGradeId}
                                         >
 
                                             {grade.map((grade) => {
@@ -245,15 +257,28 @@ function Class(props) {
                                     </Col>
                                     <Col lg={2} md={12} sm={12}>
                                         <Button className={cx('btn-search', 'text-center', 'btn-success')}
-                                                size="lg"
-                                                onClick={handleSearch}
+                                            size="lg"
+                                            onClick={handleSearch}
                                         >
-                                            <FontAwesomeIcon icon={faSearch} className={cx('search-icon')}/>
+                                            <FontAwesomeIcon icon={faSearch} className={cx('search-icon')} />
                                             Tìm
                                         </Button>
                                     </Col>
 
                                 </Row>
+
+                                <Row>
+                                    <Col lg={4} md={12} sm={12}>
+                                        <Button className={cx('btn-search', 'text-center', 'btn-success')}
+                                            style={{ marginTop: '20px' }}
+                                            size="lg"
+                                            onClick={handleGetAll}
+                                        >
+                                            Tất cả
+                                        </Button>
+                                    </Col>
+                                </Row>
+
                             </div>
                             {!isResult && (<h3 className={cx('not-result')}>Không có kết quả tìm kiếm</h3>)}
                             {
@@ -262,12 +287,12 @@ function Class(props) {
                                         {
                                             data.map((item) => {
                                                 return (
-                                                    <ClassItem key={item.id} data={item}/>
+                                                    <ClassItem key={item.id} data={item} />
                                                 )
                                             })
 
                                         }
-                                        <PaginationTutor pageCount={pageCount} handlePageClick={handlePageClick}/>
+                                        <PaginationTutor pageCount={pageCount} handlePageClick={handlePageClick} />
                                     </div>
                                 )
                             }
@@ -294,11 +319,11 @@ function Class(props) {
                                 <div className={cx('need')}>
                                     <h5 className={cx('need-title', 'line-bottom')}>Gia sư cần biết</h5>
                                     <a className={cx('need-link')} href="">
-                                        <FaHandPointRight style={{marginRight: '4px'}}/>
+                                        <FaHandPointRight style={{ marginRight: '4px' }} />
                                         Quy trình nhận lớp
                                     </a>
                                     <a className={cx('need-link')} href="">
-                                        <FaHandPointRight style={{marginRight: '4px'}}/>
+                                        <FaHandPointRight style={{ marginRight: '4px' }} />
                                         Hợp đồng mẫu
                                     </a>
                                 </div>

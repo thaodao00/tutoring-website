@@ -13,6 +13,7 @@ import LoadingOverlay from 'react-loading-overlay';
 import { async } from '@firebase/util';
 import { applyClass } from '~/services/workspaces.sevices'
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 const cx = classNames.bind(styles);
 
 function ClassItem(props) {
@@ -32,6 +33,16 @@ function ClassItem(props) {
 
 
     const { data } = props;
+    console.log('====================================');
+    console.log(data);
+    console.log('====================================');
+    useEffect(() => {
+        data.requireRelationshipTimeWeeks.map((item, index) => {
+
+        })
+
+    })
+
     const formatCurrency = (currency) => {
         currency = currency.toLocaleString('vi', { style: 'currency', currency: 'VND' });
         return currency
@@ -89,7 +100,9 @@ function ClassItem(props) {
                     <div className={cx('fee-block')}>
                         <Row>
                             <Col lg={6} md={12}>
-                                <h4 className={cx('fee')}><span>Học phí :</span> {formatCurrency(data.tuition)}/Tháng</h4>
+                                <h4 className={cx('fee')}><span>Học phí :</span> {formatCurrency(data.tuition)}/Tháng</h4><br></br>
+                                <h4 ><strong>Thời gian khóa học:</strong> {new Date(data.classRequirement.dateStart).toLocaleDateString()} - {new Date(data.classRequirement.dateEnd).toLocaleDateString()}</h4>
+
                             </Col>
                             <Col lg={6} md={12}>
                                 { }
@@ -108,10 +121,7 @@ function ClassItem(props) {
                         <p>{data.description}</p>
                     </div>
                     <Row>
-                        {/*<Col lg={4} className={cx('request-block')}>*/}
-                        {/*    <AiOutlineClockCircle className={cx('icon-request')}/>*/}
-                        {/*    <span><b>Tạo lúc:</b> 12:06 29.10.2022</span>*/}
-                        {/*</Col>*/}
+
                         <Col lg={4} className={cx('request-block')}>
                             <BsGenderAmbiguous className={cx('icon-request')} />
                             <span><b>Yêu cầu gia sư:</b><SwitchCase value={data.classRequirement.genderTutor} /></span>
@@ -120,6 +130,14 @@ function ClassItem(props) {
                             <AiOutlineSchedule className={cx('icon-request')} />
                             <span>Tuần học <b>{data.requireRelationshipTimeWeeks.length}</b> buổi
                                 ({convertToMinute(data.classRequirement.timeLesson)} phút/buổi)</span>
+                        </Col>
+                        <Col lg={4} className={cx('request-block')}>
+                            <span><AiOutlineClockCircle className={cx('icon-request')} /><b>Thời gian dạy: </b>{data.requireRelationshipTimeWeeks.map((item, index) => {
+                                return (
+                                    <p key={index} className="p-0 m-0"> {item.day == 1 ? ("Chủ Nhật") : ('Thứ ' + item.day)} lúc {item.hours} giờ: {item.minutes} phút </p>
+                                )
+
+                            })}</span>
                         </Col>
                     </Row>
                     <Row>
@@ -160,10 +178,10 @@ function ClassItem(props) {
                     </Row>
                 </Col>
 
-            </div>
+            </div >
             <NotificationContainer />
 
-        </LoadingOverlay>
+        </LoadingOverlay >
 
 
     );
