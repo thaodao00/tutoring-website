@@ -13,6 +13,7 @@ import {FaHandPointRight} from "react-icons/fa";
 import {tagLinks} from "~/utils/FakeData";
 import PaginationTutor from "~/layout/common/PaginationTutor";
 import {
+    getDataBySubjectIdGradeId,
     getGrade,
     getSubject,
     pagination, paginationByGradeId,
@@ -65,22 +66,14 @@ function Class(props) {
         fetchData()
 
     }, [maxResult])
-    const fetchSearchValue = async (currentPage, subjectId, gradeId) => {
-        const response = await paginationSearch(currentPage, maxResult, subjectId, gradeId)
+    const fetchSearchValue = async (subjectId, gradeId) => {
+        const response = await getDataBySubjectIdGradeId( subjectId, gradeId)
         const {data, status} = response?.data
         const total = data.total
-        if (total < maxResult) {
-            const response = await paginationSearch(currentPage, total, subjectId, gradeId)
-            const {data} = response?.data
-            if (data === undefined) {
-                return []
-            }
-            const newTotal = data.total
-            setPageCount(Math.floor(newTotal / total));
-            const result = data.data
-            return result
+        const currentPage = (Math.ceil(total / maxResult))
+        setPageCount(currentPage)
+        return data.data
 
-        }
 
 
     }
@@ -91,40 +84,21 @@ function Class(props) {
         setPageCount(Math.floor(total / maxResult))
         return data.data;
     };
-    const fetchDataBySubjectId = async (currentPage, subjectId) => {
-        const response = await paginationBySubjectId(currentPage, maxResult, subjectId);
+    const fetchDataBySubjectId = async (currentPage,subjectId) => {
+        const response = await paginationBySubjectId(subjectId);
         const {data} = await response?.data;
         const total = data.total
-        if (total < maxResult) {
-            const response = await paginationBySubjectId(currentPage, total, subjectId)
-            const {data} = response?.data
-            if (data === undefined) {
-                return []
-            }
-            const newTotal = data.total
-            setPageCount(Math.floor(newTotal / total));
-            const result = data.data
-            return result
+        setPageCount(Math.ceil(total / maxResult))
+        return data.data
 
-        }
 
     };
     const fetchDataByGradeId = async (currentPage, gradeId) => {
-        const response = await paginationByGradeId(currentPage, maxResult, gradeId);
+        const response = await paginationByGradeId(gradeId);
         const {data} = await response?.data;
         const total = data.total
-        if (total < maxResult) {
-            const response = await paginationByGradeId(currentPage, total, gradeId)
-            const {data} = response?.data
-            if (data === undefined) {
-                return []
-            }
-            const newTotal = data.total
-            setPageCount(Math.floor(newTotal / total));
-            const result = data.data
-            return result
-
-        }
+        setPageCount(Math.ceil(total / maxResult))
+        return data.data
 
     };
 
@@ -134,15 +108,10 @@ function Class(props) {
         if (subjectId === 'ALL' && gradeId === 'ALL') {
             e.preventDefault()
             window.location.reload();
-            // const response = await pagination(1, maxResult)
-            // const {data} = response?.data.data
-            // if (data.length > 0) {
-            //     setData(data)
-            //     setIsResult(true)
-            // }
+
 
         } else if (gradeId === 'ALL' && subjectId !== 'ALL') {
-            const data = await fetchDataBySubjectId(1, subjectId)
+            const data = await fetchDataBySubjectId( 1,subjectId)
             if (data.length > 0) {
                 setData(data)
                 setIsResult(true)
@@ -161,7 +130,7 @@ function Class(props) {
             }
 
         } else {
-            const dataFromSever = await fetchSearchValue(1, subjectId, gradeId)
+            const dataFromSever = await fetchSearchValue( subjectId, gradeId)
             if (dataFromSever.length > 0) {
                 setData(dataFromSever)
                 setIsResult(true)
@@ -182,13 +151,10 @@ function Class(props) {
         let currentPage = data.selected + 1;
         setLoading(true)
         if (isSearch === true) {
-            const dataFromSever = await fetchSearchValue(currentPage, subjectId, gradeId)
+            const dataFromSever = await fetchSearchValue(subjectId, gradeId)
             setData(dataFromSever)
         }
-        // else if (subjectId === 'ALL' && gradeId === 'ALL') {
-        //     const commentsFormServer = await fetchData(currentPage);
-        //     setData(commentsFormServer);
-        // }
+
         else if (gradeId === 'ALL' && subjectId !== 'ALL') {
             const commentsFormServer = await fetchDataBySubjectId(currentPage, subjectId);
             setData(commentsFormServer);
