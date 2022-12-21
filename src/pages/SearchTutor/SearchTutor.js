@@ -165,6 +165,7 @@ function SearchTutor(props) {
 
     });
 
+
     const handleSubmit = async (data) => {
         setLoading(true)
         const fullA = "";
@@ -644,7 +645,7 @@ function SearchTutor(props) {
                                                                 level.map((item) => {
                                                                     return (
                                                                         <OptionItem value={item.id} key={item.id}
-                                                                                    children={item.name}/>
+                                                                                    children={item.name == 'Học sinh' ? 'Sinh viên' : 'Giáo viên'}/>
                                                                     )
                                                                 })
                                                             }

@@ -33,9 +33,7 @@ function ClassItem(props) {
 
 
     const { data } = props;
-    console.log('====================================');
     console.log(data);
-    console.log('====================================');
     useEffect(() => {
         data.requireRelationshipTimeWeeks.map((item, index) => {
 
@@ -72,6 +70,7 @@ function ClassItem(props) {
         }
 
         await applyClass(body).then((res) => {
+            console.log(res)
             if (res.data.status === 1) {
                 NotificationManager.success(res.status.message)
             }

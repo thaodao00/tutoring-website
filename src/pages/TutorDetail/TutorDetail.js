@@ -77,7 +77,7 @@ function TutorDetail(props) {
                                                 <ul className={cx('list')}>
                                                     <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faBirthdayCake} /> <strong> NĂM SINH:</strong> <span className='text-break'>{new Date(data.birthday).toLocaleDateString()}</span></li>
                                                     <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faMapLocation} /><strong> NƠI Ở:</strong> <span className='text-break'>{address[0]?.fullAddress || ""}</span></li>
-                                                    <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faGraduationCap} /> <strong> TRÌNH ĐỘ:</strong> <span className='text-break'>{data?.level === "TEACHER" ? ('Giáo Viên') : ('Học Sinh') || ""}</span></li>
+                                                    <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faGraduationCap} /> <strong> TRÌNH ĐỘ:</strong> <span className='text-break'>{data?.level === "TEACHER" ? ('Giáo Viên') : ('Sinh viên') || ""}</span></li>
                                                     <li className={cx('item')}><FontAwesomeIcon className={cx('icon')} icon={faBook} /> <strong> MÔN DẠY: </strong>{item.map((i, index) => { return (<span key={index}>{i.name} </span>) })}
                                                     </li>
                                                 </ul>
