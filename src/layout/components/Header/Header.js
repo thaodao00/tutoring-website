@@ -145,17 +145,17 @@ function Header() {
                     <span className={cx('phone')}>
                         <FontAwesomeIcon icon={faPhoneFlip} className={cx('phone-icon')} />
                         <Button href="tel: 09222222" className={cx('text-phone')}>
-                            092.222.222
+                            0363275624
                         </Button>
                         -
                         <Button href="tel: 09222222" className={cx('text-phone')}>
-                            092.222.222
+                            0893156752
                         </Button>
                     </span>
                     <span className={cx('mail')}>
                         <FontAwesomeIcon icon={faEnvelope} className={cx('mail-icon')} />
                         <Button href="mailto:daykem@gmail.com" className={cx('text-mail')}>
-                            daykem@gmail.com
+                            trungtamgiasu@gmail.com
                         </Button>
                     </span>
                 </div>
@@ -220,7 +220,7 @@ function Header() {
                     <Button to="/">
                         <img
                             className={cx('logo')}
-                            src="https://www.daykemtainha.vn/public/templates/public/giasu/images/logo-wide-giasu.png"
+                            src="https://ohay.vn/blog/wp-content/uploads/2020/03/trung-tam-gia-su-sai-gon.png"
                             alt="logo"
                         />
                     </Button>

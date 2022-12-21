@@ -33,7 +33,7 @@ const hotline = [
 
 const email = [
     {
-        mail: 'giasutainangtre.vn@gmail.com - info@giasutainangtre.vn',
+        mail: 'trungtamgiasu@gmail.com',
     },
 ];
 
